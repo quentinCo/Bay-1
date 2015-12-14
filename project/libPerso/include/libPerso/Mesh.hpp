@@ -11,26 +11,24 @@
 
 #include <assimp/scene.h>
 
-#include "Vertex.hpp"
+#include <libPerso/Vertex.hpp>
+#include <libPerso/Buffers.hpp>
+#include <libPerso/VAO.hpp>
 
 class Mesh{
 	private :
 		// Variables
 		int nbVertices;
 		
-		std::vector <Vertex> vecVertices;
-		GLuint vbo;
+		Buffers <Vertex> vbo;
 		
-		std::vector <uint32_t> vecIndice;
-		GLuint ibo;
+		Buffers <uint32_t> ibo;
 		
-		GLuint vao;
+		VAO vao;
 		
 		// Function
-		void initBuffer();
-		void initVBO();
-		void initIBO();
-		void initVAO();
+		void initBuffer(std::vector <Vertex> &vecVertices, std::vector <uint32_t> &vecIndices);
+		
 		
 	public :
 		Mesh();
@@ -41,11 +39,11 @@ class Mesh{
 		~Mesh();
 		
 		int getNbVertices() const;
-		GLuint getVBO() const;
+		
 		std::vector <Vertex> getVertices() const;
-		GLuint getIBO() const;
+		
 		std::vector <uint32_t> getIndices() const;
-		GLuint getVAO() const;
+		
 		
 		void drawMesh();
 		

@@ -1,4 +1,4 @@
-#include "libPerso/Mesh.hpp"
+#include <libPerso/Mesh.hpp>
 
 using namespace glm;
 
@@ -7,6 +7,9 @@ using namespace glm;
 Mesh::Mesh(){}
 
 Mesh::Mesh(const aiMesh *mesh, const aiMaterial *mat): nbVertices(mesh->mNumVertices){
+	std::vector <Vertex> vecVertices;
+	std::vector <uint32_t> vecIndice;
+	
 	bool normal = mesh->HasNormals();
 
 	for(int i = 0; i <nbVertices; i++){
@@ -46,23 +49,31 @@ Mesh::Mesh(const aiMesh *mesh, const aiMaterial *mat): nbVertices(mesh->mNumVert
 			vecIndice.push_back(mesh->mFaces[i].mIndices[j]);
 		}
 	}
-	initBuffer();
+	
+	
+	initBuffer(vecVertices, vecIndice);
 }
 
 Mesh::Mesh(const Vertex *pointTab,const int sizePointTab, const uint32_t *pointOrderTab, const int sizeOrder): nbVertices(sizePointTab){
 
+	std::vector <Vertex> vecVertices;
+	std::vector <uint32_t> vecIndice;
+
 	for(int i = 0; i<sizePointTab; i++) vecVertices.push_back(pointTab[i]);
 	for(int i = 0; i<sizeOrder; i++) vecIndice.push_back(pointOrderTab[i]);
 	
-	initBuffer();
+	initBuffer(vecVertices, vecIndice);
 }
 
 Mesh::Mesh(const std::vector<Vertex> &pointVec, const std::vector <uint32_t> &pointOrderVec): nbVertices(pointVec.size()){
 	
+	std::vector <Vertex> vecVertices;
+	std::vector <uint32_t> vecIndice;
+	
 	for(int i = 0; i<nbVertices; i++) vecVertices.push_back(pointVec[i]);
 	for(int i = 0; i<pointOrderVec.size(); i++) vecIndice.push_back(pointOrderVec[i]);
 	
-	initBuffer();
+	initBuffer(vecVertices, vecIndice);
 }
 // ---------------------
 	
@@ -73,70 +84,16 @@ Mesh::~Mesh(){}
 // Get
 int Mesh::getNbVertices() const{ return nbVertices; }
 
-GLuint Mesh::getVBO() const{ return vbo; }
+std::vector <Vertex> Mesh::getVertices() const{ return vbo.getData(); }
 
-std::vector <Vertex> Mesh::getVertices() const{ return vecVertices; }
-
-GLuint Mesh::getIBO() const{ return ibo; }
-
-std::vector <uint32_t> Mesh::getIndices() const{ return vecIndice; }
-
-GLuint Mesh::getVAO() const{ return vao; }
+std::vector <uint32_t> Mesh::getIndices() const{ return ibo.getData(); }
 // ---------------------
 
 // Initialisation des buffers
-void Mesh::initBuffer(){
-	initVBO();
-	initIBO();
-	initVAO();
-}
-
-void Mesh::initVBO(){
-
-	glGenBuffers(1,&vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBufferData(GL_ARRAY_BUFFER,nbVertices*sizeof(Vertex), vecVertices.data(), GL_STATIC_DRAW);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-}
-
-void Mesh::initIBO(){
-
-	glGenBuffers(1,&ibo);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, vecIndice.size()*sizeof(uint32_t), vecIndice.data(),GL_STATIC_DRAW);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-	
-}
-
-void Mesh::initVAO(){
-
-	glGenVertexArrays(1, &vao);
-	
-	glBindVertexArray(vao);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
-	
-	glEnableVertexAttribArray(0);
-	glEnableVertexAttribArray(1);	
-	glEnableVertexAttribArray(2);
-	glEnableVertexAttribArray(3);
-	glEnableVertexAttribArray(4);	
-	glEnableVertexAttribArray(5);
-	
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	
-	glVertexAttribPointer(0,3,GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid*) offsetof(Vertex, position));
-	glVertexAttribPointer(1,3,GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid*) offsetof(Vertex, color));
-	glVertexAttribPointer(2,3,GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid*) offsetof(Vertex, normal));
-	
-	glVertexAttribPointer(3,3,GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid*) offsetof(Vertex, ambientColor));
-	glVertexAttribPointer(4,3,GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid*) offsetof(Vertex, specularColor));
-	glVertexAttribPointer(5,3,GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid*) offsetof(Vertex, emissionColor));
-	
-	
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-	glBindVertexArray(0);
+void Mesh::initBuffer(std::vector <Vertex> &vecVertices, std::vector <uint32_t> &vecIndices){
+	vbo = Buffers <Vertex> (GL_ARRAY_BUFFER, vecVertices);
+	ibo = Buffers <uint32_t> (GL_ELEMENT_ARRAY_BUFFER, vecIndices);
+	vao = VAO(vbo, ibo);
 }
 // ---------------------
 
@@ -146,13 +103,13 @@ void Mesh::drawMesh(){
 	if(glIsVertexArray(vao))std::cout<<"VAO BIND"<<std::endl;
 	if(glIsBuffer(vbo))std::cout<<"VBO BIND"<<std::endl;*/
 	
-	glBindVertexArray(vao);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+	vao.bind();
+	ibo.bind();
 	
-	glDrawElements(GL_TRIANGLES, vecIndice.size(), GL_UNSIGNED_INT, (void*)0);
+	glDrawElements(GL_TRIANGLES, ibo.getDataSize(), GL_UNSIGNED_INT, (void*)0);
 	
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-	glBindVertexArray(0);
+	ibo.unbind();
+	vao.unbind();
 }
 // ---------------------
 

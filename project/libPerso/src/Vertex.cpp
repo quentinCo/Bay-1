@@ -1,4 +1,4 @@
-#include "libPerso/Vertex.hpp"
+#include <libPerso/Vertex.hpp>
 
 using namespace glm;
 

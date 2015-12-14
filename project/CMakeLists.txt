@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.8)
 
-project(Bay-1)
+project(ImacGL)
 
 add_definitions(-std=c++11)
 
@@ -21,5 +21,11 @@ add_subdirectory(glimac)
 add_subdirectory(assimp)
 add_subdirectory(gtest)
 add_subdirectory(libPerso)
+
+#file(GLOB TEST_DIRECTORIES "Test*")
+
+#foreach(TEST ${TEST_DIRECTORIES})
+#    add_subdirectory(${TEST})
+#endforeach()
 
 add_subdirectory(main)
