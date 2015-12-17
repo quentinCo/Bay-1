@@ -64,8 +64,8 @@ int main(int argc, char** argv) {
 
 
 	// Verif existance fichier
-	std::string pathFile = "/home/quentin/Documents/TEST/test/projet/main/assets/models/borderland/Maya/maya.obj";
-	//std::string pathFile = "/home/quentin/Documents/TEST/test/projet/main/assets/models/forme_test_collor.obj";
+	//std::string pathFile = "/home/quentin/Documents/TEST/test/projet/main/assets/models/borderland/Maya/maya.obj";
+	std::string pathFile = "/home/quentin/Documents/TEST/test/projet/main/assets/models/forme_test_collor.obj";
 	
 	std::ifstream fin(pathFile.c_str());
 	

@@ -14,15 +14,18 @@ struct Vertex{
 	glm::vec3 specularColor;
 	glm::vec3 emissionColor;
 	
-	//glm::vec3 transparency;
+	float shininess;
+	float opacity;
 
 	Vertex(
-		glm::vec3 pos = glm::vec3(0,0,0),
-		glm::vec3 col = glm::vec3(1,1,1),
-		glm::vec3 norm = glm::vec3(0,0,1),
-		glm::vec3 amb = glm::vec3(0,0,0),
-		glm::vec3 spec = glm::vec3(0,0,0),
-		glm::vec3 emi = glm::vec3(0,0,0)
+		const glm::vec3 &pos = glm::vec3(0,0,0),
+		const glm::vec3 &col = glm::vec3(1,1,1),
+		const glm::vec3 &norm = glm::vec3(0,0,1),
+		const glm::vec3 &amb = glm::vec3(0,0,0),
+		const glm::vec3 &spec = glm::vec3(0,0,0),
+		const glm::vec3 &emi = glm::vec3(0,0,0),
+		const float &shi = 0,
+		const float &opa = 1
 	);
 	
 	Vertex(const Vertex &p);

@@ -19,7 +19,8 @@ Mesh::Mesh(const aiMesh *mesh, const aiMaterial *mat): nbVertices(mesh->mNumVert
 		vec3 amb = vec3(0,0,0);
 		vec3 spec = vec3(0,0,0);
 		vec3 emi = vec3(0,0,0);
-		
+		float shi = 0;
+		float opa = 1;
 		
 		if(mat){
 			aiColor4D aColor;
@@ -35,13 +36,21 @@ Mesh::Mesh(const aiMesh *mesh, const aiMaterial *mat): nbVertices(mesh->mNumVert
 			if (AI_SUCCESS == aiGetMaterialColor(mat, AI_MATKEY_COLOR_EMISSIVE, &aColor)){
 				emi = vec3(aColor.r, aColor.g, aColor.b);
 			}
+			if (AI_SUCCESS == aiGetMaterialColor(mat, AI_MATKEY_SHININESS, &aColor)){
+				shi = aColor.r;
+			}
+			if (AI_SUCCESS == aiGetMaterialColor(mat, AI_MATKEY_OPACITY, &aColor)){
+				opa = aColor.r;
+			}
 		}
 				
 		vec3 norm;
 		if(normal) norm = vec3(mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z);
 		else norm = vec3(0,0,1);
 		
-		vecVertices.push_back(Vertex(pos, col, norm, amb, spec, emi));
+		Vertex newVertex = Vertex(pos, col, norm, amb, spec, emi, shi, opa);
+		
+		vecVertices.push_back(newVertex);
 	}	
 	
 	for(int i = 0; i<mesh->mNumFaces; i++){

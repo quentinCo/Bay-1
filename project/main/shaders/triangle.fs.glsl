@@ -6,6 +6,9 @@ in vec3 vAmbColor;
 in vec3 vSpecColor;
 in vec3 vEmiColor;
 
+in vec3 vPosition;
+
+
 out vec3 fFragColor;
 
 
@@ -15,7 +18,9 @@ void main() {
 	//fFragColor = vSpecColor;
 	//fFragColor = vEmiColor;
 	
-	fFragColor = normalize(vNormal);
+	fFragColor = vPosition;
+	
+	//fFragColor = normalize(vNormal);
 	
 	//fFragColor = vec3(0,1,0);
 }

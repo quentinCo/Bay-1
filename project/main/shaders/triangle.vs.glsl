@@ -7,11 +7,16 @@ layout(location = 3) in vec3 aVertexAmbColor;
 layout(location = 4) in vec3 aVertexSpecularColor;
 layout(location = 5) in vec3 aVertexEmissionColor;
 
+layout(location = 6) in float aVertexShininess;
+layout(location = 7) in float aVertexOpacity;
+
 out vec3 vDiffColor;
 out vec3 vNormal;
 out vec3 vAmbColor;
 out vec3 vSpecColor;
 out vec3 vEmiColor;
+
+out vec3 vPosition;
 
 mat4 rotate(float a, float b){
 	return mat4(
@@ -28,6 +33,8 @@ void main() {
 	vAmbColor = aVertexAmbColor;
 	vSpecColor = aVertexSpecularColor;
 	vEmiColor = aVertexEmissionColor;
+	
+	vPosition = aVertexPosition;
 	
 	gl_Position = vec4(0.5*aVertexPosition.x, 0.5*aVertexPosition.y, 0.5*aVertexPosition.z, 1);
 }

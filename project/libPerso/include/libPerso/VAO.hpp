@@ -14,6 +14,7 @@ class VAO{
 
 	private :
 		GLuint vao;
+		Buffers<uint32_t> *ibo;
 	
 	public :
 		VAO();

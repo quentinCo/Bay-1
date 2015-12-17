@@ -4,10 +4,13 @@
 #include <iostream>
 #include <cstdlib>
 #include <vector>
+#include <sstream>
+#include <string>
 
 #include <GL/glew.h>
 
 #include <glimac/glm.hpp>
+#include <glimac/Program.hpp>
 
 #include <assimp/scene.h>
 

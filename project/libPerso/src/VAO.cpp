@@ -14,6 +14,8 @@ VAO::VAO(Buffers<Vertex> &vbo, Buffers<uint32_t> &ibo){
 	glEnableVertexAttribArray(3);
 	glEnableVertexAttribArray(4);	
 	glEnableVertexAttribArray(5);
+	glEnableVertexAttribArray(6);
+	glEnableVertexAttribArray(7);
 	
 	vbo.bind();
 	
@@ -24,6 +26,9 @@ VAO::VAO(Buffers<Vertex> &vbo, Buffers<uint32_t> &ibo){
 	glVertexAttribPointer(3,3,GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid*) offsetof(Vertex, ambientColor));
 	glVertexAttribPointer(4,3,GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid*) offsetof(Vertex, specularColor));
 	glVertexAttribPointer(5,3,GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid*) offsetof(Vertex, emissionColor));
+	
+	glVertexAttribPointer(6,1,GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid*) offsetof(Vertex, shininess));
+	glVertexAttribPointer(7,1,GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid*) offsetof(Vertex, opacity));
 	
 	vbo.unbind();
 	ibo.unbind();
