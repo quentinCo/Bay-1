@@ -63,8 +63,8 @@ int main(int argc, char** argv) {
 
 	// Verif existance fichier
 	//std::string pathFile = applicationPath.dirPath()+ "assets/models/nanosuit/nanosuit.obj";
-	std::string pathFile = applicationPath.dirPath()+ "assets/models/borderland/Lilith/Lilith.obj";
-	//std::string pathFile = applicationPath.dirPath()+ "assets/models/borderland/Maya_obj/maya_3.obj";
+	//std::string pathFile = applicationPath.dirPath()+ "assets/models/borderland/Lilith/Lilith.obj";
+	std::string pathFile = applicationPath.dirPath()+ "assets/models/borderland/Maya_obj/maya_3.obj";
 	//std::string pathFile = applicationPath.dirPath()+ "assets/models/forme_test_collor.obj";
 	/*
 	std::ifstream fin(pathFile.c_str());
@@ -151,7 +151,10 @@ int main(int argc, char** argv) {
 	
 	// ------------------------
 	std::cout<< "CREATION SCENE FINI" << std::endl;
-	// Application loop:
+	
+	glEnable(GL_DEPTH_TEST); 
+	
+	// Application loop:	
 	bool done = false;
 	while(!done) {
 		// Event loop:
@@ -161,6 +164,9 @@ int main(int argc, char** argv) {
 				done = true; // Leave the loop after this iteration
 			}
 		}
+		
+		
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		/*********************************
 		 * HERE SHOULD COME THE RENDERING CODE

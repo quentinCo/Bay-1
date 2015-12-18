@@ -138,22 +138,25 @@ void Mesh::bindTextures( const glimac::Program &prog ){
 	GLuint opacityNr = 1;
 	
 	for(GLuint i = 0; i < textures.size(); i++){
+		glActiveTexture(GL_TEXTURE0 + i);
+	
 		std::stringstream ss;
 		std::string number;
-		std::string name = textures[i].getType();
+		std::string name = textures[i].getTypeTexture();
 		
-		if(name == "Texture_diffuse")ss << diffuseNr++; 
-		else if(name == "Texture_normal")ss << normalNr++;
-		else if(name == "Texture_specular")ss << specularNr++;
-		else if(name == "Texture_ambiant")ss << ambiantNr++; 
-		else if(name == "Texture_emissive")ss << emissiveNr++;
-		else if(name == "Texture_shininess")ss << shininessNr++; 
-		else if(name == "Texture_opacity")ss << opacityNr++; 
+		if(name == "Texture_diffuse") ss << diffuseNr++;
+		else if(name == "Texture_normal") ss << normalNr++;
+		else if(name == "Texture_specular") ss << specularNr++;
+		else if(name == "Texture_ambiant") ss << ambiantNr++; 
+		else if(name == "Texture_emissive") ss << emissiveNr++;
+		else if(name == "Texture_shininess") ss << shininessNr++; 
+		else if(name == "Texture_opacity") ss << opacityNr++; 
 		
 		number = ss.str(); 
-		
+		//std::cout << "Bind : " << i << std::endl;
 		// init variable uniform correspondant à la texture
 		glUniform1i(glGetUniformLocation(prog.getGLId(), ("u" + name + number).c_str()), i);
+		
 		
 		textures[i].bind(GL_TEXTURE0 + i);
 	}
