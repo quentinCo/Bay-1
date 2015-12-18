@@ -5,7 +5,7 @@
 #include <cstdlib>
 #include <vector>
 #include <sstream>
-#include <string>
+#include <cstring>
 
 #include <GL/glew.h>
 
@@ -17,6 +17,8 @@
 #include <libPerso/Vertex.hpp>
 #include <libPerso/Buffers.hpp>
 #include <libPerso/VAO.hpp>
+#include <libPerso/Material.hpp>
+#include <libPerso/Texture.hpp>
 
 class Mesh{
 	private :
@@ -29,15 +31,25 @@ class Mesh{
 		
 		VAO vao;
 		
+		Material material;
+		bool hasMaterial;
+		
+		std::vector <Texture> textures;
+		bool hasTexture;
+		
 		// Function
 		void initBuffer(std::vector <Vertex> &vecVertices, std::vector <uint32_t> &vecIndices);
-		
+		void uniformMaterial(const glimac::Program &prog);
+		void bindTextures(const glimac::Program &prog);
+		void unbindTextures();
 		
 	public :
 		Mesh();
 		Mesh(const aiMesh *mesh, const aiMaterial *mat = NULL);
+		/*
 		Mesh(const Vertex *pointTab,const int sizePointTab, const uint32_t *pointOrderTab, const int sizeOrder);
 		Mesh(const std::vector<Vertex> &pointVec, const std::vector <uint32_t> &pointOrderVec);
+		*/
 		
 		~Mesh();
 		
@@ -48,7 +60,10 @@ class Mesh{
 		std::vector <uint32_t> getIndices() const;
 		
 		
-		void drawMesh();
+		void setTextures(const std::vector<Texture> &tex);
+		
+		
+		void drawMesh(const glimac::Program &prog );
 		
 		friend std::ostream & operator<< (std::ostream & os, const Mesh &mesh);
 };
