@@ -2,14 +2,19 @@
 
 using namespace std;
 
+// Construteurs
 Scene::Scene(){}
 
 Scene::Scene(string path){
 	loadScene(path);
 }
+// ---------------------
 
+// Destructeur
 Scene::~Scene(){}
+// ---------------------
 
+// Créer la scéne à partir d'un fichier
 int Scene::loadScene(string path){
 	Assimp::Importer aImporter;
 	const aiScene* aScene = aImporter.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);	
@@ -28,6 +33,9 @@ int Scene::loadScene(string path){
 	
 	return 1;
 }
+// ---------------------
+
+// Parcours et initialisation des mesh
 void Scene::processNode(const aiNode* aNode, const aiScene* aScene){
 	for(GLuint i = 0; i < aNode->mNumMeshes; i++)
 	{
@@ -48,7 +56,9 @@ void Scene::processNode(const aiNode* aNode, const aiScene* aScene){
 
 	for(GLuint i = 0; i < aNode->mNumChildren; i++) processNode(aNode->mChildren[i], aScene);
 }
+// ---------------------
 
+// Initialisation des textures
 vector<Texture> Scene::processTexture(const aiMesh* aiMesh, const aiScene* scene, const aiMaterial *mat){
 
 	vector<Texture> textures;
@@ -109,10 +119,11 @@ vector<Texture> Scene::loadMaterialTextures(const aiMaterial* mat,const aiTextur
 	}
 	return texturesType;
 }
+// ---------------------
 
-
-
+// Dessin
 void Scene::drawScene(const glimac::Program &prog){
 	for(auto it : meshes) it.drawMesh(prog);
 }
+// ---------------------
 

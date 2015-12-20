@@ -1,6 +1,7 @@
 #include <libPerso/VAO.hpp>
 
-VAO::VAO(){}
+// Constructeurs
+VAO::VAO(){};
 
 VAO::VAO(Buffers<Vertex> &vbo, Buffers<uint32_t> &ibo){
 	glGenVertexArrays(1,&vao);
@@ -23,9 +24,13 @@ VAO::VAO(Buffers<Vertex> &vbo, Buffers<uint32_t> &ibo){
 	glBindVertexArray(0);
 	
 }
+// ---------------------
 
-VAO::~VAO(){};
+// Destructeur
+VAO::~VAO(){}
+// ---------------------
 
+// Bind et unbind
 void VAO::bind() const{
 	glBindVertexArray(vao);
 }
@@ -33,3 +38,4 @@ void VAO::bind() const{
 void VAO::unbind() const{
 	glBindVertexArray(0);
 }
+// ---------------------

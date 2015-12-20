@@ -21,10 +21,18 @@ class Scene
 		std::vector<Texture> textures_loaded;
 		std::string directory;
 
+		// Créer une scéne à partir d'un fichier
 		int loadScene(std::string path);
+		// ---------------------
+		
+		// Parcourt des mesh
 		void processNode(const aiNode* node, const aiScene* scene);
+		// ---------------------
+		
+		// Chargement des Textures
 		std::vector<Texture> processTexture(const aiMesh* aiMesh, const aiScene* scene, const aiMaterial *mat);
 		std::vector<Texture> loadMaterialTextures(const aiMaterial* mat,const aiTextureType type, std::string typeName);
+		// ---------------------
 
 	public:
 		Scene();
@@ -32,7 +40,9 @@ class Scene
 		
 		~Scene();
 		
-		void drawScene(const glimac::Program &prog);  
+		// Méthode de dessin
+		void drawScene(const glimac::Program &prog); 
+		// ---------------------
 };
 
 #endif

@@ -2,7 +2,7 @@
 
 using namespace glm;
 
-
+// Constructeurs
 Material::Material( glm::vec3 diffColor, glm::vec3 ambColor, glm::vec3 speColor, glm::vec3 emiColor, float shin, float opa )
 : diffuseColor(diffColor), ambientColor(ambColor), specularColor(speColor), emissionColor(emiColor), shininess(shin), opacity(opa){};
 
@@ -30,8 +30,11 @@ Material::Material(const aiMaterial *mat){
 	}
 	else Material();
 };
+// ---------------------
 
+// Destructeur
 Material::~Material(){};
+// ---------------------
 
 std::ostream & operator<< (std::ostream & os, const Material &mat){
 	os << "diffuseColor : [" << mat.diffuseColor.x << ", " << mat.diffuseColor.y << ", " << mat.diffuseColor.z << "]\n\n";

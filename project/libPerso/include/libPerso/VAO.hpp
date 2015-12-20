@@ -17,13 +17,19 @@ class VAO{
 		Buffers<uint32_t> *ibo;
 	
 	public :
+		// Constructeurs
 		VAO();
 		VAO(Buffers<Vertex> &vbo, Buffers<uint32_t> &ibo);
-	
+		// ---------------------
+		
+		// Destructeur
 		~VAO();
+		// ---------------------
 	
+		// Bind et unbind
 		void bind() const;
 		void unbind() const;
+		// ---------------------
 };
 
 #endif
