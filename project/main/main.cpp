@@ -26,7 +26,7 @@
 
 // Import
 #include <libPerso/Scene.hpp>
-#include <libPerso/Camera.hpp>
+#include <libPerso/Player.hpp>
 
 #define GL_GPU_MEM_INFO_TOTAL_AVAILABLE_MEM_NVX 0x9048
 #define GL_GPU_MEM_INFO_CURRENT_AVAILABLE_MEM_NVX 0x9049
@@ -66,9 +66,10 @@ int main(int argc, char** argv) {
 
 
 	// Verif existance fichier
+	std::string pathFile = applicationPath.dirPath()+ "assets/models/scene_test.obj";
 	//std::string pathFile = applicationPath.dirPath()+ "assets/models/nanosuit/nanosuit.obj";
 	//std::string pathFile = applicationPath.dirPath()+ "assets/models/borderland/Lilith/Lilith.obj";
-	std::string pathFile = applicationPath.dirPath()+ "assets/models/borderland/Maya_obj/maya_3.obj";
+	//std::string pathFile = applicationPath.dirPath()+ "assets/models/borderland/Maya_obj/maya_3.obj";
 	//std::string pathFile = applicationPath.dirPath()+ "assets/models/forme_test_collor.obj";
 	
 // Init Scene
@@ -77,20 +78,16 @@ int main(int argc, char** argv) {
 	Scene scene = Scene(pathFile.c_str());
 // ------------------------
 
-// Init Camera
+// Init Player (Player est herite de Camera)
 	std::cout<< "CREATION SCENE FINI" << std::endl;
 	
 	glEnable(GL_DEPTH_TEST); 
 	
-	Camera camera = Camera();
-	std::cout <<"CAMERA : " << camera << std::endl;
+	Player player = Player(glm::vec3(0,0,-6), glm::vec3(0,0,2), 0.05, 0.5);
+	std::cout <<"CAMERA : " << player << std::endl;
 // -----------------------
 	
 // Variable utiles pour la Camera
-	bool mousePositionInit = false;
-	// float hypotenus;
-	
-	float speedXY = 0.01;
 	
 	glm::mat4 ProjMatrix = glm::perspective(glm::radians(70.f),1.f,0.1f,100.f);
 // ------------------------------
@@ -120,12 +117,7 @@ std::cout << "MEMOIR GPU => cur_avail_mem_kb / total_mem_kb : " << cur_avail_mem
 			}
 			switch(e.type){
 				case SDL_MOUSEMOTION:
-					if(mousePositionInit){
-						//std::cout << "mouse : " << e.motion.xrel << " -- "<<e.motion.yrel<<std::endl;
-						camera.rotateUp(-e.motion.yrel * (180.f/windowHeight));
-						camera.rotateLeft(-e.motion.xrel * (180.f/windowWidth));
-					}
-					else mousePositionInit = true;
+					player.playerRotate(e.motion);
 					break;
 
 				case SDL_KEYDOWN:
@@ -144,14 +136,7 @@ std::cout << "MEMOIR GPU => cur_avail_mem_kb / total_mem_kb : " << cur_avail_mem
 		
 		// Gestion Deplacement (la touche reste enfoncé)
 		Uint8 *keystate = SDL_GetKeyState(NULL);
-		if ( keystate[SDLK_z]) camera.moveFront(speedXY);
-		else if ( keystate[SDLK_s]) camera.moveFront(-speedXY);
-		
-		if ( keystate[SDLK_q]) camera.moveLeft(speedXY);
-		else if ( keystate[SDLK_d]) camera.moveLeft(-speedXY);
-		
-		if ( keystate[SDLK_a]) camera.moveTop(speedXY);	// Monter
-		else if ( keystate[SDLK_e]) camera.moveTop(-speedXY);	// Descendre
+		player.playerMove(keystate);
 		
 	// -------------------------------------------------------------------
 		//std::cout <<"CAMERA : " << camera << std::endl;
@@ -165,7 +150,7 @@ std::cout << "MEMOIR GPU => cur_avail_mem_kb / total_mem_kb : " << cur_avail_mem
 	 	
 		//for(auto it : scene) it.drawMesh(program);
 
-		glm::mat4 globalMVMatrix = camera.getViewMatrix();
+		glm::mat4 globalMVMatrix = player.getViewMatrix();
 		
 		//std::cout << globalMVMatrix << std::endl;
 

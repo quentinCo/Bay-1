@@ -1,4 +1,9 @@
+#ifndef CAMERA_H
+#define CAMERA_H
+
 #include <iostream>
+
+#include <glimac/glm.hpp>
 #include <glimac/SDLWindowManager.hpp>
 
 class Camera{
@@ -20,16 +25,20 @@ class Camera{
 		// ---------------------
 
 		// Destructeur
-		~Camera();
+		virtual ~Camera();
 		// ---------------------
 
-		// Get
+		// Get et set
 		glm::vec3 getPosition() const;
 		float getPhi() const;
 		float getTheta() const;
 		glm::vec3 getFrontVector() const;	
 		glm::vec3 getLeftVector() const;	
 		glm::vec3 getUpVector() const;
+		
+		void setPosition(glm::vec3 pos);
+		void setPhi(float radian);
+		void setTheta(float radian);
 		// ---------------------
 		
 		// Calcul de position
@@ -49,3 +58,5 @@ class Camera{
 		
 		friend std::ostream & operator<< (std::ostream & os, const Camera &cam);
 };
+
+#endif

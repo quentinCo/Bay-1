@@ -1,8 +1,13 @@
 #include <libPerso/Camera.hpp>
 
+using namespace glm;
+
 // Constructeurs
-Camera :: Camera() : m_Position(0,0,1), m_fPhi(M_PI), m_fTheta(0){
+Camera :: Camera() : m_Position(0,0,0), m_fPhi(M_PI), m_fTheta(0){
 	computeDirectionVectors();
+		
+	SDL_WM_GrabInput(SDL_GRAB_ON);
+	SDL_ShowCursor(SDL_DISABLE);
 }
 // ---------------------
 
@@ -13,18 +18,31 @@ Camera :: ~Camera(){
 }
 //----------------------
 
-// Get
-glm::vec3 Camera::getPosition() const { return m_Position ;}
+// Get et set
+vec3 Camera::getPosition() const { return m_Position ;}
 
 float Camera::getPhi() const {return m_fPhi;}
 
 float Camera::getTheta() const {return m_fTheta;}
 
-glm::vec3 Camera::getFrontVector() const { return m_FrontVector;}
+vec3 Camera::getFrontVector() const { return m_FrontVector;}
 
-glm::vec3 Camera::getLeftVector() const { return m_LeftVector;}	
+vec3 Camera::getLeftVector() const { return m_LeftVector;}	
 
-glm::vec3 Camera::getUpVector() const {return m_UpVector;}
+vec3 Camera::getUpVector() const {return m_UpVector;}
+
+
+void Camera::setPosition(vec3 pos){ m_Position = pos;}
+
+void Camera::setPhi(float radian){
+	m_fPhi = radian;
+	computeDirectionVectors();
+}
+
+void Camera::setTheta(float radian){
+	m_fTheta = radian;
+	computeDirectionVectors();
+}
 // ---------------------
 
 // Calcule des vecteurs
@@ -37,12 +55,9 @@ void Camera :: computeDirectionVectors(){
 	if(m_fTheta > M_PI/2) m_fTheta = M_PI/2;
 	else if(m_fTheta < -M_PI/2) m_fTheta = -M_PI/2;
 */
-	m_FrontVector = glm::vec3(std::cos(m_fTheta)*std::sin(m_fPhi), std::sin(m_fTheta), std::cos(m_fTheta)*std::cos(m_fPhi));
-	m_LeftVector = glm::vec3(std::sin(m_fPhi + M_PI/2), 0, std::cos(m_fPhi + M_PI/2));		
-	m_UpVector = glm::cross(m_FrontVector, m_LeftVector);
-	
-	SDL_WM_GrabInput(SDL_GRAB_ON);
-	SDL_ShowCursor(SDL_DISABLE);
+	m_FrontVector = vec3(std::cos(m_fTheta)*std::sin(m_fPhi), std::sin(m_fTheta), std::cos(m_fTheta)*std::cos(m_fPhi));
+	m_LeftVector = vec3(std::sin(m_fPhi + M_PI/2), 0, std::cos(m_fPhi + M_PI/2));		
+	m_UpVector = cross(m_FrontVector, m_LeftVector);
 }
 // ---------------------
 
@@ -73,8 +88,8 @@ void Camera :: rotateUp(float degrees){
 // ---------------------
 
 // View Matrice
-glm::mat4 Camera :: getViewMatrix() const{
-	return glm::lookAt(m_Position, m_Position + m_FrontVector,m_UpVector);
+mat4 Camera :: getViewMatrix() const{
+	return lookAt(m_Position, m_Position + m_FrontVector,m_UpVector);
 }
 // ---------------------
 
