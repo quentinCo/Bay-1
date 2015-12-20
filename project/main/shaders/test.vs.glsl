@@ -29,8 +29,10 @@ void main() {
 	// Calcul des valeurs de sortie
 	vPosition_vs = vec3(uMVMatrix * vertexPosition);
 	vNormal_vs = vec3(uNormalMatrix * vertexNormal);
-    
+	
 	vCoordsTex = aVertexCoordsTexture;
+
+	// Calcul de la position projetée
 	
 	gl_Position = uMVPMatrix * vec4(0.6*aVertexPosition.x, 0.6*aVertexPosition.y - 0.5, 0.6*aVertexPosition.z, 1);
 }

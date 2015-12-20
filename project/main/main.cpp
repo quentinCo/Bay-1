@@ -83,6 +83,7 @@ int main(int argc, char** argv) {
 	glEnable(GL_DEPTH_TEST); 
 	
 	Camera camera = Camera();
+	std::cout <<"CAMERA : " << camera << std::endl;
 // -----------------------
 	
 // Variable utiles pour la Camera
@@ -121,8 +122,12 @@ std::cout << "MEMOIR GPU => cur_avail_mem_kb / total_mem_kb : " << cur_avail_mem
 			}
 			switch(e.type){
 				case SDL_MOUSEMOTION:
-					camera.rotateUp(-e.motion.yrel * (180.f/windowHeight));
-					camera.rotateLeft(-e.motion.xrel * (180.f/windowWidth));
+					if(mousePositionInit){
+						//std::cout << "mouse : " << e.motion.xrel << " -- "<<e.motion.yrel<<std::endl;
+						camera.rotateUp(-e.motion.yrel * (180.f/windowHeight));
+						camera.rotateLeft(-e.motion.xrel * (180.f/windowWidth));
+					}
+					else mousePositionInit = true;
 					break;
 
 				case SDL_KEYDOWN:
@@ -151,8 +156,10 @@ std::cout << "MEMOIR GPU => cur_avail_mem_kb / total_mem_kb : " << cur_avail_mem
 		else if ( keystate[SDLK_e]) camera.moveTop(-speedXY);	// Descendre
 		
 	// -------------------------------------------------------------------
+		//std::cout <<"CAMERA : " << camera << std::endl;
 		
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 
 		/*********************************
 		 * HERE SHOULD COME THE RENDERING CODE

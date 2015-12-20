@@ -1,7 +1,7 @@
 #include <libPerso/Camera.hpp>
 
 // Constructeurs
-Camera :: Camera() : m_Position(0,0,-1), m_fPhi(M_PI), m_fTheta(0){
+Camera :: Camera() : m_Position(0,0,1), m_fPhi(M_PI), m_fTheta(0){
 	computeDirectionVectors();
 }
 // ---------------------
