@@ -88,13 +88,11 @@ int main(int argc, char** argv) {
 	
 // Variable utiles pour la Camera
 	bool mousePositionInit = false;
-	glm::vec2 mousePosition = glm::vec2(0,0);
 	// float hypotenus;
 	
 	float speedXY = 0.01;
 	
 	glm::mat4 ProjMatrix = glm::perspective(glm::radians(70.f),1.f,0.1f,100.f);
-	glm::mat4 MVMatrix = glm::translate(glm::mat4(1), glm::vec3(0.f,0.f,-5.f));
 // ------------------------------
 
 
