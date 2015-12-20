@@ -88,13 +88,11 @@ int main(int argc, char** argv) {
 	
 // Variable utiles pour la Camera
 	bool mousePositionInit = false;
-	glm::vec2 mousePosition = glm::vec2(0,0);
 	// float hypotenus;
 	
 	float speedXY = 0.01;
 	
 	glm::mat4 ProjMatrix = glm::perspective(glm::radians(70.f),1.f,0.1f,100.f);
-	glm::mat4 MVMatrix = glm::translate(glm::mat4(1), glm::vec3(0.f,0.f,-5.f));
 // ------------------------------
 
 
@@ -171,7 +169,7 @@ std::cout << "MEMOIR GPU => cur_avail_mem_kb / total_mem_kb : " << cur_avail_mem
 		
 		//std::cout << globalMVMatrix << std::endl;
 
-		glUniformMatrix4fv(glGetUniformLocation(program.getGLId(), "matuMVMatrix"), 1, GL_FALSE, glm::value_ptr(globalMVMatrix));
+		glUniformMatrix4fv(glGetUniformLocation(program.getGLId(), "uMVMatrix"), 1, GL_FALSE, glm::value_ptr(globalMVMatrix));
 		glUniformMatrix4fv(glGetUniformLocation(program.getGLId(), "uNormalMatrix"), 1, GL_FALSE, glm::value_ptr(glm::transpose(glm::inverse(globalMVMatrix))));
 		glUniformMatrix4fv(glGetUniformLocation(program.getGLId(), "uMVPMatrix"), 1, GL_FALSE, glm::value_ptr(ProjMatrix * globalMVMatrix));
 

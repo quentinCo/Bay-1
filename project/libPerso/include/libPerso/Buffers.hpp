@@ -30,8 +30,8 @@ class Buffers{
 		// Destructeur
 		~Buffers(){}
 		// ---------------------
-	
-		// Get
+		
+		// Get 
 		GLuint getBuffer()const{
 			return buffer;
 		}
