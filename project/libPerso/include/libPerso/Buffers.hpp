@@ -13,27 +13,25 @@ class Buffers{
 	private :
 		GLuint buffer;
 		GLenum target;
-		std::vector <T> data;
+		int size;
 	
 	public :
+		// Constructeur
 		Buffers(){}
 	
-		Buffers(const GLenum t,const std::vector<T> &d):target(t), data(d){
+		Buffers(const GLenum t,const std::vector<T> &d):target(t), size(d.size())/*, data(d)*/{
 			glGenBuffers(1,&buffer);
 			glBindBuffer(target, buffer);
-			glBufferData(target, data.size()*sizeof(T), data.data(), GL_STATIC_DRAW);
+			glBufferData(target, d.size()*sizeof(T), d.data(), GL_STATIC_DRAW);
 			glBindBuffer(target, 0);
 		}
+		// ---------------------
 		
-		Buffers(const Buffers<T> &b):target(b.target), data(b.data){
-			glGenBuffers(1,&buffer);
-			glBindBuffer(target, buffer);
-			glBufferData(target, data.size()*sizeof(T), data.data(), GL_STATIC_DRAW);
-			glBindBuffer(target, 0);
-		}
-		
+		// Destructeur
 		~Buffers(){}
+		// ---------------------
 	
+		// Get
 		GLuint getBuffer()const{
 			return buffer;
 		}
@@ -41,12 +39,11 @@ class Buffers{
 			return target;
 		}
 		int getDataSize()const{
-			return data.size();
+			return size;
 		}
-		std::vector<T> getData()const{
-			return data;
-		}
+		// ---------------------
 		
+		// Bind et unbind
 		void bind() const{
 			glBindBuffer(target, buffer);
 		}
@@ -54,6 +51,7 @@ class Buffers{
 		void unbind() const{
 			glBindBuffer(target, 0);
 		}
+		// ---------------------
 };
 
 #endif

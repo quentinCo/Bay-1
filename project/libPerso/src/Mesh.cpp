@@ -7,9 +7,10 @@ using namespace glm;
 Mesh::Mesh(){}
 
 Mesh::Mesh(const aiMesh *mesh, const aiMaterial *mat): nbVertices(mesh->mNumVertices), hasMaterial(false), hasTexture(false){
+	/*
 	std::vector <Vertex> vecVertices;
 	std::vector <uint32_t> vecIndice;
-	
+	*/
 	bool normal = mesh->HasNormals();
 
 	if(mat){
@@ -77,13 +78,13 @@ Mesh::~Mesh(){}
 // Get
 int Mesh::getNbVertices() const{ return nbVertices; }
 
-std::vector <Vertex> Mesh::getVertices() const{ return vbo.getData(); }
+std::vector <Vertex> Mesh::getVertices() const{ return vecVertices; }
 
-std::vector <uint32_t> Mesh::getIndices() const{ return ibo.getData(); }
+std::vector <uint32_t> Mesh::getIndices() const{ return vecIndice; }
+
 // ---------------------
 
 // Set
-
 void Mesh::setTextures(const std::vector<Texture> &tex){
 	textures = tex;
 }

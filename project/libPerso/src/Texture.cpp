@@ -1,17 +1,24 @@
 #include <libPerso/Texture.hpp>
 
+// Constructeurs
 Texture::Texture(){}
 
 Texture::Texture(std::string meshPath, std::string texPath, std::string type){
 	initTexture(meshPath, texPath, type);
 }
+// ---------------------
 
+// Destructeur
 Texture::~Texture(){}
+// ---------------------
 
+// Get
 GLuint Texture::getIdTexture() const{ return textureId; }
 std::string Texture::getTypeTexture() const{ return textureType; }
 std::string Texture::getPathTexture() const{ return texturePath; }
+// ---------------------
 
+// Initialisation de la texture
 int Texture::initTexture(std::string meshPath, std::string texPath, std::string type){
 	textureType = type;
 	texturePath = meshPath+"/"+texPath;
@@ -51,7 +58,9 @@ int Texture::initTexture(std::string meshPath, std::string texPath, std::string 
 	
 	return 0;
 }
+// ---------------------
 
+// Bind et unbind
 void Texture::bind(GLenum texture){
 	glActiveTexture(texture);
 	glBindTexture(GL_TEXTURE_2D, textureId);
@@ -61,6 +70,7 @@ void Texture::unbind(GLenum texture){
 	glActiveTexture(texture);
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
+// ---------------------
 
 std::ostream & operator<< (std::ostream & os, const Texture &tex){
 	os << "TEXTURE :" << "\n";

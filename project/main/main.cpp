@@ -4,6 +4,9 @@
 #include <string>
 #include <fstream>
 
+// Import SDL
+#include <SDL/SDL.h>
+
 // Import glimac
 #include <glimac/SDLWindowManager.hpp>
 #include <glimac/Program.hpp>
@@ -11,6 +14,7 @@
 
 // Import GL
 #include <GL/glew.h>
+//#include <GL/glut.h>
 
 // Import assimp
 #include <assimp/Importer.hpp>
@@ -22,22 +26,22 @@
 
 // Import
 #include <libPerso/Scene.hpp>
+#include <libPerso/Camera.hpp>
+
+#define GL_GPU_MEM_INFO_TOTAL_AVAILABLE_MEM_NVX 0x9048
+#define GL_GPU_MEM_INFO_CURRENT_AVAILABLE_MEM_NVX 0x9049
+
 
 using namespace glimac;
 
 int main(int argc, char** argv) {
-/*
-	bool printDebug;
-	if(argc > 1 && std::string(argv[1]).compare("debug")==0){
-		std::cout<<"MODE PRINT_DEBUG\n"<<std::endl;
-		printDebug = true;
-	}
-	else{
-		printDebug = false;
-	}
-*/
+
 	// Initialize SDL and open a window
-	SDLWindowManager windowManager(800, 800, "GLImac");
+	unsigned int windowWidth = 800;
+	unsigned int windowHeight = 800;
+	
+	SDLWindowManager windowManager(windowWidth, windowHeight, "Bay-1");
+
 
 	// Initialize glew for OpenGL3+ support
 	GLenum glewInitError = glewInit();
@@ -66,105 +70,87 @@ int main(int argc, char** argv) {
 	//std::string pathFile = applicationPath.dirPath()+ "assets/models/borderland/Lilith/Lilith.obj";
 	std::string pathFile = applicationPath.dirPath()+ "assets/models/borderland/Maya_obj/maya_3.obj";
 	//std::string pathFile = applicationPath.dirPath()+ "assets/models/forme_test_collor.obj";
-	/*
-	std::ifstream fin(pathFile.c_str());
 	
-	Assimp::Importer aImporter;
-	
-	if(!fin.fail()) {
-		std::cout<< "Could open file: " << pathFile << std::endl;
-		fin.close();
-	}
-	else{
-		std::cerr<< "Couldn't open file: " << pathFile<<" \n" << aImporter.GetErrorString() << std::endl;
-		return EXIT_FAILURE;
-	}
-	// ------------------------
-	// Chargement scene
-	const aiScene* aScene = aImporter.ReadFile(pathFile, aiProcess_Triangulate);
-	if(aScene){
-		std::cout << "Loading file : "<< pathFile <<std::endl;
-	}
-	else{
-		std::cerr << "Error loading file : "<< pathFile <<" : " << aImporter.GetErrorString() <<std::endl;
-		return EXIT_FAILURE;
-	}
-		
-	// ------------------------
-	// Print Test
-	if(printDebug){
-		std::cout << "INFORMATION MESHS CHARGES\n"<<std::endl;
-		for(unsigned int i = 0; i < aScene->mNumMeshes; i++){
-			std::cout << "Mesh : " << i << " - Adress : "<< aScene->mMeshes[i] << std::endl;
-			std::cout << "Point du mesh :" << std::endl;
-			for(unsigned int j = 0; j < aScene->mMeshes[i]->mNumVertices; j++){
-				std::cout <<"----> [" << aScene->mMeshes[i]->mVertices[j].x
-				<<" , "<< aScene->mMeshes[i]->mVertices[j].y
-				<<" , "<< aScene->mMeshes[i]->mVertices[j].z
-				<<"]"<< std::endl;
-			}
-			std::cout << "Face du mesh :"<< std::endl;
-			for(unsigned int j = 0; j < aScene->mMeshes[i]->mNumFaces; j++){
-				std::cout <<"Face "<< j <<" : "<<std::endl;
-				for(unsigned int k = 0; k < aScene->mMeshes[i]->mFaces[j].mNumIndices; k++){
-					std::cout <<"----> "<< aScene->mMeshes[i]->mFaces[j].mIndices[k]
-					<< "[" << aScene->mMeshes[i]->mVertices[aScene->mMeshes[i]->mFaces[j].mIndices[k]].x
-					<<" , "<< aScene->mMeshes[i]->mVertices[aScene->mMeshes[i]->mFaces[j].mIndices[k]].y
-					<<" , "<< aScene->mMeshes[i]->mVertices[aScene->mMeshes[i]->mFaces[j].mIndices[k]].z;
-					std::cout <<"]"<< std::endl;
-				}
-			}
-			for(unsigned int j = 0; j < AI_MAX_NUMBER_OF_COLOR_SETS; j++){
-			
-				std::cout << "aiScene->mMeshes["<< i <<"]->HasVertexColors["<< j <<"]: "<< aScene->mMeshes[i]->HasVertexColors(j) <<"\n"<<std::endl;
-				if( aScene->mMeshes[i]->HasVertexColors(j)){
-					for(unsigned int k = 0; k < aScene->mMeshes[i]->mNumVertices; k++){
-						std::cout <<  aScene->mMeshes[i]->mColors[j][k].r << " - " <<  aScene->mMeshes[i]->mColors[j][k].g << " - "<<  aScene->mMeshes[i]->mColors[j][k].b<<std::endl;
-					}
-				}
-			}
-		}
-		std::cout << "\n--------------------------\n"<<std::endl;
-	}
-	// ------------------------
-	
-	// Init Scene
+// Init Scene
 	std::cout << "CREATION SCENE" <<std::endl;
-	std::vector <Mesh> scene;
-	if(aScene->HasMeshes()){
-		if(aScene->HasMaterials()){
-			for(unsigned int i = 0; i < aScene->mNumMeshes; i++){
-				scene.push_back(Mesh(
-					aScene->mMeshes[i],
-					aScene->mMaterials[aScene->mMeshes[i]->mMaterialIndex]
-				));
-			}
-		}
-		else{
-			for(unsigned int i = 0; i < aScene->mNumMeshes; i++){
-				scene.push_back(Mesh(aScene->mMeshes[i]));
-			}
-		}
-	}
-	*/
+
 	Scene scene = Scene(pathFile.c_str());
-	
-	// ------------------------
+// ------------------------
+
+// Init Camera
 	std::cout<< "CREATION SCENE FINI" << std::endl;
 	
 	glEnable(GL_DEPTH_TEST); 
 	
-	// Application loop:	
-	bool done = false;
-	while(!done) {
-		// Event loop:
+	Camera camera = Camera();
+// -----------------------
+	
+// Variable utiles pour la Camera
+	bool mousePositionInit = false;
+	glm::vec2 mousePosition = glm::vec2(0,0);
+	// float hypotenus;
+	
+	float speedXY = 0.01;
+	
+	glm::mat4 ProjMatrix = glm::perspective(glm::radians(70.f),1.f,0.1f,100.f);
+	glm::mat4 MVMatrix = glm::translate(glm::mat4(1), glm::vec3(0.f,0.f,-5.f));
+// ------------------------------
+
+
+/*
+GLint total_mem_kb = 0;
+glGetIntegerv(GL_GPU_MEM_INFO_TOTAL_AVAILABLE_MEM_NVX, 
+              &total_mem_kb);
+
+GLint cur_avail_mem_kb = 0;
+glGetIntegerv(GL_GPU_MEM_INFO_CURRENT_AVAILABLE_MEM_NVX, 
+              &cur_avail_mem_kb);
+std::cout << "MEMOIR GPU => cur_avail_mem_kb / total_mem_kb : " << cur_avail_mem_kb << " / "<<total_mem_kb << std::endl;
+*/
+
+// Application loop:	
+	bool loop = false;
+	while(!loop) {
+	// Traitement des events
 		SDL_Event e;
-		while(windowManager.pollEvent(e)) {
-			if(e.type == SDL_QUIT) {
-				done = true; // Leave the loop after this iteration
+				
+		while(SDL_PollEvent(&e)){
+			if(e.type == SDL_QUIT){
+				loop = true;
+				break;
 			}
+			switch(e.type){
+				case SDL_MOUSEMOTION:
+					camera.rotateUp(-e.motion.yrel * (180.f/windowHeight));
+					camera.rotateLeft(-e.motion.xrel * (180.f/windowWidth));
+					break;
+
+				case SDL_KEYDOWN:
+					switch(e.key.keysym.sym){
+						case SDLK_ESCAPE : 
+							loop = true;
+							break;
+						default : break;
+				}
+				break;
+
+				default:
+				break;
+			}		
 		}
 		
+		// Gestion Deplacement (la touche reste enfoncé)
+		Uint8 *keystate = SDL_GetKeyState(NULL);
+		if ( keystate[SDLK_z]) camera.moveFront(speedXY);
+		else if ( keystate[SDLK_s]) camera.moveFront(-speedXY);
+		
+		if ( keystate[SDLK_q]) camera.moveLeft(speedXY);
+		else if ( keystate[SDLK_d]) camera.moveLeft(-speedXY);
+		
+		if ( keystate[SDLK_a]) camera.moveTop(speedXY);	// Monter
+		else if ( keystate[SDLK_e]) camera.moveTop(-speedXY);	// Descendre
+		
+	// -------------------------------------------------------------------
 		
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -174,10 +160,28 @@ int main(int argc, char** argv) {
 	 	
 		//for(auto it : scene) it.drawMesh(program);
 
+		glm::mat4 globalMVMatrix = camera.getViewMatrix();
+		
+		//std::cout << globalMVMatrix << std::endl;
+
+		glUniformMatrix4fv(glGetUniformLocation(program.getGLId(), "uMVMatrix"), 1, GL_FALSE, glm::value_ptr(globalMVMatrix));
+		glUniformMatrix4fv(glGetUniformLocation(program.getGLId(), "uNormalMatrix"), 1, GL_FALSE, glm::value_ptr(glm::transpose(glm::inverse(globalMVMatrix))));
+		glUniformMatrix4fv(glGetUniformLocation(program.getGLId(), "uMVPMatrix"), 1, GL_FALSE, glm::value_ptr(ProjMatrix * globalMVMatrix));
+
+		// Dessin
 		scene.drawScene(program);
+		// ----------------------
 
 		// Update the display
 		windowManager.swapBuffers();
+		/*
+glGetIntegerv(GL_GPU_MEM_INFO_TOTAL_AVAILABLE_MEM_NVX, 
+              &total_mem_kb);
+
+glGetIntegerv(GL_GPU_MEM_INFO_CURRENT_AVAILABLE_MEM_NVX, 
+              &cur_avail_mem_kb);
+std::cout << "MEMOIR GPU => cur_avail_mem_kb / total_mem_kb : " << cur_avail_mem_kb << " / "<<total_mem_kb << std::endl;
+		*/
 	}
 
 	return EXIT_SUCCESS;

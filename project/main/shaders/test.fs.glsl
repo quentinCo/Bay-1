@@ -16,8 +16,8 @@ uniform sampler2D uTexture_diffuse1;
 uniform sampler2D uTexture_normal1;
 uniform sampler2D uTexture_specular1;
 
-in vec3 vPosition;
-in vec3 vNormal;
+in vec3 vPosition_vs;
+in vec3 vNormal_vs;
 in vec2 vCoordsTex;
 
 
@@ -30,11 +30,11 @@ void main() {
 	//fFragColor = uMaterial.specularColor;
 	//fFragColor = uMaterial.emissionColor;
 	
-	//fFragColor = vPosition;
+	//fFragColor = vPosition_vs;
 	
 	//fFragColor = vec3(vCoordsTex,0);
 	
-	//fFragColor = texture(uTexture_diffuse1, vCoordsTex).xyz;
+	fFragColor = texture(uTexture_diffuse1, vCoordsTex).xyz;
 	
 	//fFragColor = texture(uTexture_normal1, vCoordsTex).xyz;
 	
