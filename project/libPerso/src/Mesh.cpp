@@ -100,7 +100,7 @@ void Mesh::initBuffer(std::vector <Vertex> &vecVertices, std::vector <uint32_t> 
 // ---------------------
 
 // Dessin
-void Mesh::drawMesh(const glimac::Program &prog ){
+void Mesh::drawMesh(const Program &prog ){
 	vao.bind();
 	ibo.bind();
 	
@@ -117,7 +117,7 @@ void Mesh::drawMesh(const glimac::Program &prog ){
 // ---------------------
 
 // Uniform value 
-void Mesh::uniformMaterial(const glimac::Program &prog){
+void Mesh::uniformMaterial(const Program &prog){
 	glUniform3fv(glGetUniformLocation(prog.getGLId(), "uMaterial.diffuseColor"),1, value_ptr(material.diffuseColor));
 	glUniform3fv(glGetUniformLocation(prog.getGLId(), "uMaterial.ambientColor"),1, value_ptr(material.ambientColor));
 	glUniform3fv(glGetUniformLocation(prog.getGLId(), "uMaterial.specularColor"),1, value_ptr(material.specularColor));
@@ -129,7 +129,7 @@ void Mesh::uniformMaterial(const glimac::Program &prog){
 // ---------------------
 
 // Bind - unbind textures
-void Mesh::bindTextures( const glimac::Program &prog ){
+void Mesh::bindTextures( const Program &prog ){
 	GLuint diffuseNr = 1;
 	GLuint normalNr = 1;
 	GLuint specularNr = 1;

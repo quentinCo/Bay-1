@@ -9,7 +9,7 @@
 
 // Import glimac
 #include <glimac/SDLWindowManager.hpp>
-#include <glimac/Program.hpp>
+//#include <glimac/Program.hpp>
 #include <glimac/FilePath.hpp>
 
 // Import GL
@@ -27,6 +27,7 @@
 // Import
 #include <libPerso/Scene.hpp>
 #include <libPerso/Player.hpp>
+#include <libPerso/Program.hpp>
 
 #define GL_GPU_MEM_INFO_TOTAL_AVAILABLE_MEM_NVX 0x9048
 #define GL_GPU_MEM_INFO_CURRENT_AVAILABLE_MEM_NVX 0x9049
@@ -60,10 +61,13 @@ int main(int argc, char** argv) {
 	// Shader
 	FilePath applicationPath(argv[0]);
 
+	Program::setShadersDirectory(applicationPath.dirPath());
+
 	// Chargement des shaders
+/*
 	Program program = loadProgram(applicationPath.dirPath() + "shaders/test.vs.glsl", applicationPath.dirPath() + "shaders/test.fs.glsl");
 	program.use();
-
+*/
 
 	// Verif existance fichier
 	std::string pathFile = applicationPath.dirPath()+ "assets/models/scene_test.obj";
@@ -152,14 +156,8 @@ std::cout << "MEMOIR GPU => cur_avail_mem_kb / total_mem_kb : " << cur_avail_mem
 
 		glm::mat4 globalMVMatrix = player.getViewMatrix();
 		
-		//std::cout << globalMVMatrix << std::endl;
-
-		glUniformMatrix4fv(glGetUniformLocation(program.getGLId(), "uMVMatrix"), 1, GL_FALSE, glm::value_ptr(globalMVMatrix));
-		glUniformMatrix4fv(glGetUniformLocation(program.getGLId(), "uNormalMatrix"), 1, GL_FALSE, glm::value_ptr(glm::transpose(glm::inverse(globalMVMatrix))));
-		glUniformMatrix4fv(glGetUniformLocation(program.getGLId(), "uMVPMatrix"), 1, GL_FALSE, glm::value_ptr(ProjMatrix * globalMVMatrix));
-
 		// Dessin
-		scene.drawScene(program);
+		scene.drawScene(globalMVMatrix);
 		// ----------------------
 
 		// Update the display

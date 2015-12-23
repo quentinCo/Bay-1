@@ -10,7 +10,6 @@
 #include <GL/glew.h>
 
 #include <glimac/glm.hpp>
-#include <glimac/Program.hpp>
 
 #include <assimp/scene.h>
 
@@ -19,6 +18,7 @@
 #include <libPerso/VAO.hpp>
 #include <libPerso/Material.hpp>
 #include <libPerso/Texture.hpp>
+#include <libPerso/Program.hpp>
 
 class Mesh{
 	private :
@@ -42,9 +42,9 @@ class Mesh{
 		// Function
 		void initBuffer(std::vector <Vertex> &vecVertices, std::vector <uint32_t> &vecIndices);
 		
-		void uniformMaterial(const glimac::Program &prog);
+		void uniformMaterial(const Program &prog);
 		
-		void bindTextures(const glimac::Program &prog);
+		void bindTextures(const Program &prog);
 		void unbindTextures();
 		
 	public :
@@ -72,7 +72,7 @@ class Mesh{
 		// ---------------------
 		
 		// Methode de dessin
-		void drawMesh(const glimac::Program &prog );
+		void drawMesh(const Program &prog );
 		// ---------------------
 		
 		friend std::ostream & operator<< (std::ostream & os, const Mesh &mesh);
