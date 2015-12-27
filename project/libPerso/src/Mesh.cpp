@@ -42,7 +42,7 @@ Mesh::Mesh(const aiMesh *mesh, const aiMaterial *mat): nbVertices(mesh->mNumVert
 		}
 	}
 	
-	
+	collision = PhysicsObject(vecVertices);		// initialisation de la collision
 	initBuffer(vecVertices, vecIndice);
 }
 
@@ -82,6 +82,8 @@ std::vector <Vertex> Mesh::getVertices() const{ return vecVertices; }
 
 std::vector <uint32_t> Mesh::getIndices() const{ return vecIndice; }
 
+PhysicsObject Mesh::getPhysicsObject() const{ return collision; }
+
 // ---------------------
 
 // Set
@@ -106,6 +108,9 @@ void Mesh::drawMesh(const Program &prog ){
 	
 	if(hasMaterial) uniformMaterial(prog);
 	if(hasTexture) bindTextures(prog);
+	
+	// Si mesh mobile
+	// if(mass > 0) initUniformTransormation();
 	
 	glDrawElements(GL_TRIANGLES, ibo.getDataSize(), GL_UNSIGNED_INT, (void*)0);
 	

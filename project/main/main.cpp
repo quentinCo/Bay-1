@@ -9,20 +9,10 @@
 
 // Import glimac
 #include <glimac/SDLWindowManager.hpp>
-//#include <glimac/Program.hpp>
 #include <glimac/FilePath.hpp>
 
 // Import GL
 #include <GL/glew.h>
-//#include <GL/glut.h>
-
-// Import assimp
-#include <assimp/Importer.hpp>
-#include <assimp/scene.h>
-#include <assimp/postprocess.h>
-
-// Import gtest
-#include <gtest/gtest.h>
 
 // Import
 #include <libPerso/Scene.hpp>
@@ -63,12 +53,6 @@ int main(int argc, char** argv) {
 
 	Program::setShadersDirectory(applicationPath.dirPath());
 
-	// Chargement des shaders
-/*
-	Program program = loadProgram(applicationPath.dirPath() + "shaders/test.vs.glsl", applicationPath.dirPath() + "shaders/test.fs.glsl");
-	program.use();
-*/
-
 	// Verif existance fichier
 	std::string pathFile = applicationPath.dirPath()+ "assets/models/scene_test.obj";
 	//std::string pathFile = applicationPath.dirPath()+ "assets/models/nanosuit/nanosuit.obj";
@@ -85,17 +69,17 @@ int main(int argc, char** argv) {
 // Init Player (Player est herite de Camera)
 	std::cout<< "CREATION SCENE FINI" << std::endl;
 	
-	glEnable(GL_DEPTH_TEST); 
+	glEnable(GL_DEPTH_TEST);
+	/*glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK);
+	glFrontFace(GL_CW);  */
 	
-	Player player = Player(glm::vec3(0,0,-6), glm::vec3(0,0,2), 0.05, 0.5);
-	std::cout <<"CAMERA : " << player << std::endl;
+	Player player = Player(glm::vec3(0,1,-6), glm::vec3(0,0,2), 1.5, 0.02, 0.5);
+	//std::cout <<"PLAYER : " << player << std::endl;
+	
+	//  --->  Ajout du player au monde des collisions.
+	scene.addWorldCollision(player.getCollision());
 // -----------------------
-	
-// Variable utiles pour la Camera
-	
-	glm::mat4 ProjMatrix = glm::perspective(glm::radians(70.f),1.f,0.1f,100.f);
-// ------------------------------
-
 
 /*
 GLint total_mem_kb = 0;
@@ -154,7 +138,7 @@ std::cout << "MEMOIR GPU => cur_avail_mem_kb / total_mem_kb : " << cur_avail_mem
 	 	
 		//for(auto it : scene) it.drawMesh(program);
 
-		glm::mat4 globalMVMatrix = player.getViewMatrix();
+		glm::mat4 globalMVMatrix = player.getViewMatrixPlayer();
 		
 		// Dessin
 		scene.drawScene(globalMVMatrix);

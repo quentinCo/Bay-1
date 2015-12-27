@@ -15,6 +15,7 @@
 #include <libPerso/Program.hpp>
 #include <libPerso/Mesh.hpp>
 #include <libPerso/Texture.hpp>
+#include <libPerso/CollisionWorld.hpp>
 
 class Scene 
 {
@@ -23,6 +24,8 @@ class Scene
 		std::vector<Texture> textures_loaded;
 		std::map<Program, std::vector <Mesh>> mapMeshByShaders;
 		std::string directory;
+		CollisionWorld collisionWorld;
+		
 
 		// Créer une scéne à partir d'un fichier
 		int loadScene(std::string path);
@@ -56,6 +59,11 @@ class Scene
 		// Méthode de dessin
 		void drawScene(const glm::mat4 &globalMVMatrix); 
 		// ---------------------
+		
+		
+		//----------------------------------TEMPORAIRE
+		void addWorldCollision(PhysicsObject &object);
+		//--------------------------------------------
 };
 
 #endif

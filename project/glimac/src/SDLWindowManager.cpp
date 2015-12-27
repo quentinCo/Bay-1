@@ -43,7 +43,7 @@ void SDLWindowManager::swapBuffers() {
 }
 
 float SDLWindowManager::getTime() const {
-    return 0.001f * SDL_GetTicks();
+    return 1000/60.f * SDL_GetTicks();
 }
 
 }

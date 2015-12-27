@@ -3,7 +3,13 @@
 using namespace glm;
 
 // Constructeurs
-Camera :: Camera() : m_Position(0,0,0), m_fPhi(M_PI), m_fTheta(0){
+Camera :: Camera(const vec3 &pos, const vec3 &frontVector) : m_Position(pos){
+	
+	vec3 normalizeFront = normalize(frontVector);
+	
+	m_fTheta = asin(normalizeFront.y);
+	m_fPhi = acos(normalizeFront.z / cos(m_fTheta));
+	
 	computeDirectionVectors();
 		
 	SDL_WM_GrabInput(SDL_GRAB_ON);
@@ -47,14 +53,7 @@ void Camera::setTheta(float radian){
 
 // Calcule des vecteurs
 void Camera :: computeDirectionVectors(){
-/*
-	std::cout << "m_fTheta : "<< m_fTheta<<std::endl;
-	if(m_fPhi > M_PI/2) m_fPhi = M_PI/2;
-	else if(m_fPhi < -M_PI/2) m_fPhi = -M_PI/2;
-	
-	if(m_fTheta > M_PI/2) m_fTheta = M_PI/2;
-	else if(m_fTheta < -M_PI/2) m_fTheta = -M_PI/2;
-*/
+
 	m_FrontVector = vec3(std::cos(m_fTheta)*std::sin(m_fPhi), std::sin(m_fTheta), std::cos(m_fTheta)*std::cos(m_fPhi));
 	m_LeftVector = vec3(std::sin(m_fPhi + M_PI/2), 0, std::cos(m_fPhi + M_PI/2));		
 	m_UpVector = cross(m_FrontVector, m_LeftVector);
@@ -83,13 +82,22 @@ void Camera :: rotateLeft(float degrees){
 
 void Camera :: rotateUp(float degrees){
 	m_fTheta += degrees*M_PI/180;
+	
+	if(m_fTheta > M_PI/2) m_fTheta = M_PI/2;
+	else if(m_fTheta < -M_PI/2) m_fTheta = -M_PI/2;
+	
 	computeDirectionVectors();
 }
 // ---------------------
 
 // View Matrice
-mat4 Camera :: getViewMatrix() const{
-	return lookAt(m_Position, m_Position + m_FrontVector,m_UpVector);
+mat4 Camera :: getViewMatrix(const mat4 &t) const{
+
+	//std::cout << "getViewMatrix : "<< t * vec4(m_Position,1) << std::endl;
+	vec3 newPosition = vec3(t * vec4(m_Position,1));				// Calcul de la position de la camera, selon la position de box de collision du player.
+	vec3 newDirection = vec3(t*(vec4(m_Position,1) + vec4(m_FrontVector,0)));
+	vec3 newUp = vec3( t*vec4(m_UpVector,0));
+	return lookAt(newPosition, newDirection, newUp);
 }
 // ---------------------
 

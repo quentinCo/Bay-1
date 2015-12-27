@@ -5,7 +5,7 @@ using namespace std;
 // Construteurs
 Scene::Scene(){}
 
-Scene::Scene(string path){
+Scene::Scene(string path): collisionWorld(){
 	loadScene(path);
 }
 // ---------------------
@@ -46,7 +46,7 @@ int Scene::loadScene(string path){
 void Scene::processNode(const aiNode* aNode, const aiScene* aScene, map<array<string, 2>, vector<Mesh>> &mapNameShader){
 	for(GLuint i = 0; i < aNode->mNumMeshes; i++)
 	{
-		//cout << "\n---------------------------------------" <<endl;
+		cout << "\n---------------------------------------" <<endl;
 		aiMesh* aMesh = aScene->mMeshes[aNode->mMeshes[i]];
 	
 		aiMaterial *mat;
@@ -58,11 +58,10 @@ void Scene::processNode(const aiNode* aNode, const aiScene* aScene, map<array<st
 		Mesh mesh (aMesh, mat);
 		
 		mesh.setTextures(processTexture(aMesh, aScene, mat));
-		//--------------------------
+
 		addToMapShadersName(mapNameShader, mat, mesh);
-		//---------------------------
-		//meshes.push_back(mesh);
-		//cout << "-------------------------------------" <<endl;	
+
+		collisionWorld.addToWorld(mesh);		// -------------------> Ajoute des box de collision au monde des collisions.
 	}
 
 	for(GLuint i = 0; i < aNode->mNumChildren; i++) processNode(aNode->mChildren[i], aScene, mapNameShader);
@@ -231,3 +230,8 @@ void Scene::initUniformValue(const Program &program, const glm::mat4 &globalMVMa
 }
 // ---------------------
 
+//-------------------------------------TEMPORAIRE
+void Scene::addWorldCollision(PhysicsObject &object){
+	collisionWorld.getWorld()->addRigidBody(object.getBody());
+}
+//-----------------------------------------------

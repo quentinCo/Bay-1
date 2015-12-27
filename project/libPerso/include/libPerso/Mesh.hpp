@@ -19,6 +19,7 @@
 #include <libPerso/Material.hpp>
 #include <libPerso/Texture.hpp>
 #include <libPerso/Program.hpp>
+#include <libPerso/PhysicsObject.hpp>
 
 class Mesh{
 	private :
@@ -38,6 +39,8 @@ class Mesh{
 		
 		std::vector <Texture> textures;
 		bool hasTexture;
+		
+		PhysicsObject collision;	// Physique du mesh (collision)
 		
 		// Function
 		void initBuffer(std::vector <Vertex> &vecVertices, std::vector <uint32_t> &vecIndices);
@@ -67,6 +70,8 @@ class Mesh{
 		std::vector <Vertex> getVertices() const;
 		
 		std::vector <uint32_t> getIndices() const;
+		
+		PhysicsObject getPhysicsObject() const;
 		
 		void setTextures(const std::vector<Texture> &tex);
 		// ---------------------
