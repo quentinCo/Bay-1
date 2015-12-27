@@ -14,6 +14,7 @@ http://bulletphysics.org/Bullet/BulletFull/classbtRigidBody.html#ac6e5f94e998150
 
 
 DERNIERE PISTE 
+----> Revoir l'organisation, non pas un Mesh avec une box de collision, mais un box de collision qui affiche un mesh ?
 
 http://bulletphysics.org/Bullet/BulletFull/classbtCharacterControllerInterface.html
 
