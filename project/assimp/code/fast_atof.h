@@ -17,8 +17,6 @@
 
 #include <math.h>
 #include <limits.h>
-#include <cstdint>
-#include <stdexcept>
 
 namespace Assimp
 {
