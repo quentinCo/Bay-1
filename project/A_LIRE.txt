@@ -1,0 +1,22 @@
+
+JUSTE QUELQUE LIENS QUE J'AI TROUVÉ ET QUI MON AIDÉ (ENFIN ...)
+
+http://happy.developpez.com/tutoriels/bullet-physics/#LVIII
+
+https://www.youtube.com/watch?v=1CEI2pOym1Y
+
+https://openclassrooms.com/forum/sujet/bullet-et-ogre-probleme-pour-creer-un-btconvexhullshape-74402		// CELUI LÀ, C'EST POUR DES BODY QUI S'ADAPTE AU MESH
+
+http://www.bulletphysics.org/Bullet/phpBB3/viewtopic.php?p=&f=9&t=2518
+
+http://bulletphysics.org/Bullet/BulletFull/classbtRigidBody.html#ac6e5f94e998150e37ca8962c851d10a8
+
+
+
+DERNIERE PISTE 
+
+http://bulletphysics.org/Bullet/BulletFull/classbtCharacterControllerInterface.html
+
+https://github.com/alxandrb/ImaKart/tree/master/project/include				// ANCIEN PROJET D'IMAC QUI UTILISE BULLET
+https://github.com/alxandrb/ImaKart/blob/master/project/include/model/GameWorld.hpp
+https://github.com/alxandrb/ImaKart/blob/master/project/include/model/Kart.hpp
