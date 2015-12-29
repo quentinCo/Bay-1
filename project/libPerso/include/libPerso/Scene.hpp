@@ -15,6 +15,7 @@
 #include <libPerso/Program.hpp>
 #include <libPerso/Mesh.hpp>
 #include <libPerso/Texture.hpp>
+#include <libPerso/Light.hpp>
 
 class Scene 
 {
@@ -23,7 +24,15 @@ class Scene
 		std::vector<Texture> textures_loaded;
 		std::map<Program, std::vector <Mesh>> mapMeshByShaders;
 		std::string directory;
-
+		
+		std::vector <EllipsoidLight> vectorLights;
+		EllipsoidLight *lights;
+		
+		std::vector <DirectionalLight> vectorDirLights;
+		DirectionalLight *dirLights;
+		
+		
+		// FONCTIONS
 		// Créer une scéne à partir d'un fichier
 		int loadScene(std::string path);
 		// ---------------------
@@ -37,6 +46,10 @@ class Scene
 		std::vector<Texture> loadMaterialTextures(const aiMaterial* mat,const aiTextureType type, std::string typeName);
 		// ---------------------
 		
+		// Gestion des types de mesh
+		//Mesh selectTypeMesh (const std::string &name,const aiMesh *aMesh, const aiMaterial *mat);
+		// ---------------------
+		
 		// Gestion du map shader
 		void addToMapShadersName(std::map<std::array<std::string, 2>,std::vector<Mesh>> &mapNameShader, const aiMaterial *mat, const Mesh mesh);
 		std::string recoverNameShader (const std::string &nameMat, const std::string &begin, char end);
@@ -45,6 +58,7 @@ class Scene
 		
 		// Uniform value
 		void initUniformValue(const Program &program, const glm::mat4 &globalMVMatrix);
+		void initUniformLightTabs();
 		// ---------------------
 
 	public:

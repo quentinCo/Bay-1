@@ -24,6 +24,8 @@ VAO::VAO(Buffers<Vertex> &vbo, Buffers<uint32_t> &ibo){
 	glBindVertexArray(0);
 	
 }
+
+VAO::VAO(const VAO &v):vao(v.vao){}
 // ---------------------
 
 // Destructeur

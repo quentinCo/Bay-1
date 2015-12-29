@@ -23,6 +23,9 @@
 class Mesh{
 	private :
 		// Variables
+		glm::vec3 positionCenter;
+		glm::vec3 dimenssion;
+		
 		int nbVertices;
 		
 		Buffers <Vertex> vbo;
@@ -40,6 +43,8 @@ class Mesh{
 		bool hasTexture;
 		
 		// Function
+		void saveMinMaxPosition(glm::vec3 &posM, glm::vec3 &posm,const glm::vec3 &pos);
+		
 		void initBuffer(std::vector <Vertex> &vecVertices, std::vector <uint32_t> &vecIndices);
 		
 		void uniformMaterial(const Program &prog);
@@ -55,6 +60,7 @@ class Mesh{
 		Mesh(const Vertex *pointTab,const int sizePointTab, const uint32_t *pointOrderTab, const int sizeOrder);
 		Mesh(const std::vector<Vertex> &pointVec, const std::vector <uint32_t> &pointOrderVec);
 		*/
+		Mesh(const Mesh &mesh);
 		// ---------------------
 		
 		// Destructeur
@@ -62,11 +68,19 @@ class Mesh{
 		// ---------------------
 		
 		// Get et Set
+		glm::vec3 getPosCenter() const;
+		
+		glm::vec3 getDimenssion() const;
+		
 		int getNbVertices() const;
 		
 		std::vector <Vertex> getVertices() const;
 		
 		std::vector <uint32_t> getIndices() const;
+		
+		bool getHasMaterial() const;
+		
+		Material getMaterial() const;
 		
 		void setTextures(const std::vector<Texture> &tex);
 		// ---------------------

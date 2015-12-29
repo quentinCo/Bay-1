@@ -7,10 +7,10 @@ using namespace glm;
 Mesh::Mesh(){}
 
 Mesh::Mesh(const aiMesh *mesh, const aiMaterial *mat): nbVertices(mesh->mNumVertices), hasMaterial(false), hasTexture(false){
-	/*
-	std::vector <Vertex> vecVertices;
-	std::vector <uint32_t> vecIndice;
-	*/
+	
+	vec3 posMax;
+	vec3 posMin;
+	
 	bool normal = mesh->HasNormals();
 
 	if(mat){
@@ -18,12 +18,17 @@ Mesh::Mesh(const aiMesh *mesh, const aiMaterial *mat): nbVertices(mesh->mNumVert
 		material = Material(mat);
 	}
 	
-	if(mesh->mTextureCoords[0]){
-		hasTexture = true;
-	}
+	if(mesh->mTextureCoords[0]){ hasTexture = true; }
 
-	for(int i = 0; i <nbVertices; i++){
+	for(int i = 0; i <nbVertices; i++){	
 		vec3 pos = vec3(mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z);
+			
+		if(i == 0){
+			posMax = pos;
+			posMin = pos;
+		}
+		else saveMinMaxPosition(posMax, posMin, pos);
+			
 			
 		vec3 norm = vec3(0,0,1);
 		if(normal) norm = vec3(mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z);
@@ -42,7 +47,9 @@ Mesh::Mesh(const aiMesh *mesh, const aiMaterial *mat): nbVertices(mesh->mNumVert
 		}
 	}
 	
-	
+	positionCenter = (posMax + posMin) * 0.5f;
+	dimenssion = vec3(abs(posMax.x - posMin.x), abs(posMax.y - posMin.y), abs(posMax.z - posMin.y));
+
 	initBuffer(vecVertices, vecIndice);
 }
 
@@ -69,6 +76,12 @@ Mesh::Mesh(const std::vector<Vertex> &pointVec, const std::vector <uint32_t> &po
 	initBuffer(vecVertices, vecIndice);
 }
 */
+Mesh::Mesh(const Mesh &mesh)
+:positionCenter(mesh.positionCenter), dimenssion(mesh.dimenssion), nbVertices(mesh.nbVertices),
+vbo(mesh.vbo), vecVertices(mesh.vecVertices), ibo(mesh.ibo), vecIndice(mesh.vecIndice), vao(mesh.vao),
+material(mesh.material), hasMaterial(mesh.hasMaterial), textures(mesh.textures), hasTexture(mesh.hasTexture)
+{}
+
 // ---------------------
 	
 // Destructeur
@@ -76,9 +89,17 @@ Mesh::~Mesh(){}
 // ---------------------
 
 // Get
+glm::vec3 Mesh::getPosCenter() const{ return positionCenter; }
+
+glm::vec3 Mesh::getDimenssion() const{ return dimenssion; }
+
 int Mesh::getNbVertices() const{ return nbVertices; }
 
 std::vector <Vertex> Mesh::getVertices() const{ return vecVertices; }
+
+bool Mesh::getHasMaterial() const { return hasMaterial; }
+
+Material Mesh::getMaterial() const { return material; }
 
 std::vector <uint32_t> Mesh::getIndices() const{ return vecIndice; }
 
@@ -89,6 +110,19 @@ void Mesh::setTextures(const std::vector<Texture> &tex){
 	textures = tex;
 }
 
+// ---------------------
+
+// Sauvegarde des x, y et z min pour le calcul des dimensions et centre du mesh.
+void Mesh::saveMinMaxPosition(vec3 &posM, vec3 &posm,const vec3 &pos){
+	if(posM.x < pos.x) posM.x = pos.x;
+	else if(posm.x > pos.x) posm.x = pos.x;
+	
+	if(posM.y < pos.y) posM.y = pos.y;
+	else if(posm.y > pos.y) posm.y = pos.y;
+	
+	if(posM.z < pos.z) posM.z = pos.z;
+	else if(posm.z > pos.z) posm.z = pos.z;
+}
 // ---------------------
 
 // Initialisation des buffers
@@ -171,6 +205,8 @@ void Mesh::unbindTextures(){
 std::ostream & operator<< (std::ostream & os, const Mesh &mesh){
 
 	os << "Affichage des informations du Mesh : " << std::endl;
+	os << "Position Center : " << mesh.getPosCenter() << "\n";
+	os << "Dimenssion : " << mesh.getDimenssion() << "\n";
 	os << "vecVertices :\n";
 	for(auto it : mesh.getVertices()) os << it;
 	os << "------\n";

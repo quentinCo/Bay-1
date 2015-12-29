@@ -19,12 +19,13 @@ class Buffers{
 		// Constructeur
 		Buffers(){}
 	
-		Buffers(const GLenum t,const std::vector<T> &d):target(t), size(d.size())/*, data(d)*/{
+		Buffers(const GLenum t,const std::vector<T> &d):target(t), size(d.size()){
 			glGenBuffers(1,&buffer);
 			glBindBuffer(target, buffer);
 			glBufferData(target, d.size()*sizeof(T), d.data(), GL_STATIC_DRAW);
 			glBindBuffer(target, 0);
 		}
+		Buffers(const Buffers<T> &b):buffer(b.buffer), target(b.target), size(b.size){}
 		// ---------------------
 		
 		// Destructeur

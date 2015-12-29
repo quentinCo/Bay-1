@@ -93,7 +93,7 @@ int main(int argc, char** argv) {
 	
 // Variable utiles pour la Camera
 	
-	glm::mat4 ProjMatrix = glm::perspective(glm::radians(70.f),1.f,0.1f,100.f);
+	//glm::mat4 ProjMatrix = glm::perspective(glm::radians(70.f),1.f,0.1f,100.f);
 // ------------------------------
 
 
@@ -161,6 +161,14 @@ std::cout << "MEMOIR GPU => cur_avail_mem_kb / total_mem_kb : " << cur_avail_mem
 		// ----------------------
 
 		// Update the display
+		/*
+		GLubyte *data = malloc(3);
+		void glReadPixels(0, 0, 1, 1, GL_RGB, GL_FLOAT,  data);
+		*/
+		/*
+		GLfloat array[3];
+		glReadPixels(30,30,1,1,GL_RGB,GL_FLOAT, array);
+		*/
 		windowManager.swapBuffers();
 		/*
 glGetIntegerv(GL_GPU_MEM_INFO_TOTAL_AVAILABLE_MEM_NVX, 

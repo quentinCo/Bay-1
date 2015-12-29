@@ -14,12 +14,12 @@ class VAO{
 
 	private :
 		GLuint vao;
-		Buffers<uint32_t> *ibo;
 	
 	public :
 		// Constructeurs
 		VAO();
 		VAO(Buffers<Vertex> &vbo, Buffers<uint32_t> &ibo);
+		VAO(const VAO &v);
 		// ---------------------
 		
 		// Destructeur

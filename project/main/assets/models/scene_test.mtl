@@ -1,5 +1,5 @@
 # Blender MTL File: 'test_scene.blend'
-# Material Count: 16
+# Material Count: 19
 
 newmtl Arm
 Ns 74.509804
@@ -73,6 +73,26 @@ illum 2
 map_Kd nanosuit/leg_dif.png
 map_Bump nanosuit/leg_showroom_ddn.png
 
+newmtl Material
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.000000 0.001936
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+
+newmtl Material.001
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.005487 0.006464 0.640000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+
 newmtl Material.001_tina.tga.002
 Ns 86.274510
 Ka 0.000000 0.000000 0.000000
@@ -84,6 +104,16 @@ d 1.000000
 illum 2
 map_Kd borderland/Tiny_Tina/Tex/tina.tga
 map_Bump borderland/Tiny_Tina/Tex/tina_bump.tga
+
+newmtl Material.002
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.011579 0.640000 0.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
 
 newmtl Material.002_mask.tga.002
 Ns 86.274510
