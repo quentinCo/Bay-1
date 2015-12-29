@@ -2,8 +2,10 @@
 
 using namespace glm;
 
-int EllipsoidLight::numLights = 0;
-int DirectionalLight::numLights = 0;
+unsigned int EllipsoidLight::numLights = 0;
+unsigned int DirectionalLight::numLights = 0;
+unsigned int EllipsoidLight::bindingIndex = 1;
+unsigned int DirectionalLight::bindingIndex = 2;
 std::string EllipsoidLight::uniformName = "uEllipsoidLigths";
 std::string DirectionalLight::uniformName = "uDirectionalLights";
 

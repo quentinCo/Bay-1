@@ -221,7 +221,7 @@ void Scene::drawScene(const glm::mat4 &globalMVMatrix){
 		//Binding des lumières----------------------------------
 		EllipsoidLight lights[3]; // Déclaration du tableau des lumières ellipsoïdales, à la place du 3, tu devras mettre le bon nombre de lumières, on en a 100 au maximum
 		
-		for(int i = 0; i < EllipsoidLight::numLights; ++i){
+		for(unsigned int i = 0; i < EllipsoidLight::numLights; ++i){
 			lights[i] = EllipsoidLight(
 				glm::vec4(0, 1, 0, 1), // Position du centre de la lumière, la dernière valeur doit rester à 1 vu que c'est un point
 				glm::vec4(1, 1, 1, 0), // Coefficients d'étirement, tu la définiras avec ta hitbox, le x devra être la moitié de la largeur, le y la moitié de la hauteur et le z la moitié de la profondeur et dernière valeur à 0
@@ -232,9 +232,9 @@ void Scene::drawScene(const glm::mat4 &globalMVMatrix){
 		bindLights(it->first, lights); // Ici on envoie les lumières aux programmes de shader
 		
 		
-		DirectionalLight dirlights[0]; // Déclaration du tableau des lumières directionnelles, à la place du 0, tu devras mettre le bon nombre de lumières, on en a 100 au maximum
+		DirectionalLight dirlights[1]; // Déclaration du tableau des lumières directionnelles, à la place du 1, tu devras mettre le bon nombre de lumières, on en a 100 au maximum
 		
-		for(int i = 0; i < DirectionalLight::numLights; ++i){
+		for(unsigned int i = 0; i < DirectionalLight::numLights; ++i){
 			dirlights[i] = DirectionalLight(
 				glm::vec4(1, 1, 1, 0), // Direction de la lumière, la dernière valeur doit rester à 0 vu que c'est un point
 				glm::vec4(1, 1, 1, 0) // Intensité lumineuse, RGB et dernière valeur à 0 

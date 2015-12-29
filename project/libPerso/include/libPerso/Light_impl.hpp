@@ -10,7 +10,7 @@ void bindLights(const Program &prog, const lightT *lights){
 	//std::cout << "Taille " << lightT::numLights * sizeof(float)*3*4 << " Taille " << lightT::numLights * sizeof(lightT) << std::endl; //Debug line
 	
 	// On obtient l'emplacement du bloc uniforme
-    GLuint Lights_binding = lightT::numLights;
+    GLuint Lights_binding = lightT::bindingIndex;
     GLint uniform_block_index = glGetUniformBlockIndex(prog.getGLId(), lightT::uniformName.c_str());
     // On bind le bloc
     glUniformBlockBinding(prog.getGLId(), uniform_block_index, Lights_binding);

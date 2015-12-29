@@ -13,7 +13,8 @@
 #include <glimac/glm.hpp>
 
 struct EllipsoidLight{
-	static int numLights;
+	static unsigned int numLights;
+	static unsigned int bindingIndex;
 	static std::string uniformName;
 	
 	glm::vec4 position;
@@ -33,7 +34,8 @@ struct EllipsoidLight{
 };
 
 struct DirectionalLight{
-	static int numLights;
+	static unsigned int numLights;
+	static unsigned int bindingIndex;
 	static std::string uniformName;
 	
 	glm::vec4 direction;

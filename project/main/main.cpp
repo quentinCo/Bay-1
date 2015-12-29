@@ -71,6 +71,7 @@ int main(int argc, char** argv) {
 
 	// Verif existance fichier
 	std::string pathFile = applicationPath.dirPath()+ "assets/models/scene_test.obj";
+	//std::string pathFile = applicationPath.dirPath()+ "assets/models/Cavern.obj";
 	//std::string pathFile = applicationPath.dirPath()+ "assets/models/nanosuit/nanosuit.obj";
 	//std::string pathFile = applicationPath.dirPath()+ "assets/models/borderland/Lilith/Lilith.obj";
 	//std::string pathFile = applicationPath.dirPath()+ "assets/models/borderland/Maya_obj/maya_3.obj";
