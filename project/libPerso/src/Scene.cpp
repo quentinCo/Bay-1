@@ -300,12 +300,15 @@ void Scene::initUniformValue(const Program &program, const glm::mat4 &globalMVMa
 
 void Scene::initUniformLightTabs(){
 	//EllipsoidLight::numLights = vectorLights.size();
+	cout << EllipsoidLight::numLights << endl;
 	lights = new EllipsoidLight[EllipsoidLight::numLights];
 	for(unsigned int i = 0; i < vectorLights.size(); i++){
 		lights[i] = vectorLights[i];
 		cout << "----------\n" << endl;
 		cout << lights[i] << endl;
 	}
+	vectorLights.clear();
+	cout << EllipsoidLight::numLights << endl;
 	
 	//DirectionalLight::numLights = vectorDirLights.size();
 	dirLights = new DirectionalLight[DirectionalLight::numLights];

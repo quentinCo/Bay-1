@@ -48,7 +48,7 @@ Mesh::Mesh(const aiMesh *mesh, const aiMaterial *mat): nbVertices(mesh->mNumVert
 	}
 	
 	positionCenter = (posMax + posMin) * 0.5f;
-	dimenssion = vec3(abs(posMax.x - posMin.x), abs(posMax.y - posMin.y), abs(posMax.z - posMin.y));
+	dimension = vec3(abs(posMax.x - posMin.x), abs(posMax.y - posMin.y), abs(posMax.z - posMin.z));
 
 	initBuffer(vecVertices, vecIndice);
 }
@@ -77,7 +77,7 @@ Mesh::Mesh(const std::vector<Vertex> &pointVec, const std::vector <uint32_t> &po
 }
 */
 Mesh::Mesh(const Mesh &mesh)
-:positionCenter(mesh.positionCenter), dimenssion(mesh.dimenssion), nbVertices(mesh.nbVertices),
+:positionCenter(mesh.positionCenter), dimension(mesh.dimension), nbVertices(mesh.nbVertices),
 vbo(mesh.vbo), vecVertices(mesh.vecVertices), ibo(mesh.ibo), vecIndice(mesh.vecIndice), vao(mesh.vao),
 material(mesh.material), hasMaterial(mesh.hasMaterial), textures(mesh.textures), hasTexture(mesh.hasTexture)
 {}
@@ -91,7 +91,7 @@ Mesh::~Mesh(){}
 // Get
 glm::vec3 Mesh::getPosCenter() const{ return positionCenter; }
 
-glm::vec3 Mesh::getDimenssion() const{ return dimenssion; }
+glm::vec3 Mesh::getDimension() const{ return dimension; }
 
 int Mesh::getNbVertices() const{ return nbVertices; }
 
@@ -156,7 +156,6 @@ void Mesh::uniformMaterial(const Program &prog){
 	glUniform3fv(glGetUniformLocation(prog.getGLId(), "uMaterial.ambientColor"),1, value_ptr(material.ambientColor));
 	glUniform3fv(glGetUniformLocation(prog.getGLId(), "uMaterial.specularColor"),1, value_ptr(material.specularColor));
 	glUniform3fv(glGetUniformLocation(prog.getGLId(), "uMaterial.emissionColor"),1, value_ptr(material.emissionColor));
-	
 	glUniform1f(glGetUniformLocation(prog.getGLId(), "uMaterial.shininess"), material.shininess);
 	glUniform1f(glGetUniformLocation(prog.getGLId(), "uMaterial.opacity"), material.opacity);
 }
@@ -206,7 +205,7 @@ std::ostream & operator<< (std::ostream & os, const Mesh &mesh){
 
 	os << "Affichage des informations du Mesh : " << std::endl;
 	os << "Position Center : " << mesh.getPosCenter() << "\n";
-	os << "Dimenssion : " << mesh.getDimenssion() << "\n";
+	os << "Dimension : " << mesh.getDimension() << "\n";
 	os << "vecVertices :\n";
 	for(auto it : mesh.getVertices()) os << it;
 	os << "------\n";
