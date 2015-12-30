@@ -1,4 +1,4 @@
-#version 440
+#version 330
 
 #define MAX_LIGHTS 100
 
@@ -49,11 +49,11 @@ in vec2 vCoordsTex;
 out vec3 fFragColor;
 
 vec3 blinnPhong(){
-	vec3 wi;
-	float d;
-	vec3 Li;
+	vec3 wi = vec3(0, 0, 0);
+	float d = 0;
+	vec3 Li = vec3(0, 0, 0);
 	vec3 wo = normalize(-vPosition_vs);
-	vec3 N;
+	vec3 N = vec3(0, 0, 0);
 	vec3 normalMapTexel = texture(uTexture_normal1, vCoordsTex).xyz;
 	vec3 diffuseMapTexel = texture(uTexture_diffuse1, vCoordsTex).xyz;
 	vec3 specularMapTexel = texture(uTexture_specular1, vCoordsTex).xyz;
@@ -69,11 +69,11 @@ vec3 blinnPhong(){
 		N = vNormal_vs;
 	}
 		
-	vec3 halfVector;
+	vec3 halfVector = vec3(0, 0, 0);
 	
-	vec3 traceVec;
+	vec3 traceVec = vec3(0, 0, 0);
 	
-	vec3 finalColor;
+	vec3 finalColor = vec3(0, 0, 0);
 	
 	for(int i = 0; i < uEllipsoidLigths_nb ; ++i){
 		MVLightPosition = (uMVMatrix * eLights[i].position).xyz;

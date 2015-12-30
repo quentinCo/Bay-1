@@ -29,8 +29,6 @@
 #include <libPerso/Player.hpp>
 #include <libPerso/Program.hpp>
 
-#define GL_GPU_MEM_INFO_TOTAL_AVAILABLE_MEM_NVX 0x9048
-#define GL_GPU_MEM_INFO_CURRENT_AVAILABLE_MEM_NVX 0x9049
 
 
 using namespace glimac;

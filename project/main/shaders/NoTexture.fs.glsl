@@ -46,19 +46,19 @@ in vec2 vCoordsTex;
 out vec3 fFragColor;
 
 vec3 blinnPhong(){
-	vec3 wi;
-	float d;
-	vec3 Li;
+	vec3 wi = vec3(0, 0, 0);
+	float d = 0;
+	vec3 Li = vec3(0, 0, 0);
 	vec3 wo = normalize(-vPosition_vs);
 	vec3 N = vNormal_vs;
-	vec3 halfVector;
+	vec3 halfVector = vec3(0, 0, 0);
 	
-	vec3 traceVec;
+	vec3 traceVec = vec3(0, 0, 0);
 	
-	vec3 MVLightPosition ; //Position de la lumière dans le repère caméra
+	vec3 MVLightPosition = vec3(0, 0, 0); //Position de la lumière dans le repère caméra
 
 	
-	vec3 finalColor;
+	vec3 finalColor = vec3(0, 0, 0);
 	
 	for(int i = 0; i < uEllipsoidLigths_nb ; ++i){
 		MVLightPosition = (uMVMatrix * eLights[i].position).xyz;

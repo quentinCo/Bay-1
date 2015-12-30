@@ -187,7 +187,7 @@ void Mesh::bindTextures( const Program &prog ){
 		else if(name == "Texture_opacity") ss << opacityNr++; 
 		
 		number = ss.str(); 
-		//std::cout << "Bind : " << i << std::endl;
+		
 		// init variable uniform correspondant à la texture
 		glUniform1i(glGetUniformLocation(prog.getGLId(), ("u" + name + number).c_str()), i);
 		
