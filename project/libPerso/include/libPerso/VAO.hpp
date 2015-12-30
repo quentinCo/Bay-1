@@ -14,6 +14,7 @@ class VAO{
 
 	private :
 		GLuint vao;
+		static std::map<GLuint, unsigned int> occurenceCounter;
 	
 	public :
 		// Constructeurs
@@ -21,6 +22,8 @@ class VAO{
 		VAO(Buffers<Vertex> &vbo, Buffers<uint32_t> &ibo);
 		VAO(const VAO &v);
 		// ---------------------
+		
+		VAO& operator =(VAO&& rvalue);
 		
 		// Destructeur
 		~VAO();

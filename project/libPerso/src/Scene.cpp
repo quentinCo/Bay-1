@@ -2,16 +2,33 @@
 
 using namespace std;
 
+std::map<GLuint, unsigned int> Scene::occurenceCounter;
+unsigned int Scene::occurence = 0;
+
 // Construteurs
 Scene::Scene(){}
 
-Scene::Scene(string path){
+Scene::Scene(string path): id(++occurence){
+	occurenceCounter[id]++;
 	loadScene(path);
+}
+
+Scene::Scene(const Scene &s):
+textures_loaded(s.textures_loaded), mapMeshByShaders(s.mapMeshByShaders), vectorLights(s.vectorLights),
+lights(s.lights), vectorDirLights(s.vectorDirLights), dirLights(s.dirLights), id(s.id)
+{
+	occurenceCounter[id]++;
 }
 // ---------------------
 
 // Destructeur
-Scene::~Scene(){}
+Scene::~Scene(){
+	occurenceCounter[id]--;
+	if(occurenceCounter[id] == 0){
+		if(lights != NULL) delete lights;
+		if(dirLights != NULL) delete dirLights;
+	}
+}
 // ---------------------
 
 // Créer la scéne à partir d'un fichier
@@ -168,7 +185,7 @@ vector<Texture> Scene::loadMaterialTextures(const aiMaterial* mat, const aiTextu
 
 // Gestion map shader
 	// Recupération des noms des shaders pour chaque mesh
-void Scene::addToMapShadersName(map<array<string, 2>,vector<Mesh>> &mapNameShader, const aiMaterial *mat, const Mesh mesh){
+void Scene::addToMapShadersName(map<array<string, 2>,vector<Mesh>> &mapNameShader, const aiMaterial *mat, const Mesh &mesh){
 	cout << "Find Shaders :" << endl;
 	if(mat){
 		aiString aNameMat;

@@ -76,12 +76,11 @@ Mesh::Mesh(const std::vector<Vertex> &pointVec, const std::vector <uint32_t> &po
 	initBuffer(vecVertices, vecIndice);
 }
 */
-Mesh::Mesh(const Mesh &mesh)
-:positionCenter(mesh.positionCenter), dimenssion(mesh.dimenssion), nbVertices(mesh.nbVertices),
+
+Mesh::Mesh(const Mesh &mesh):positionCenter(mesh.positionCenter), dimenssion(mesh.dimenssion), nbVertices(mesh.nbVertices),
 vbo(mesh.vbo), vecVertices(mesh.vecVertices), ibo(mesh.ibo), vecIndice(mesh.vecIndice), vao(mesh.vao),
 material(mesh.material), hasMaterial(mesh.hasMaterial), textures(mesh.textures), hasTexture(mesh.hasTexture)
 {}
-
 // ---------------------
 	
 // Destructeur

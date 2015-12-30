@@ -1,5 +1,7 @@
 #include <libPerso/VAO.hpp>
 
+std::map<GLuint, unsigned int> VAO::occurenceCounter;
+
 // Constructeurs
 VAO::VAO(){};
 
@@ -23,13 +25,29 @@ VAO::VAO(Buffers<Vertex> &vbo, Buffers<uint32_t> &ibo){
 	ibo.unbind();
 	glBindVertexArray(0);
 	
+	occurenceCounter[vao]++;
+	
 }
 
-VAO::VAO(const VAO &v):vao(v.vao){}
+VAO::VAO(const VAO &v):vao(v.vao){ occurenceCounter[vao]++; }
+
+VAO& VAO::operator =(VAO&& rvalue) {
+	vao = rvalue.vao;
+	
+	rvalue.vao = 0; // Plus de buffer
+	/*
+	std::cout << "this.vao = " << vao << std::endl;
+	std::cout << "rvalue.vao =" << rvalue.vao << std::endl;
+	*/
+	return *this;
+}
 // ---------------------
 
 // Destructeur
-VAO::~VAO(){}
+VAO::~VAO(){
+	occurenceCounter[vao]--;
+	if(occurenceCounter[vao] == 0) glDeleteVertexArrays(1,&vao);
+}
 // ---------------------
 
 // Bind et unbind

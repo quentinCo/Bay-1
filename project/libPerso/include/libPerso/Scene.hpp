@@ -31,6 +31,10 @@ class Scene
 		std::vector <DirectionalLight> vectorDirLights;
 		DirectionalLight *dirLights;
 		
+		// Evite la suppression accidentel des variables allouées avec la destruction de copie.
+		static std::map<unsigned int, unsigned int> occurenceCounter;
+		static unsigned int occurence;
+		unsigned int id;
 		
 		// FONCTIONS
 		// Créer une scéne à partir d'un fichier
@@ -51,7 +55,7 @@ class Scene
 		// ---------------------
 		
 		// Gestion du map shader
-		void addToMapShadersName(std::map<std::array<std::string, 2>,std::vector<Mesh>> &mapNameShader, const aiMaterial *mat, const Mesh mesh);
+		void addToMapShadersName(std::map<std::array<std::string, 2>,std::vector<Mesh>> &mapNameShader, const aiMaterial *mat, const Mesh &mesh);
 		std::string recoverNameShader (const std::string &nameMat, const std::string &begin, char end);
 		void verifFileShaders (std::string &pathShader, const std::string &fileExtention);
 		// ---------------------
@@ -64,6 +68,7 @@ class Scene
 	public:
 		Scene();
 		Scene(std::string path);
+		Scene(const Scene &s);
 		
 		~Scene();
 		
