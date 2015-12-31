@@ -53,40 +53,44 @@ in vec2 vCoordsTex;
 out vec3 fFragColor;
 
 vec3 blinnPhong(){
-	vec3 wi;
-	float d;
-	vec3 Li;
+	vec3 wi = vec3(0, 0, 0);
+	float d = 0;
+	vec3 Li = vec3(0, 0, 0);
 	vec3 wo = normalize(-vPosition_vs);
 	vec3 N = mat3(vNormal_vs, vec3(0), vec3(0)) * texture(uTexture_normal1, vCoordsTex).xyz;
-	vec3 halfVector;
+	vec3 halfVector = vec3(0, 0, 0);
+	vec3 diffuseMapTexel = texture(uTexture_diffuse1, vCoordsTex).xyz;
 	
-	vec3 traceVec;
+	vec3 MVLightPosition = vec3(0, 0, 0); //Position de la lumière dans le repère caméra
 	
-	vec3 finalColor;
+	vec3 traceVec = vec3(0, 0, 0);
+	
+	vec3 finalColor = vec3(0, 0, 0);
 	
 	for(int i = 0; i < uEllipsoidLigths_nb ; ++i){
-		wi = normalize((uMVMatrix * eLights[i].position).xyz - vPosition_vs);
+		MVLightPosition = (uMVMatrix * eLights[i].position).xyz;
+		
+		wi = normalize(MVLightPosition - vPosition_vs);
 		
 		traceVec = normalize((inverse(uMVMatrix) * vec4(vPosition_vs, 1) - eLights[i].position).xyz);  //Vecteur entre la lumière et le fragment dans le repère absolu du monde
 		
-		d = distance((uMVMatrix * eLights[i].position).xyz, vPosition_vs) * length(vec3(traceVec.x/eLights[i].halfAxes.x, traceVec.y/ eLights[i].halfAxes.y, traceVec.z/eLights[i].halfAxes.z)); //On étire la lumière sur les trois axes x,y et z
+		d = distance(MVLightPosition, vPosition_vs) * length(vec3(traceVec.x/eLights[i].halfAxes.x, traceVec.y/ eLights[i].halfAxes.y, traceVec.z/eLights[i].halfAxes.z)); //On étire la lumière sur les trois axes x,y et z
 		
 		Li = eLights[i].lightIntensity.xyz / (d*d);
 		
 		halfVector = (wo + wi) * 0.5;
 		
-		finalColor += Li * (texture(uTexture_diffuse1, vCoordsTex).xyz * max(0,dot(wi, N)) + texture(uTexture_specular1, vCoordsTex).xyz * pow(max(0,dot(halfVector, N)), uMaterial.shininess));
+		finalColor += Li * (diffuseMapTexel * max(0,dot(wi, N)) + texture(uTexture_specular1, vCoordsTex).xyz * pow(max(0,dot(halfVector, N)), uMaterial.shininess));
 	}
 	
 	for(int i = 0; i < uDirectionalLights_nb ; ++i){
 		wi = normalize((uMVMatrix * dLights[i].direction).xyz);
 		Li = dLights[i].lightIntensity.xyz;
-		wo = normalize(-vPosition_vs);
 		halfVector = (wo + wi) * 0.5;
 		
-		finalColor += Li * (texture(uTexture_diffuse1, vCoordsTex).xyz * max(0,dot(wi, N)) + texture(uTexture_specular1, vCoordsTex).xyz * pow(max(0,dot(halfVector, N)), uMaterial.shininess));
+		finalColor += Li * (diffuseMapTexel * max(0,dot(wi, N)) + texture(uTexture_specular1, vCoordsTex).xyz * pow(max(0,dot(halfVector, N)), uMaterial.shininess));
 	}
-
+	
 	return max(finalColor, uMaterial.ambientColor) + uMaterial.emissionColor;
 }
 

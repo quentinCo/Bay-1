@@ -4,8 +4,11 @@
 // Binding des lumières et envoie au programme
 template<typename lightT>
 void bindLights(const Program &prog, const lightT *lights){
-	//std::cout << "Il y a combien de lumières Bébert ? " << lightT::numLights << std::endl; //Debug line
-	//std::cout << "Il y a combien de lumières Bébert ? " << lights[0].position << std::endl; //Debug line
+	/*for(int i = 0; i < lightT::numLights; ++i){
+		std::cout << "Lumière " << i << std::endl; //Debug line
+		std::cout << "Axes ? " << lights[i].halfAxes << std::endl; //Debug line
+		std::cout << "Position ? " << lights[i].position << std::endl; //Debug line
+	}*/
 	//std::cout << "uniform name ? " << (lightT::uniformName + "_nb").c_str() << std::endl; //Debug line
 	//std::cout << "Taille " << lightT::numLights * sizeof(float)*3*4 << " Taille " << lightT::numLights * sizeof(lightT) << std::endl; //Debug line
 	

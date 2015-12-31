@@ -2,6 +2,7 @@
 #include <iostream>
 
 #include <string>
+#include <map>
 
 #include <GL/glew.h>
 #include <glimac/Shader.hpp>
@@ -14,29 +15,24 @@ private:
 	
 	GLuint m_nGLId;
 	static std::string directory;
+	static std::map<GLuint, unsigned int> occurenceCounter;
 	
 public:
-	Program(): m_nGLId(glCreateProgram()) {}
+	Program();
 
-	Program(const Program &p):m_nGLId(p.m_nGLId){}
+	Program(const Program &p);
 
-	~Program() { glDeleteProgram(m_nGLId);}
+	~Program();
 
-	Program(Program&& rvalue): m_nGLId(rvalue.m_nGLId) { rvalue.m_nGLId = 0;}
+	Program(Program&& rvalue);
 
-	Program& operator =(Program&& rvalue) {
-		m_nGLId = rvalue.m_nGLId;
-		rvalue.m_nGLId = 0;
-		return *this;
-	}
+	Program& operator =(Program&& rvalue);
 	
-	bool operator <(const Program &rvalue)const{
-		return m_nGLId < rvalue.m_nGLId;
-	}
+	bool operator <(const Program &rvalue)const;
 
-	GLuint getGLId() const { return m_nGLId; }
+	GLuint getGLId() const ;
 
-	void attachShader(const glimac::Shader& shader) { glAttachShader(m_nGLId, shader.getGLId()); }
+	void attachShader(const glimac::Shader& shader);
 
 	bool link();
 
@@ -45,7 +41,7 @@ public:
 	static glimac::FilePath getShadersDirectory();
 	static void setShadersDirectory(glimac::FilePath dir);
 
-	void use() const{ glUseProgram(m_nGLId);}
+	void use() const;
 };
 
 // Build a GLSL program from source code

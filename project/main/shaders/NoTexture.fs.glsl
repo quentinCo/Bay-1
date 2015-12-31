@@ -46,41 +46,45 @@ in vec2 vCoordsTex;
 out vec3 fFragColor;
 
 vec3 blinnPhong(){
-	vec3 wi;
-	float d;
-	vec3 Li;
+	vec3 wi = vec3(0, 0, 0);
+	float d = 0;
+	vec3 Li = vec3(0, 0, 0);
 	vec3 wo = normalize(-vPosition_vs);
 	vec3 N = vNormal_vs;
-	vec3 halfVector;
+	vec3 halfVector = vec3(0, 0, 0);
 	
-	vec3 traceVec;
+	vec3 traceVec = vec3(0, 0, 0);
 	
-	vec3 finalColor;
+	vec3 MVLightPosition = vec3(0, 0, 0); //Position de la lumière dans le repère caméra
+
 	
-	for(int i = 0; i < 3 ; ++i){
-		wi = normalize((uMVMatrix * eLights[i].position).xyz - vPosition_vs);
+	vec3 finalColor = vec3(0, 0, 0);
+	
+	for(int i = 0; i < uEllipsoidLigths_nb ; ++i){
+		MVLightPosition = (uMVMatrix * eLights[i].position).xyz;
 		
-		//traceVec = normalize((inverse(uMVMatrix) * vec4(vPosition_vs, 1) - eLights[i].position).xyz);  //Vecteur entre la lumière et le fragment dans le repère absolu du monde
+		wi = normalize(MVLightPosition - vPosition_vs);
 		
-		//d = distance((uMVMatrix * eLights[i].position).xyz, vPosition_vs) * length(vec3(traceVec.x/eLights[i].halfAxes.x, traceVec.y/ eLights[i].halfAxes.y, traceVec.z/eLights[i].halfAxes.z)); //On étire la lumière sur les trois axes x,y et z
+		traceVec = normalize((inverse(uMVMatrix) * vec4(vPosition_vs, 1) - eLights[i].position).xyz);  //Vecteur entre la lumière et le fragment dans le repère absolu du monde
 		
-		//Li = eLights[i].lightIntensity.xyz / (d*d);
+		d = distance(MVLightPosition, vPosition_vs) * length(vec3(traceVec.x/eLights[i].halfAxes.x, traceVec.y/ eLights[i].halfAxes.y, traceVec.z/eLights[i].halfAxes.z)); //On étire la lumière sur les trois axes x,y et z
 		
-		//halfVector = (wo + wi) * 0.5;
+		Li = eLights[i].lightIntensity.xyz / (d*d);
 		
-		finalColor += wi ;
-	}
-	/*
-	for(int i = 0; i < uDirectionalLights_nb ; ++i){
-		wi = normalize((uMVMatrix * dLights[0].direction).xyz);
-		Li = dLights[0].lightIntensity.xyz;
-		wo = normalize(-vPosition_vs);
 		halfVector = (wo + wi) * 0.5;
 		
 		finalColor += Li * (uMaterial.diffuseColor * max(0,dot(wi, N)) + uMaterial.specularColor * pow(max(0,dot(halfVector, N)), uMaterial.shininess));
 	}
-	*/
-	return finalColor;
+	
+	for(int i = 0; i < uDirectionalLights_nb ; ++i){
+		wi = normalize((uMVMatrix * dLights[i].direction).xyz);
+		Li = dLights[0].lightIntensity.xyz;
+		halfVector = (wo + wi) * 0.5;
+		
+		finalColor += Li * (uMaterial.diffuseColor * max(0,dot(wi, N)) + uMaterial.specularColor * pow(max(0,dot(halfVector, N)), uMaterial.shininess));
+	}
+	
+	return max(finalColor, uMaterial.ambientColor) + uMaterial.emissionColor;
 }
 
 void main() {

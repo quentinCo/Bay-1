@@ -6,7 +6,7 @@ using namespace glm;
 Camera :: Camera() : m_Position(0,0,0), m_fPhi(M_PI), m_fTheta(0){
 	computeDirectionVectors();
 		
-	SDL_WM_GrabInput(SDL_GRAB_ON);
+	//SDL_WM_GrabInput(SDL_GRAB_ON);
 	SDL_ShowCursor(SDL_DISABLE);
 }
 // ---------------------

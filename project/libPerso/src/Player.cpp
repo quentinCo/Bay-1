@@ -14,6 +14,14 @@ Player :: Player(const vec3 &pos, const vec3 &frontVector, float speedMove, floa
 
 Player :: ~Player(){}
 
+void Player :: setFrontVector(const glm::vec3 &frontVector){
+	vec3 normalizeFront = normalize(frontVector);
+	float theta = asin(normalizeFront.y);
+
+	setTheta(theta);
+	setPhi(acos(normalizeFront.z / cos(theta)));
+}
+
 void Player :: playerRotate(const SDL_MouseMotionEvent &e){
 	// if présent pour évité la détection du placement du curseur au centre de la fenetre
 	if(mousePositionInit){

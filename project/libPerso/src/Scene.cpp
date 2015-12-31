@@ -8,18 +8,46 @@ unsigned int Scene::occurence = 0;
 // Construteurs
 Scene::Scene(){}
 
-Scene::Scene(string path): id(++occurence){
+Scene::Scene(const string path, const string next[]):id(++occurence){
+	for(int i = 0; i < 2; i++){
+		nextSites[i] = next[i];
+	}
 	occurenceCounter[id]++;
 	loadScene(path);
 }
 
 Scene::Scene(const Scene &s):
 textures_loaded(s.textures_loaded), mapMeshByShaders(s.mapMeshByShaders), vectorLights(s.vectorLights),
-lights(s.lights), vectorDirLights(s.vectorDirLights), dirLights(s.dirLights), id(s.id)
+lights(s.lights), vectorDirLights(s.vectorDirLights), dirLights(s.dirLights),cameraPosition(s.cameraPosition),
+cameraFront(s.cameraFront), id(s.id)
 {
+	for(int i = 0; i<2; i++) nextSites[i] = s.nextSites[i];
 	occurenceCounter[id]++;
 }
 // ---------------------
+
+Scene& Scene::operator =(Scene&& rvalue){
+	textures_loaded = rvalue.textures_loaded;
+	mapMeshByShaders = rvalue.mapMeshByShaders;
+	
+	vectorLights = rvalue.vectorLights;
+	lights = rvalue.lights;
+	
+	vectorDirLights = rvalue.vectorDirLights;
+	dirLights = rvalue.dirLights;
+	
+	cameraPosition = rvalue.cameraPosition;
+	cameraFront = rvalue.cameraFront;
+	
+	id = rvalue.id;
+
+	for(int i = 0; i<2; i++) nextSites[i] = rvalue.nextSites[i];
+
+	rvalue.lights = NULL;
+	rvalue.dirLights = NULL;
+
+	return *this;
+}
 
 // Destructeur
 Scene::~Scene(){
@@ -31,8 +59,17 @@ Scene::~Scene(){
 }
 // ---------------------
 
+glm::vec3 Scene::getCameraPosition() const{ return cameraPosition; }
+
+glm::vec3 Scene::getCameraFront() const{ return cameraFront; }
+
+string Scene::getNext(int i)const{ 
+	if(i < 2) return nextSites[i];
+	return "";
+}
+
 // Créer la scéne à partir d'un fichier
-int Scene::loadScene(string path){
+int Scene::loadScene(const string path){
 
 	Assimp::Importer aImporter;
 	const aiScene* aScene = aImporter.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenSmoothNormals);	
@@ -49,12 +86,16 @@ int Scene::loadScene(string path){
 
 	map< array<string, 2>, vector<Mesh>> mapNameShader;
 
+	cameraPosition = glm::vec3(0,0,0);
+	cameraFront = glm::vec3(0,0,-1);
+
+
 	processNode(aScene->mRootNode, aScene, mapNameShader);
 	
 	initUniformLightTabs();
 	
 	for(auto it : mapNameShader){
-	//	cout << "it.first[0] : " << it.first[0] << " --- it.first[1] : " << it.first[1] << endl;
+		//cout << "it.first[0] : " << it.first[0] << " --- it.first[1] : " << it.first[1] << endl;
 		mapMeshByShaders.insert(pair<Program, vector<Mesh>>(loadProgramShader(glimac::FilePath(it.first[0]),glimac::FilePath(it.first[1])), it.second));
 	}
 	
@@ -79,6 +120,16 @@ void Scene::processNode(const aiNode* aNode, const aiScene* aScene, map<array<st
 		else if(nameMesh.find("AloneLight") != string::npos){
 			cout << "AloneLight**********************************<" << endl;
 			vectorLights.push_back(EllipsoidLight(aMesh->mVertices[0]));
+		}
+		else if(nameMesh.find("Camera") != string::npos){
+			cout << "Camera<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<" << endl;
+			cameraPosition = glm::vec3(aMesh->mVertices[0].x, aMesh->mVertices[0].y, aMesh->mVertices[0].z);
+			cameraFront = glm::vec3(
+				aMesh->mVertices[1].x - aMesh->mVertices[0].x,
+				aMesh->mVertices[1].y - aMesh->mVertices[0].y,
+				aMesh->mVertices[1].z - aMesh->mVertices[0].z
+			);
+			std::cout << "CAMERA SCENE : " << cameraPosition << "\n\n" << cameraFront << std::endl;
 		}
 		else{
 			aiMaterial *mat;
@@ -268,7 +319,7 @@ void Scene::drawScene(const glm::mat4 &globalMVMatrix){
 		
 		initUniformValue(it->first, globalMVMatrix);
 		bindLights(it->first, lights);
-		//bindLights(it->first, dirLights);
+		bindLights(it->first, dirLights);
 		
 		for(auto mesh : it->second) mesh.drawMesh(it->first);
 		
@@ -304,6 +355,8 @@ void Scene::drawScene(const glm::mat4 &globalMVMatrix){
 	}
 }
 
+
+// Envoie des uniformes value.
 void Scene::initUniformValue(const Program &program, const glm::mat4 &globalMVMatrix){
 
 	//-----------------------------
@@ -317,12 +370,15 @@ void Scene::initUniformValue(const Program &program, const glm::mat4 &globalMVMa
 
 void Scene::initUniformLightTabs(){
 	//EllipsoidLight::numLights = vectorLights.size();
+	cout << EllipsoidLight::numLights << endl;
 	lights = new EllipsoidLight[EllipsoidLight::numLights];
 	for(unsigned int i = 0; i < vectorLights.size(); i++){
 		lights[i] = vectorLights[i];
 		cout << "----------\n" << endl;
 		cout << lights[i] << endl;
 	}
+	vectorLights.clear();
+	cout << EllipsoidLight::numLights << endl;
 	
 	//DirectionalLight::numLights = vectorDirLights.size();
 	dirLights = new DirectionalLight[DirectionalLight::numLights];
@@ -333,4 +389,5 @@ void Scene::initUniformLightTabs(){
 	}
 }
 // ---------------------
+
 

@@ -13,13 +13,14 @@ find_package(GLEW REQUIRED)
 # Pour gérer un bug a la fac, a supprimer sur machine perso:
 set(OPENGL_LIBRARIES /usr/lib/x86_64-linux-gnu/libGL.so)
 
-include_directories(${SDL_INCLUDE_DIR} ${OPENGL_INCLUDE_DIR} ${GLEW_INCLUDE_DIR} glimac/include third-party/include assimp/include gtest/include libPerso/include)
+include_directories(${SDL_INCLUDE_DIR} ${OPENGL_INCLUDE_DIR} ${GLEW_INCLUDE_DIR} glimac/include third-party/include assimp/include gtest/include rapidjson/include libPerso/include)
 
 set(ALL_LIBRARIES glimac assimp libPerso ${SDL_LIBRARY} ${OPENGL_LIBRARIES} ${GLEW_LIBRARY})
 
 add_subdirectory(glimac)
 add_subdirectory(assimp)
 add_subdirectory(gtest)
+add_subdirectory(rapidjson)
 add_subdirectory(libPerso)
 
 add_subdirectory(main)

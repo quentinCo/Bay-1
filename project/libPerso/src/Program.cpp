@@ -4,6 +4,43 @@
 using namespace glimac;
 
 std::string Program::directory = "/";
+std::map<GLuint, unsigned int> Program::occurenceCounter;
+
+Program::Program(): m_nGLId(glCreateProgram()) {
+	occurenceCounter[m_nGLId]++;
+}
+
+Program::Program(const Program &p):m_nGLId(p.m_nGLId){
+	occurenceCounter[m_nGLId]++;
+}
+
+Program::Program(Program&& rvalue): m_nGLId(rvalue.m_nGLId) {
+	rvalue.m_nGLId = 0;
+}
+
+Program::~Program() {
+	occurenceCounter[m_nGLId]--;
+	if(occurenceCounter[m_nGLId] == 0) glDeleteProgram(m_nGLId);
+}
+
+Program& Program::operator =(Program&& rvalue) {
+	m_nGLId = rvalue.m_nGLId;
+	rvalue.m_nGLId = 0;
+	return *this;
+}
+
+bool Program::operator <(const Program &rvalue)const{
+	return m_nGLId < rvalue.m_nGLId;
+}
+
+GLuint Program::getGLId() const {
+	return m_nGLId;
+}
+
+void Program::attachShader(const glimac::Shader& shader) {
+	glAttachShader(m_nGLId, shader.getGLId());
+}
+
 
 bool Program::link() {
 	glLinkProgram(m_nGLId);
@@ -24,6 +61,10 @@ const std::string Program::getInfoLog() const {
 
 glimac::FilePath Program::getShadersDirectory(){ return directory; }
 void Program::setShadersDirectory(FilePath dir){ directory = dir;}
+
+void Program::use() const{
+	glUseProgram(m_nGLId);
+}
 
 // Build a GLSL program from source code
 Program buildProgramShader(const GLchar* vsSrc, const GLchar* fsSrc) {

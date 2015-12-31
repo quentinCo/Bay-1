@@ -23,6 +23,8 @@ class Player: public Camera{
 		);
 		
 		~Player();
+
+		void setFrontVector(const glm::vec3 &frontVector);
 		
 		void playerRotate(const SDL_MouseMotionEvent &e);
 		void playerMove(const Uint8 *keystate);

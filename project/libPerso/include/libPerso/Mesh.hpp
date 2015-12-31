@@ -24,7 +24,7 @@ class Mesh{
 	private :
 		// Variables
 		glm::vec3 positionCenter;
-		glm::vec3 dimenssion;
+		glm::vec3 dimension;
 		
 		int nbVertices;
 		
@@ -70,7 +70,7 @@ class Mesh{
 		// Get et Set
 		glm::vec3 getPosCenter() const;
 		
-		glm::vec3 getDimenssion() const;
+		glm::vec3 getDimension() const;
 		
 		int getNbVertices() const;
 		
