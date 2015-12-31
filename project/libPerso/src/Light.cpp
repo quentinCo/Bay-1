@@ -13,7 +13,7 @@ std::string DirectionalLight::uniformName = "uDirectionalLights";
 EllipsoidLight::EllipsoidLight(const vec4 &pos, const vec4 &halfA, const vec4 &lightI)
 : position(pos), halfAxes(halfA), lightIntensity(lightI)
 {
-	numLights++;
+	//numLights++;
 }
 
 EllipsoidLight::EllipsoidLight(const aiVector3D v):EllipsoidLight(vec4(v.x, v.y, v.z, 1)){}
@@ -25,13 +25,13 @@ EllipsoidLight::EllipsoidLight(const Mesh &mesh){
 	
 	if(mesh.getHasMaterial()) lightIntensity = vec4(mesh.getMaterial().diffuseColor*100.f, 0);
 	
-	numLights++;
+	//numLights++;
 }
 
 EllipsoidLight::EllipsoidLight(const EllipsoidLight &l)
 : position(l.position), halfAxes(l.halfAxes), lightIntensity(l.lightIntensity)
 {
-	numLights++;
+	//numLights++;
 }
 // ---------------------
 
@@ -51,7 +51,7 @@ std::ostream & operator<< (std::ostream & os, const EllipsoidLight &light){
 DirectionalLight::DirectionalLight(const vec4 &dir, const vec4 &lightI)
 : direction(dir), lightIntensity(lightI)
 {
-	numLights++;
+	//numLights++;
 }
 
 DirectionalLight::DirectionalLight(const aiMesh *mesh)
@@ -67,7 +67,7 @@ DirectionalLight::DirectionalLight(const aiMesh *mesh)
 DirectionalLight::DirectionalLight(const DirectionalLight &l)
 : direction(l.direction), lightIntensity(l.lightIntensity)
 {
-	numLights++;
+	//numLights++;
 }
 // ---------------------
 

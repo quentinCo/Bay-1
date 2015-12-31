@@ -12,14 +12,19 @@ Scene::Scene(const string path, const string next[]):id(++occurence){
 	for(int i = 0; i < 2; i++){
 		nextSites[i] = next[i];
 	}
+	
+	lightsBuffer = LightBuffer <EllipsoidLight> (GL_UNIFORM_BUFFER);
+	dirLightsBuffer = LightBuffer <DirectionalLight> (GL_UNIFORM_BUFFER);
+	
+	
 	occurenceCounter[id]++;
 	loadScene(path);
 }
 
 Scene::Scene(const Scene &s):
 textures_loaded(s.textures_loaded), mapMeshByShaders(s.mapMeshByShaders), vectorLights(s.vectorLights),
-lights(s.lights), vectorDirLights(s.vectorDirLights), dirLights(s.dirLights),cameraPosition(s.cameraPosition),
-cameraFront(s.cameraFront), id(s.id)
+lights(s.lights), lightsBuffer(s.lightsBuffer), vectorDirLights(s.vectorDirLights), dirLights(s.dirLights),dirLightsBuffer(s.dirLightsBuffer),
+cameraPosition(s.cameraPosition), cameraFront(s.cameraFront), id(s.id)
 {
 	for(int i = 0; i<2; i++) nextSites[i] = s.nextSites[i];
 	occurenceCounter[id]++;
@@ -32,9 +37,11 @@ Scene& Scene::operator =(Scene&& rvalue){
 	
 	vectorLights = rvalue.vectorLights;
 	lights = rvalue.lights;
+	lightsBuffer = rvalue.lightsBuffer;
 	
 	vectorDirLights = rvalue.vectorDirLights;
 	dirLights = rvalue.dirLights;
+	dirLightsBuffer = rvalue.dirLightsBuffer;
 	
 	cameraPosition = rvalue.cameraPosition;
 	cameraFront = rvalue.cameraFront;
@@ -318,10 +325,13 @@ void Scene::drawScene(const glm::mat4 &globalMVMatrix){
 			}*/
 		
 		initUniformValue(it->first, globalMVMatrix);
-		bindLights(it->first, lights);
-		bindLights(it->first, dirLights);
+		lightsBuffer.bindLights(it->first, lights);
+		dirLightsBuffer.bindLights(it->first, dirLights);
 		
 		for(auto mesh : it->second) mesh.drawMesh(it->first);
+		
+		lightsBuffer.unbindLights();
+		dirLightsBuffer.unbindLights();
 		
 		//Binding des lumières----------------------------------
 		/*
@@ -369,7 +379,7 @@ void Scene::initUniformValue(const Program &program, const glm::mat4 &globalMVMa
 }
 
 void Scene::initUniformLightTabs(){
-	//EllipsoidLight::numLights = vectorLights.size();
+	EllipsoidLight::numLights = vectorLights.size();
 	cout << EllipsoidLight::numLights << endl;
 	lights = new EllipsoidLight[EllipsoidLight::numLights];
 	for(unsigned int i = 0; i < vectorLights.size(); i++){
@@ -378,15 +388,17 @@ void Scene::initUniformLightTabs(){
 		cout << lights[i] << endl;
 	}
 	vectorLights.clear();
-	cout << EllipsoidLight::numLights << endl;
+	cout << "EllipsoidLight::numLights => " << EllipsoidLight::numLights << endl;
 	
-	//DirectionalLight::numLights = vectorDirLights.size();
+	DirectionalLight::numLights = vectorDirLights.size();
 	dirLights = new DirectionalLight[DirectionalLight::numLights];
 	for(unsigned int i = 0; i < vectorDirLights.size(); i++){
 		dirLights[i] = vectorDirLights[i];
 		cout << "----------\n" << endl;
 		cout << dirLights[i] << endl;
 	}
+	vectorDirLights.clear();
+	cout << "DirectionalLight::numLights => " << DirectionalLight::numLights << endl;
 }
 // ---------------------
 

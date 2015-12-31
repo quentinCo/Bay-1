@@ -16,6 +16,7 @@
 #include <libPerso/Mesh.hpp>
 #include <libPerso/Texture.hpp>
 #include <libPerso/Light.hpp>
+#include <libPerso/Light_impl.hpp>
 
 class Scene 
 {
@@ -30,9 +31,11 @@ class Scene
 		// Liste des lumières
 		std::vector <EllipsoidLight> vectorLights;
 		EllipsoidLight *lights;
+		LightBuffer <EllipsoidLight> lightsBuffer;
 		
 		std::vector <DirectionalLight> vectorDirLights;
 		DirectionalLight *dirLights;
+		LightBuffer <DirectionalLight> dirLightsBuffer;
 		
 		// Information sur la camera.
 		glm::vec3 cameraPosition;

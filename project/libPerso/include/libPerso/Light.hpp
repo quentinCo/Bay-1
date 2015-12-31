@@ -60,9 +60,4 @@ struct DirectionalLight{
 	friend std::ostream & operator<< (std::ostream & os, const DirectionalLight &point);
 };
 
-template<typename lightT>
-void bindLights(const Program &prog, const lightT *lights);
-
-#include <libPerso/Light_impl.hpp>
-
 #endif
