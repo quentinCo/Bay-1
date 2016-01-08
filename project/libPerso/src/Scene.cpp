@@ -120,11 +120,11 @@ void Scene::processNode(const aiNode* aNode, const aiScene* aScene, map<array<st
 		string nameMesh = aNode->mName.data;
 		
 		cout << "nameMesh --> : " << nameMesh << endl;
-		/*if(nameMesh.find("DirectionLight") != string::npos){
+		if(nameMesh.find("DirectionLight") != string::npos){
 			cout << "DirectionLight------------------------------<" << endl;
 			vectorDirLights.push_back(DirectionalLight(aMesh));
 		}
-		else */if(nameMesh.find("Camera") != string::npos){
+		else if(nameMesh.find("Camera") != string::npos){
 			cout << "Camera<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<" << endl;
 			cameraPosition = glm::vec3(aMesh->mVertices[0].x, aMesh->mVertices[0].y, aMesh->mVertices[0].z);
 			cameraFront = glm::vec3(
