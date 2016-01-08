@@ -1,5 +1,5 @@
 # Blender MTL File: 'test_scene.blend'
-# Material Count: 19
+# Material Count: 20
 
 newmtl Arm
 Ns 74.509804
@@ -115,6 +115,15 @@ d 1.000000
 illum 2
 map_Kd borderland/Tiny_Tina/Tex/mask.tga
 map_Bump borderland/Tiny_Tina/Tex/mask_bump.tga
+
+newmtl Material.003
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.011579 0.640000 0.000000
+Ks 0.500000 0.500000 0.500000
+Ni 1.000000
+d 1.000000
+illum 2
 
 newmtl Model001_Material002vsShadertest_fsShaderTexture_
 Ns 78.431373

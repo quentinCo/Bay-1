@@ -120,15 +120,11 @@ void Scene::processNode(const aiNode* aNode, const aiScene* aScene, map<array<st
 		string nameMesh = aNode->mName.data;
 		
 		cout << "nameMesh --> : " << nameMesh << endl;
-		if(nameMesh.find("DirectionLight") != string::npos){
+		/*if(nameMesh.find("DirectionLight") != string::npos){
 			cout << "DirectionLight------------------------------<" << endl;
 			vectorDirLights.push_back(DirectionalLight(aMesh));
 		}
-		else if(nameMesh.find("AloneLight") != string::npos){
-			cout << "AloneLight**********************************<" << endl;
-			vectorLights.push_back(EllipsoidLight(aMesh->mVertices[0]));
-		}
-		else if(nameMesh.find("Camera") != string::npos){
+		else */if(nameMesh.find("Camera") != string::npos){
 			cout << "Camera<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<" << endl;
 			cameraPosition = glm::vec3(aMesh->mVertices[0].x, aMesh->mVertices[0].y, aMesh->mVertices[0].z);
 			cameraFront = glm::vec3(
@@ -145,15 +141,22 @@ void Scene::processNode(const aiNode* aNode, const aiScene* aScene, map<array<st
 			else mat = NULL;
 		
 			Mesh mesh = Mesh(aMesh, mat);
-		
-			if(nameMesh.find("MeshBright") != string::npos){
-				cout << "MeshBright////////////////////////////////<" << endl;
+			
+			if(nameMesh.find("PointLight") != string::npos){
+				cout << "PointLight**********************************<" << endl;
 				vectorLights.push_back(EllipsoidLight(mesh));
 			}
-		
-			mesh.setTextures(processTexture(aMesh, aScene, mat));
-		
-			addToMapShadersName(mapNameShader, mat, mesh);
+			else{
+	
+				if(nameMesh.find("MeshBright") != string::npos){
+					cout << "MeshBright////////////////////////////////<" << endl;
+					vectorLights.push_back(EllipsoidLight(mesh));
+				}
+	
+				mesh.setTextures(processTexture(aMesh, aScene, mat));
+	
+				addToMapShadersName(mapNameShader, mat, mesh);
+			}
 		}
 	}
 
