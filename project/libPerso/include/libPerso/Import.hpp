@@ -25,9 +25,6 @@
 #include <rapidjson/filereadstream.h>
 #include <rapidjson/encodedstream.h> 
 
-// Import gtest
-#include <gtest/gtest.h>
-
 // Import
 #include <libPerso/Scene.hpp>
 #include <libPerso/Player.hpp>

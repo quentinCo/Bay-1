@@ -37,7 +37,8 @@ EllipsoidLight::EllipsoidLight(const EllipsoidLight &l)
 
 // Destructeur
 EllipsoidLight::~EllipsoidLight(){
-	numLights--;
+	//numLights--;
+	std::cout << "DELETE LIGHT ELLIP" << std::endl;
 }
 // ---------------------
 
@@ -73,7 +74,7 @@ DirectionalLight::DirectionalLight(const DirectionalLight &l)
 
 // Destructeur
 DirectionalLight::~DirectionalLight(){
-	numLights--;
+	//numLights--;
 }
 // ---------------------
 
