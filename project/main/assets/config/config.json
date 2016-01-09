@@ -4,20 +4,19 @@
 	{
 		"test1" :
 		{
-			"path" : "scene_test.obj",
+			"path" : "hub.obj",
 			"next" : ["test3","test2"]			
 		},
 		"test2" :
 		{
-			"path" : "borderland/Maya_obj/maya_4.obj",
+			"path" : "grotte.obj",
 			"next" : ["test1","test3"]			
 		},
 		"test3" : 
 		{
-			"path" : "test3.obj",
+			"path" : "normaleint.obj",
 			"next" : ["test2","test1"]			
-		}
-	
+		}	
 	}
 		
 }

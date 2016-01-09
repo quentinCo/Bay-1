@@ -51,6 +51,7 @@ vec3 blinnPhong(){
 	vec3 Li = vec3(0, 0, 0);
 	vec3 wo = normalize(-vPosition_vs);
 	vec3 N = vNormal_vs;
+	
 	vec3 halfVector = vec3(0, 0, 0);
 	
 	vec3 traceVec = vec3(0, 0, 0);
@@ -62,18 +63,20 @@ vec3 blinnPhong(){
 	
 	for(int i = 0; i < uEllipsoidLigths_nb ; ++i){
 		MVLightPosition = (uMVMatrix * eLights[i].position).xyz;
-		
-		wi = normalize(MVLightPosition - vPosition_vs);
-		
-		traceVec = normalize((inverse(uMVMatrix) * vec4(vPosition_vs, 1) - eLights[i].position).xyz);  //Vecteur entre la lumière et le fragment dans le repère absolu du monde
-		
-		d = distance(MVLightPosition, vPosition_vs) * length(vec3(traceVec.x/eLights[i].halfAxes.x, traceVec.y/ eLights[i].halfAxes.y, traceVec.z/eLights[i].halfAxes.z)); //On étire la lumière sur les trois axes x,y et z
-		
-		Li = eLights[i].lightIntensity.xyz / (d*d);
-		
-		halfVector = (wo + wi) * 0.5;
-		
-		finalColor += Li * (uMaterial.diffuseColor * max(0,dot(wi, N)) + uMaterial.specularColor * pow(max(0,dot(halfVector, N)), uMaterial.shininess));
+		wi = MVLightPosition - vPosition_vs;
+		if(length(wi) < 40){
+			wi = normalize(wi);
+			
+			traceVec = normalize((inverse(uMVMatrix) * vec4(vPosition_vs, 1) - eLights[i].position).xyz);  //Vecteur entre la lumière et le fragment dans le repère absolu du monde
+			
+			d = distance(MVLightPosition, vPosition_vs) * length(vec3(traceVec.x/eLights[i].halfAxes.x, traceVec.y/ eLights[i].halfAxes.y, traceVec.z/eLights[i].halfAxes.z)); //On étire la lumière sur les trois axes x,y et z
+			
+			Li = eLights[i].lightIntensity.xyz / (d*d);
+			
+			halfVector = (wo + wi) * 0.5;
+			
+			finalColor += Li * (uMaterial.diffuseColor * max(0,dot(wi, N)) + uMaterial.specularColor * pow(max(0,dot(halfVector, N)), uMaterial.shininess));
+		}
 	}
 	
 	for(int i = 0; i < uDirectionalLights_nb ; ++i){

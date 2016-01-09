@@ -150,7 +150,7 @@ void Scene::processNode(const aiNode* aNode, const aiScene* aScene, map<array<st
 	
 				if(nameMesh.find("MeshBright") != string::npos){
 					cout << "MeshBright////////////////////////////////<" << endl;
-					vectorLights.push_back(EllipsoidLight(mesh));
+					vectorLights.push_back(EllipsoidLight(mesh, true));
 				}
 	
 				mesh.setTextures(processTexture(aMesh, aScene, mat));

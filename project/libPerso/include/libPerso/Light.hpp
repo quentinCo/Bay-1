@@ -31,7 +31,7 @@ struct EllipsoidLight{
 	
 	EllipsoidLight(const aiVector3D v);
 	
-	EllipsoidLight(const Mesh &mesh);
+	EllipsoidLight(const Mesh &mesh, bool adaptSize = false);
 	
 	EllipsoidLight(const EllipsoidLight &p);
 	~EllipsoidLight();

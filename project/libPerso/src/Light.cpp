@@ -18,13 +18,18 @@ EllipsoidLight::EllipsoidLight(const vec4 &pos, const vec4 &halfA, const vec4 &l
 
 EllipsoidLight::EllipsoidLight(const aiVector3D v):EllipsoidLight(vec4(v.x, v.y, v.z, 1)){}
 
-EllipsoidLight::EllipsoidLight(const Mesh &mesh){
+EllipsoidLight::EllipsoidLight(const Mesh &mesh, bool adaptSize){
 	position = vec4(mesh.getPosCenter(), 1);
-	halfAxes = vec4(mesh.getDimension() * 0.5f , 0);
-	lightIntensity = vec4(1,1,1,0);
 	
-	if(mesh.getHasMaterial()) lightIntensity = vec4(mesh.getMaterial().emissionColor*100.f, 0);
+	if(adaptSize)
+		halfAxes = vec4(mesh.getDimension() * 0.5f , 0);
+	else
+		halfAxes = vec4(1, 1, 1, 0);
 	
+	lightIntensity = vec4(10,10,10,0);
+	
+	if(mesh.getHasMaterial())
+		lightIntensity = vec4(mesh.getMaterial().emissionColor*2000.f, 0);
 	//numLights++;
 }
 

@@ -22,7 +22,7 @@ Game::Game(string dir, string winName, uint32_t windowWidth, uint32_t windowHeig
 	initListeSite();
 	
 	// Chargement du premier site.
-	player = Player(glm::vec3(0,0,0), glm::vec3(0,0,1), 0.05, 0.5);;
+	player = Player(glm::vec3(0,0,0), glm::vec3(0,0,1), 0.5, 0.5);;
 	initNewCurrentSite(siteHeader[firstSite]);
 }
 
