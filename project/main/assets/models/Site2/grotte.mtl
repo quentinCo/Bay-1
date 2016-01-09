@@ -1,5 +1,5 @@
 # 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
-# File Created: 08.01.2016 23:08:25
+# File Created: 09.01.2016 22:22:10
 
 newmtl Default
 	Ns 50.0000
@@ -20,8 +20,8 @@ newmtl fsShaderNoTexture_poutres
 	Tr 0.0000
 	Tf 1.0000 1.0000 1.0000 
 	illum 2
-	Ka 0.0902 0.0314 0.0235
-	Kd 0.0902 0.0314 0.0235
+	Ka 0.0118 0.0078 0.0078
+	Kd 0.0118 0.0078 0.0078
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
 
@@ -32,22 +32,22 @@ newmtl fsShaderNoTexture_stalagmite
 	Tr 0.0000
 	Tf 1.0000 1.0000 1.0000 
 	illum 2
-	Ka 0.1137 0.0235 0.0196
-	Kd 0.1137 0.0235 0.0196
+	Ka 0.0196 0.0196 0.0196
+	Kd 0.0196 0.0196 0.0196
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
 
-newmtl fsShaderNoTexture_cristal
+newmtl fsShaderemissiveMesh_cristal
 	Ns 10.0000
 	Ni 1.5000
 	d 1.0000
 	Tr 0.0000
 	Tf 1.0000 1.0000 1.0000 
 	illum 2
-	Ka 0.0000 0.0000 0.0000
-	Kd 0.0000 0.0000 0.0000
+	Ka 0.0000 0.5647 1.0000
+	Kd 0.0000 0.5647 1.0000
 	Ks 0.0000 0.0000 0.0000
-	Ke 0.0000 0.7922 0.9922
+	Ke 0.0078 0.0118 0.0118
 
 newmtl fsShaderNoTexture_grotte
 	Ns 10.0000
@@ -56,8 +56,8 @@ newmtl fsShaderNoTexture_grotte
 	Tr 0.0000
 	Tf 1.0000 1.0000 1.0000 
 	illum 2
-	Ka 0.2078 0.0784 0.0549
-	Kd 0.2078 0.0784 0.0549
+	Ka 0.0196 0.0157 0.0157
+	Kd 0.0196 0.0157 0.0157
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
 
@@ -68,8 +68,8 @@ newmtl fsShaderNoTexture_socle
 	Tr 0.0000
 	Tf 1.0000 1.0000 1.0000 
 	illum 2
-	Ka 0.1451 0.1451 0.1451
-	Kd 0.1451 0.1451 0.1451
+	Ka 0.0431 0.0431 0.0431
+	Kd 0.0431 0.0431 0.0431
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
 
@@ -80,7 +80,7 @@ newmtl fsShaderNoTexture_dragon
 	Tr 0.0000
 	Tf 1.0000 1.0000 1.0000 
 	illum 2
-	Ka 0.3176 0.3176 0.3176
-	Kd 0.3176 0.3176 0.3176
+	Ka 0.0275 0.0275 0.0275
+	Kd 0.0275 0.0275 0.0275
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000

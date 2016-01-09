@@ -54,13 +54,15 @@ int Game::initOpenGLProperties(){
 	std::cout << "GLEW Version : " << glewGetString(GLEW_VERSION) << std::endl;
 	
 	glEnable(GL_DEPTH_TEST);
-/*
+	glDepthFunc(GL_LESS);
+	
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_FRONT);
 	glFrontFace(GL_CW);
-*/
+
+	
 		
-	SDL_WM_GrabInput(SDL_GRAB_ON);
+	//SDL_WM_GrabInput(SDL_GRAB_ON);
 	SDL_ShowCursor(SDL_DISABLE);
 
 	return 1;

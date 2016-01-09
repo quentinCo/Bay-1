@@ -14,7 +14,7 @@
 		},
 		"test3" : 
 		{
-			"path" : "Site2/caverne.obj",
+			"path" : "Site2/grotte.obj",
 			"next" : ["test2","test1"]			
 		}
 	

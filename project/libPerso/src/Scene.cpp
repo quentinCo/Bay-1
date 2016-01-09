@@ -96,7 +96,7 @@ int Scene::loadScene(const string path){
 	cameraPosition = glm::vec3(0,0,0);
 	cameraFront = glm::vec3(0,0,-1);
 
-
+	std::cout<<"DEBUT LOADSCENE"<<std::endl;
 	processNode(aScene->mRootNode, aScene, mapNameShader);
 	
 	initUniformLightTabs();
