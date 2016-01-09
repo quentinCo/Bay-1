@@ -1,0 +1,45 @@
+# Blender MTL File: 'None'
+# Material Count: 4
+
+newmtl Model001_Material001
+Ns 86.274510
+Ka 0.000000 0.000000 0.000000
+Kd 0.327680 0.327680 0.327680
+Ks 0.500000 0.500000 0.500000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd SirenHands_Dif.tga
+map_Bump SirenHands_Nrm.tga
+
+newmtl Model001_Material004
+Ns 86.274510
+Ka 0.000000 0.000000 0.000000
+Kd 0.327680 0.327680 0.327680
+Ks 0.500000 0.500000 0.500000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd Mouth.tga
+
+newmtl fsShaderNoTexture_
+Ns 86.274510
+Ka 0.000000 0.000000 0.000000
+Kd 0.327680 0.327680 0.327680
+Ks 0.500000 0.500000 0.500000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd SirenBody_Bm.tga
+map_Bump SirenBody_Nrm.tga
+
+newmtl fsShaderTexture_Maya_Head
+Ns 86.274510
+Ka 0.000000 0.000000 0.000000
+Kd 0.327680 0.327680 0.327680
+Ks 0.500000 0.500000 0.500000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd SirenHead_Bm.tga
+map_Bump SirenHead_Nrm.tga
