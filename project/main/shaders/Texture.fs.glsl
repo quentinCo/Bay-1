@@ -76,10 +76,10 @@ vec3 blinnPhong(){
 	vec3 finalColor = vec3(0, 0, 0);
 	
 	for(int i = 0; i < uEllipsoidLigths_nb ; ++i){
-		if(length((inverse(uMVMatrix) * vec4(vPosition_vs, 1) - eLights[i].position).xyz) <= length(eLights[i].lightIntensity.xyz)){
-			MVLightPosition = (uMVMatrix * eLights[i].position).xyz;
-		
-			wi = normalize(MVLightPosition - vPosition_vs);
+		MVLightPosition = (uMVMatrix * eLights[i].position).xyz;
+		wi = MVLightPosition - vPosition_vs;
+		if(length(wi) < 40){
+			wi = normalize(wi);
 		
 			traceVec = normalize((inverse(uMVMatrix) * vec4(vPosition_vs, 1) - eLights[i].position).xyz); //Vecteur entre la lumière et le fragment dans le repère absolu du monde
 		
