@@ -8,7 +8,7 @@
 
 class Player: public Camera{
 	private :
-		// Ajouter hitbox
+		
 		float speedDep;
 		float speedRotate;
 		

@@ -56,10 +56,8 @@ class Mesh{
 		// Constructeurs
 		Mesh();
 		Mesh(const aiMesh *mesh, const aiMaterial *mat = NULL);
-		/*
-		Mesh(const Vertex *pointTab,const int sizePointTab, const uint32_t *pointOrderTab, const int sizeOrder);
-		Mesh(const std::vector<Vertex> &pointVec, const std::vector <uint32_t> &pointOrderVec);
-		*/
+
+
 		Mesh(const Mesh &mesh);
 		// ---------------------
 		

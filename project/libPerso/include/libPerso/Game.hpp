@@ -29,9 +29,7 @@ class Game{
 		void initNewCurrentSite(const SceneHeader &scene);
 		
 		void gameEvent();
-		
-		//void setPlayer();
-		
+				
 		Game(std::string dir, std::string winName, uint32_t windowWidth, uint32_t windowHeight);
 		
 		~Game();

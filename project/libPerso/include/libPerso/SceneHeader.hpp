@@ -4,7 +4,11 @@
 #include <iostream>
 #include <cstdlib>
 #include <cstring>
+/*
 
+	Structure permettant la sauvegarde des éléments nécéssaire à l'initialisation à l'initialisation des sites.
+
+*/
 struct SceneHeader{
 	std::string path;
 	std::string next[2];

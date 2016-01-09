@@ -16,7 +16,6 @@ class LightBuffer{
 		LightBuffer(){};
 		
 		LightBuffer(const GLenum t):target(t){
-			std::cout << "CREATION" <<std::endl;
 			// On créé le buffer d'uniforme
 			glGenBuffers(1, &ubo);
 			
@@ -59,6 +58,7 @@ class LightBuffer{
 			// On obtient l'emplacement du bloc uniforme
 			GLuint Lights_binding = lightT::bindingIndex;
 			GLint uniform_block_index = glGetUniformBlockIndex(prog.getGLId(), lightT::uniformName.c_str());
+			
 			// On bind le bloc
 			glUniformBlockBinding(prog.getGLId(), uniform_block_index, Lights_binding);
 
