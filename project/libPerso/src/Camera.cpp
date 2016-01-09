@@ -3,7 +3,13 @@
 using namespace glm;
 
 // Constructeurs
-Camera :: Camera() : m_Position(0,0,0), m_fPhi(M_PI), m_fTheta(0){
+Camera :: Camera(const vec3 &pos, const vec3 &frontVector) : m_Position(pos){
+	
+	vec3 normalizeFront = normalize(frontVector);
+	
+	m_fTheta = asin(normalizeFront.y);
+	m_fPhi = acos(normalizeFront.z / cos(m_fTheta));
+	
 	computeDirectionVectors();
 }
 // ---------------------
@@ -25,6 +31,13 @@ vec3 Camera::getLeftVector() const { return m_LeftVector;}
 
 vec3 Camera::getUpVector() const {return m_UpVector;}
 
+void Camera::setFrontVector(const glm::vec3 &frontVector){
+	vec3 normalizeFront = normalize(frontVector);
+	float theta = asin(normalizeFront.y);
+
+	setTheta(theta);
+	setPhi(acos(normalizeFront.z / cos(theta)));
+}
 
 void Camera::setPosition(vec3 pos){ m_Position = pos;}
 
@@ -41,14 +54,6 @@ void Camera::setTheta(float radian){
 
 // Calcule des vecteurs
 void Camera :: computeDirectionVectors(){
-/*
-	std::cout << "m_fTheta : "<< m_fTheta<<std::endl;
-	if(m_fPhi > M_PI/2) m_fPhi = M_PI/2;
-	else if(m_fPhi < -M_PI/2) m_fPhi = -M_PI/2;
-	
-	if(m_fTheta > M_PI/2) m_fTheta = M_PI/2;
-	else if(m_fTheta < -M_PI/2) m_fTheta = -M_PI/2;
-*/
 	m_FrontVector = vec3(std::cos(m_fTheta)*std::sin(m_fPhi), std::sin(m_fTheta), std::cos(m_fTheta)*std::cos(m_fPhi));
 	m_LeftVector = vec3(std::sin(m_fPhi + M_PI/2), 0, std::cos(m_fPhi + M_PI/2));		
 	m_UpVector = cross(m_FrontVector, m_LeftVector);
@@ -76,7 +81,11 @@ void Camera :: rotateLeft(float degrees){
 }
 
 void Camera :: rotateUp(float degrees){
-	m_fTheta += degrees*M_PI/180;
+	m_fTheta += degrees*M_PI/180;	
+	
+	if(m_fTheta > M_PI/2) m_fTheta = M_PI/2;
+	else if(m_fTheta < -M_PI/2) m_fTheta = -M_PI/2;
+	
 	computeDirectionVectors();
 }
 // ---------------------

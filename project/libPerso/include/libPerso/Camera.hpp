@@ -21,7 +21,10 @@ class Camera{
 
 	public :
 		// Constructeur
-		Camera();
+		Camera(
+			const glm::vec3 &pos = glm::vec3(0,0,0),
+			const glm::vec3 &frontVector = glm::vec3(0,0,-1)
+		);
 		// ---------------------
 
 		// Destructeur
@@ -36,19 +39,20 @@ class Camera{
 		glm::vec3 getLeftVector() const;	
 		glm::vec3 getUpVector() const;
 		
+		void setFrontVector(const glm::vec3 &frontVector);
 		void setPosition(glm::vec3 pos);
 		void setPhi(float radian);
 		void setTheta(float radian);
 		// ---------------------
 		
 		// Calcul de position
-		void moveLeft(float t);
-		void moveFront(float t);
-		void moveTop(float t);
+		virtual void moveLeft(float t);
+		virtual void moveFront(float t);
+		virtual void moveTop(float t);
 		// ---------------------
 		
 		// Calcul d'inclinaison
-		void rotateLeft(float degrees);
+		virtual void rotateLeft(float degrees);
 		void rotateUp(float degrees);
 		// ---------------------
 		
