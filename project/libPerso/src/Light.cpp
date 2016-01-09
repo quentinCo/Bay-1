@@ -23,7 +23,7 @@ EllipsoidLight::EllipsoidLight(const Mesh &mesh){
 	halfAxes = vec4(mesh.getDimension() * 0.5f , 0);
 	lightIntensity = vec4(1,1,1,0);
 	
-	if(mesh.getHasMaterial()) lightIntensity = vec4(mesh.getMaterial().diffuseColor*100.f, 0);
+	if(mesh.getHasMaterial()) lightIntensity = vec4(mesh.getMaterial().emissionColor*100.f, 0);
 	
 	//numLights++;
 }
