@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <vector>
 #include <cstring>
+#include <map>
 
 #include <glimac/Image.hpp>
 
@@ -16,6 +17,7 @@ class Texture{
 		GLuint textureId;
 		std::string textureType;		
 		std::string texturePath;
+		static std::map<GLuint, unsigned int> occurenceCounter;
 		
 		int initTexture(std::string meshPath, std::string texPath, std::string type);
 		
@@ -24,7 +26,11 @@ class Texture{
 		// Constructeur
 		Texture();
 		Texture(std::string meshPath, std::string texPath, std::string type);
+		Texture(const Texture &t);
 		// ---------------------
+		
+		Texture& operator =(const Texture& lvalue);
+		Texture& operator =(Texture&& rvalue);
 		
 		// Destructeur
 		~Texture();

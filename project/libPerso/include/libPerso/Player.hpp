@@ -8,9 +8,11 @@
 
 class Player: public Camera{
 	private :
-		// Ajouter hitbox
+		
 		float speedDep;
 		float speedRotate;
+		
+		glm::vec3 frontPlayer;
 		
 		bool mousePositionInit;
 		
@@ -24,7 +26,10 @@ class Player: public Camera{
 		
 		~Player();
 
-		void setFrontVector(const glm::vec3 &frontVector);
+		void moveLeft(float t);
+		void moveFront(float t);
+		void moveTop(float t);
+		void rotateLeft(float degrees);
 		
 		void playerRotate(const SDL_MouseMotionEvent &e);
 		void playerMove(const Uint8 *keystate);

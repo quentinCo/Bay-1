@@ -60,8 +60,8 @@ Scene& Scene::operator =(Scene&& rvalue){
 Scene::~Scene(){
 	occurenceCounter[id]--;
 	if(occurenceCounter[id] == 0){
-		if(lights != NULL) delete lights;		// Modifier ici ce sont des tableaux à supprimer donc delete [] lights.
-		if(dirLights != NULL) delete dirLights;		// De même.
+		if(lights != NULL) delete [] lights;		// Modifier ici ce sont des tableaux à supprimer donc delete [] lights.
+		if(dirLights != NULL) delete [] dirLights;		// De même.
 	}
 }
 // ---------------------
@@ -96,7 +96,7 @@ int Scene::loadScene(const string path){
 	cameraPosition = glm::vec3(0,0,0);
 	cameraFront = glm::vec3(0,0,-1);
 
-
+	std::cout<<"DEBUT LOADSCENE"<<std::endl;
 	processNode(aScene->mRootNode, aScene, mapNameShader);
 	
 	initUniformLightTabs();

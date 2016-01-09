@@ -67,24 +67,6 @@ illum 2
 map_Kd nanosuit/leg_dif.png
 map_Bump nanosuit/leg_showroom_ddn.png
 
-newmtl Material
-Ns 96.078431
-Ka 0.000000 0.000000 0.000000
-Kd 0.640000 0.000000 0.001936
-Ks 0.500000 0.500000 0.500000
-Ni 1.000000
-d 1.000000
-illum 2
-
-newmtl Material.001
-Ns 96.078431
-Ka 0.000000 0.000000 0.000000
-Kd 0.005487 0.006464 0.640000
-Ks 0.500000 0.500000 0.500000
-Ni 1.000000
-d 1.000000
-illum 2
-
 newmtl Material.001_tina.tga.002
 Ns 86.274510
 Ka 0.000000 0.000000 0.000000
@@ -96,15 +78,6 @@ illum 2
 map_Kd borderland/Tiny_Tina/Tex/tina.tga
 map_Bump borderland/Tiny_Tina/Tex/tina_bump.tga
 
-newmtl Material.002
-Ns 96.078431
-Ka 0.000000 0.000000 0.000000
-Kd 0.011579 0.640000 0.000000
-Ks 0.500000 0.500000 0.500000
-Ni 1.000000
-d 1.000000
-illum 2
-
 newmtl Material.002_mask.tga.002
 Ns 86.274510
 Ka 0.000000 0.000000 0.000000
@@ -115,15 +88,6 @@ d 1.000000
 illum 2
 map_Kd borderland/Tiny_Tina/Tex/mask.tga
 map_Bump borderland/Tiny_Tina/Tex/mask_bump.tga
-
-newmtl Material.003
-Ns 96.078431
-Ka 0.000000 0.000000 0.000000
-Kd 0.011579 0.640000 0.000000
-Ks 0.500000 0.500000 0.500000
-Ni 1.000000
-d 1.000000
-illum 2
 
 newmtl Model001_Material002vsShadertest_fsShaderTexture_
 Ns 78.431373
@@ -162,6 +126,46 @@ Ns 0.000000
 Ka 0.000000 0.000000 0.000000
 Kd 0.512000 0.512000 0.512000
 Ks 0.800000 0.800000 0.800000
+Ni 1.000000
+d 1.000000
+illum 2
+
+newmtl vsShaderdefault_fsShaderemissiveMesh_
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.640000 0.000000 0.001936
+Ks 0.000000 0.000000 0.000000
+Ke 0.200000 0.100000 0.500000
+Ni 1.000000
+d 1.000000
+illum 1
+
+newmtl vsShaderdefault_fsShaderemissiveMesh_.001
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.005487 0.006464 0.640000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.900000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+
+newmtl vsShaderdefault_fsShaderemissiveMesh_.002
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.011579 0.640000 0.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.100000 0.900000
+Ni 1.000000
+d 1.000000
+illum 2
+
+newmtl vsShaderdefault_fsShaderemissiveMesh_.003
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.011579 0.640000 0.000000
+Ks 0.500000 0.500000 0.500000
+Ke 1.000000 1.000000 1.000000
 Ni 1.000000
 d 1.000000
 illum 2

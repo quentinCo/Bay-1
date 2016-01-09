@@ -2,24 +2,31 @@
 
 using namespace glm;
 
-Player :: Player(const vec3 &pos, const vec3 &frontVector, float speedMove, float speedAngle): Camera(), speedDep(speedMove), speedRotate(speedAngle), mousePositionInit(false){
-	vec3 normalizeFront = normalize(frontVector);
-	float theta = asin(normalizeFront.y);
+Player :: Player(const vec3 &pos, const vec3 &frontVector, float speedMove, float speedAngle)
+: Camera(glm::vec3(pos.x, pos.y, pos.z) , frontVector), speedDep(speedMove), speedRotate(speedAngle), mousePositionInit(false){
+	frontPlayer = vec3(std::cos(0)*std::sin(getPhi()), std::sin(0), std::cos(0)*std::cos(getPhi()));
 
-	setTheta(theta);
-	setPhi(acos(normalizeFront.z / cos(theta)));
-	
 	setPosition(pos);	
 }
 
 Player :: ~Player(){}
 
-void Player :: setFrontVector(const glm::vec3 &frontVector){
-	vec3 normalizeFront = normalize(frontVector);
-	float theta = asin(normalizeFront.y);
+void Player :: moveLeft(float t){
+	Camera :: moveLeft(t);
+}
 
-	setTheta(theta);
-	setPhi(acos(normalizeFront.z / cos(theta)));
+void Player :: moveFront(float t){
+	setPosition(t * frontPlayer + getPosition());
+}
+
+void Player :: moveTop(float t){
+	Camera :: moveTop(t);
+}
+
+
+void Player :: rotateLeft(float degrees){
+	Camera :: rotateLeft(degrees);
+	frontPlayer = vec3(std::cos(0)*std::sin(getPhi()), std::sin(0), std::cos(0)*std::cos(getPhi()));
 }
 
 void Player :: playerRotate(const SDL_MouseMotionEvent &e){
@@ -39,6 +46,6 @@ void Player :: playerMove(const Uint8 *keystate){
 	if ( keystate[SDLK_q]) moveLeft(speedDep);
 	else if ( keystate[SDLK_d]) moveLeft(-speedDep);
 
-	if ( keystate[SDLK_a]) moveTop(speedDep);	// Monter
-	else if ( keystate[SDLK_e]) moveTop(-speedDep);	// Descendre
+	if ( keystate[SDLK_SPACE]) moveTop(speedDep);	// Monter
+	else if ( keystate[SDLK_RSHIFT] || keystate[SDLK_LSHIFT]) moveTop(-speedDep);	// Descendre
 }
