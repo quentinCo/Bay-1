@@ -22,11 +22,15 @@ Game::Game(string dir, string winName, uint32_t windowWidth, uint32_t windowHeig
 	initListeSite();
 	
 	// Chargement du premier site.
-	player = Player(glm::vec3(0,0,0), glm::vec3(0,0,1), 0.05, 0.5);;
+	player = Player(glm::vec3(0,0,0), glm::vec3(0,0,1), 0.02, 0.5);;
 	initNewCurrentSite(siteHeader[firstSite]);
 }
 
 Game::~Game(){
+
+	SDL_WM_GrabInput(SDL_GRAB_OFF);
+	SDL_ShowCursor(SDL_ENABLE);
+
 	delete instance;
 }
 
@@ -50,11 +54,14 @@ int Game::initOpenGLProperties(){
 	std::cout << "GLEW Version : " << glewGetString(GLEW_VERSION) << std::endl;
 	
 	glEnable(GL_DEPTH_TEST);
-/*
+
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_FRONT);
 	glFrontFace(GL_CW);
-*/
+
+		
+	SDL_WM_GrabInput(SDL_GRAB_ON);
+	SDL_ShowCursor(SDL_DISABLE);
 
 	return 1;
 }
@@ -146,7 +153,7 @@ void Game::gamePlay(){
 void Game::gameEvent(){
 	//cout<<"EVENT GESTION" << endl;
 	SDL_Event e;
-	string next;			
+	string next ="";			
 	while(SDL_PollEvent(&e)){
 		if(e.type == SDL_QUIT){
 			loopPlay = true;

@@ -9,12 +9,12 @@
 		},
 		"test2" :
 		{
-			"path" : "borderland/Maya_obj/maya_4.obj",
+			"path" : "Site1/hub.obj",
 			"next" : ["test1","test3"]			
 		},
 		"test3" : 
 		{
-			"path" : "test3.obj",
+			"path" : "Site2/grotte.obj",
 			"next" : ["test2","test1"]			
 		}
 	

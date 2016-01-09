@@ -1,15 +1,50 @@
 #include <libPerso/Texture.hpp>
 
+std::map<GLuint, unsigned int> Texture::occurenceCounter;
+
 // Constructeurs
 Texture::Texture(){}
 
 Texture::Texture(std::string meshPath, std::string texPath, std::string type){
 	initTexture(meshPath, texPath, type);
+	occurenceCounter[textureId]++;
+}
+
+Texture::Texture(const Texture &t)
+: textureId(t.textureId), textureType(t.textureType), texturePath(t.texturePath){
+	occurenceCounter[textureId]++;
 }
 // ---------------------
 
+Texture& Texture::operator =(const Texture& lvalue){
+	textureId = lvalue.textureId;
+	textureType = lvalue.textureType;		
+	texturePath = lvalue.texturePath;
+	
+	occurenceCounter[textureId]++;
+	
+	return *this;
+}
+
+Texture& Texture::operator =(Texture&& rvalue){
+	textureId = rvalue.textureId;
+	textureType = rvalue.textureType;		
+	texturePath = rvalue.texturePath;
+	
+	rvalue.textureId = 0;
+	
+	return *this;
+}
+
 // Destructeur
-Texture::~Texture(){}
+Texture::~Texture(){
+	occurenceCounter[textureId]--;
+	if(occurenceCounter[textureId] == 0){
+		std::cout<<"DELETE TEXTURE "<< textureId <<" : " << occurenceCounter[textureId] << std::endl;
+	
+		glDeleteTextures(1,&textureId);
+	}
+}
 // ---------------------
 
 // Get

@@ -5,17 +5,11 @@ using namespace glm;
 // Constructeurs
 Camera :: Camera() : m_Position(0,0,0), m_fPhi(M_PI), m_fTheta(0){
 	computeDirectionVectors();
-		
-	//SDL_WM_GrabInput(SDL_GRAB_ON);
-	SDL_ShowCursor(SDL_DISABLE);
 }
 // ---------------------
 
 // Destructeur
-Camera :: ~Camera(){
-	SDL_WM_GrabInput(SDL_GRAB_OFF);
-	SDL_ShowCursor(SDL_ENABLE);
-}
+Camera :: ~Camera(){}
 //----------------------
 
 // Get et set

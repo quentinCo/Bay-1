@@ -35,10 +35,6 @@ VAO& VAO::operator =(VAO&& rvalue) {
 	vao = rvalue.vao;
 	
 	rvalue.vao = 0; // Plus de buffer
-	/*
-	std::cout << "this.vao = " << vao << std::endl;
-	std::cout << "rvalue.vao =" << rvalue.vao << std::endl;
-	*/
 	return *this;
 }
 // ---------------------

@@ -60,8 +60,8 @@ Scene& Scene::operator =(Scene&& rvalue){
 Scene::~Scene(){
 	occurenceCounter[id]--;
 	if(occurenceCounter[id] == 0){
-		if(lights != NULL) delete lights;		// Modifier ici ce sont des tableaux à supprimer donc delete [] lights.
-		if(dirLights != NULL) delete dirLights;		// De même.
+		if(lights != NULL) delete [] lights;		// Modifier ici ce sont des tableaux à supprimer donc delete [] lights.
+		if(dirLights != NULL) delete [] dirLights;		// De même.
 	}
 }
 // ---------------------
