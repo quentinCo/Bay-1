@@ -24,7 +24,7 @@ EllipsoidLight::EllipsoidLight(const Mesh &mesh, bool adaptSize){
 	if(adaptSize){
 		halfAxes = vec4(mesh.getDimension() * 0.5f , 0);
 		if(mesh.getHasMaterial())
-			lightIntensity = vec4(mesh.getMaterial().emissionColor*2000.f, 0);
+			lightIntensity = vec4(mesh.getMaterial().emissionColor*1000.f, 0);
 	}
 	else
 		halfAxes = vec4(1, 1, 1, 0);
