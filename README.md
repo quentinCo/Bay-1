@@ -19,6 +19,12 @@ Contrôles de navigation :
 	
 
 Rôles :
-	Designer 3D / Shader : Quentin GUITTARD
-	Shader / Lumière : Corentin LIMOGE
+	Designer 3D : Quentin GUITTARD
+	
+	Shader : Corentin LIMOGE / Quentin GUITTARD
+	
+	Lumière : Corentin LIMOGE 
+	
 	Moteur : Quentin COUILLARD
+	
+	Architecture : Quentin COUILLARD
