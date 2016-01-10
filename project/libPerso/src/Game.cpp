@@ -5,7 +5,7 @@ using namespace std;
 Game * Game::instance = NULL;
 
 Game::Game(string dir, string winName, uint32_t windowWidth, uint32_t windowHeight)
-:windowManager(windowWidth, windowHeight, winName.c_str())
+:windowManager(windowWidth, windowHeight, winName.c_str()),fullScreen(false)
 {
 	ProjMatrix = glm::perspective(glm::radians(70.f), windowWidth/(float)windowHeight, 0.2f, 100.f);
 	
@@ -182,6 +182,20 @@ void Game::gameEvent(){
 						break;
 					case SDLK_ESCAPE : 
 						loopPlay = true;
+						break;
+					case SDLK_f :
+						if(!fullScreen){
+							windowManager.changeScreen(fullScreen);
+							ProjMatrix = glm::perspective(glm::radians(70.f), windowManager.maxWidth/(float)windowManager.maxHeight, 0.2f, 100.f);
+							fullScreen = true;
+							glViewport(0,  0,  windowManager.maxWidth,  windowManager.maxHeight);
+						}
+						else{
+							windowManager.changeScreen(fullScreen);
+							ProjMatrix = glm::perspective(glm::radians(70.f), windowManager.normalWidth/(float)windowManager.normalHeight, 0.2f, 100.f);
+							fullScreen = false;
+							glViewport(0,  0,  windowManager.normalWidth,  windowManager.normalHeight);
+						}
 						break;
 					default : break;
 			}

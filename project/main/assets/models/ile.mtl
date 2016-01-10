@@ -1,5 +1,5 @@
 # 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
-# File Created: 10.01.2016 10:59:18
+# File Created: 10.01.2016 20:13:58
 
 newmtl fsShaderNoTexture_house
 	Ns 10.0000
@@ -13,8 +13,8 @@ newmtl fsShaderNoTexture_house
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
 
-newmtl fsShaderNoTexture_water
-	Ns 10.0000
+newmtl fsShaderWater_water
+	Ns 60.0000
 	Ni 1.5000
 	d 1.0000
 	Tr 0.0000
@@ -22,8 +22,9 @@ newmtl fsShaderNoTexture_water
 	illum 2
 	Ka 0.0000 0.0039 0.0118
 	Kd 0.1137 0.4000 0.9882
-	Ks 0.0000 0.0000 0.0000
+	Ks 0.5400 0.5400 0.5400
 	Ke 0.0000 0.0000 0.0000
+	map_bump -bm 0.3000 Map__0_Normal_Bump.tga
 
 newmtl fsShaderNoTexture_terre
 	Ns 10.0000
@@ -37,7 +38,7 @@ newmtl fsShaderNoTexture_terre
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
 
-newmtl fsShaderNoTexture_trunc
+newmtl fsShaderNoTexture_grass
 	Ns 10.0000
 	Ni 1.5000
 	d 1.0000
@@ -45,7 +46,19 @@ newmtl fsShaderNoTexture_trunc
 	Tf 1.0000 1.0000 1.0000 
 	illum 2
 	Ka 0.0196 0.0196 0.0196
-	Kd 0.0431 0.0235 0.0000
+	Kd 0.0431 0.2784 0.0000
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+
+newmtl fsShaderNoTexture_trunc
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0275 0.0118 0.0078
+	Kd 0.0275 0.0118 0.0078
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
 
@@ -61,12 +74,48 @@ newmtl fsShaderNoTexture_leaf
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
 
-newmtl wire_176026026
+newmtl wire_177028149
 	Ns 32
 	d 1
 	Tr 0
 	Tf 1 1 1
 	illum 2
-	Ka 0.6902 0.1020 0.1020
-	Kd 0.6902 0.1020 0.1020
+	Ka 0.6941 0.1098 0.5843
+	Kd 0.6941 0.1098 0.5843
 	Ks 0.3500 0.3500 0.3500
+
+newmtl fsShaderemissiveMesh_directionlightorange
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0118 0.0118 0.0118
+	Kd 0.8980 0.2824 0.0392
+	Ks 0.0000 0.0000 0.0000
+	Ke 1.0000 0.6392 0.4627
+
+newmtl fsShaderemissiveMesh_directionlightblue
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0039 0.0039 0.0039
+	Kd 0.2157 0.2353 0.5882
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.6431 0.6431 1.0000
+
+newmtl fsShaderemissiveMesh_directionlightwhite
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0039 0.0039 0.0039
+	Kd 0.4588 0.4588 0.4588
+	Ks 0.0000 0.0000 0.0000
+	Ke 1.0000 1.0000 1.0000

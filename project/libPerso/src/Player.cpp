@@ -45,5 +45,5 @@ void Player :: playerMove(const Uint8 *keystate){
 	else if ( keystate[SDLK_d]) moveLeft(-speedDep);
 
 	if ( keystate[SDLK_SPACE]) moveTop(speedDep);	// Monter
-	else if ( keystate[SDLK_RSHIFT] || keystate[SDLK_LSHIFT]) moveTop(-speedDep);	// Descendre
+	else if ( keystate[SDLK_RSHIFT] || keystate[SDLK_LSHIFT]) moveTop(-speedDep);	// Descendre	
 }

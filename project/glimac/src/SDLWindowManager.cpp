@@ -8,7 +8,16 @@ SDLWindowManager::SDLWindowManager(uint32_t width, uint32_t height, const char* 
         std::cerr << SDL_GetError() << std::endl;
         return;
     }
-    if(!SDL_SetVideoMode(width, height, 32, SDL_OPENGL | SDL_FULLSCREEN)) {
+   // SDL_SetVideoMode(0, 0, 32, SDL_OPENGL | SDL_FULLSCREEN);
+    
+    const SDL_VideoInfo* screenInfo = SDL_GetVideoInfo();
+    maxWidth = screenInfo->current_w;
+    maxHeight = screenInfo->current_h;
+    
+    normalWidth = width;
+    normalHeight = height;
+	
+    if(!SDL_SetVideoMode(width, height, 32, SDL_OPENGL)) {
         std::cerr << SDL_GetError() << std::endl;
         return;
     }
@@ -44,6 +53,21 @@ void SDLWindowManager::swapBuffers() {
 
 float SDLWindowManager::getTime() const {
     return 0.001f * SDL_GetTicks();
+}
+
+void SDLWindowManager::changeScreen(bool fullScreen) const{
+	if(!fullScreen){
+		if(!SDL_SetVideoMode(maxWidth, maxHeight, 32, SDL_OPENGL | SDL_FULLSCREEN)) {
+			std::cerr << SDL_GetError() << std::endl;
+			return;
+		}
+	}
+	else{
+		if(!SDL_SetVideoMode(normalWidth, normalHeight, 32, SDL_OPENGL)) {
+			std::cerr << SDL_GetError() << std::endl;
+			return;
+		}
+	}
 }
 
 }

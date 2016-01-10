@@ -1,5 +1,5 @@
 # 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
-# File Created: 10.01.2016 15:01:28
+# File Created: 10.01.2016 15:38:40
 
 newmtl fsShaderNoTexture_poutres
 	Ns 10.0000
@@ -32,8 +32,8 @@ newmtl fsShaderemissiveMesh_cristal3
 	Tr 0.0000
 	Tf 1.0000 1.0000 1.0000 
 	illum 2
-	Ka 0.7686 0.0392 0.0392
-	Kd 0.7686 0.0392 0.0392
+	Ka 0.7686 0.2235 0.2235
+	Kd 0.7686 0.2235 0.2235
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0471 0.0039 0.0039
 
