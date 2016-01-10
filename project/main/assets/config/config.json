@@ -2,20 +2,20 @@
 	"directory": "models",
 	"fileToLoad":
 	{
-		"test1" :
+		"site1" :
 		{
-			"path" : "hub.obj",
-			"next" : ["test3","test2"]			
+			"path" : "Site1/hub.obj",
+			"next" : ["site3","site2"]			
 		},
-		"test2" :
-		{
-			"path" : "ile.obj",
-			"next" : ["test1","test3"]			
-		},
-		"test3" : 
+		"site2" :
 		{
 			"path" : "Site2/grotte.obj",
-			"next" : ["test2","test1"]			
+			"next" : ["site1","site3"]			
+		},
+		"site3" : 
+		{
+			"path" : "Site3/ile.obj",
+			"next" : ["site2","site1"]			
 		}	
 	}
 		

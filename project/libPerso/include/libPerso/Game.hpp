@@ -21,6 +21,7 @@ class Game{
 		
 		bool loopPlay;
 		
+		glm::mat4 ProjMatrix;
 		
 		int initOpenGLProperties();
 		

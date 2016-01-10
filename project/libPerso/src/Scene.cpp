@@ -122,7 +122,8 @@ void Scene::processNode(const aiNode* aNode, const aiScene* aScene, map<array<st
 		if(aScene->HasMaterials()) mat = aScene->mMaterials[aMesh->mMaterialIndex];
 		else mat = NULL;
 		
-		
+
+
 		if(nameMesh.find("DirectionLight") != string::npos){
 			vectorDirLights.push_back(DirectionalLight(aMesh, mat));
 		}
@@ -134,6 +135,7 @@ void Scene::processNode(const aiNode* aNode, const aiScene* aScene, map<array<st
 			}
 			else if(nameMesh.find("Camera") != string::npos){
 				cameraPosition = glm::vec3(mesh.getPosCenter());
+				
 				if(aMesh->HasNormals()){
 					cameraFront = glm::vec3(aMesh->mNormals[0].x, aMesh->mNormals[0].y, aMesh->mNormals[0].z);
 				}
@@ -281,12 +283,12 @@ void Scene::verifFileShaders (string &pathShader, const string &fileExtention){
 
 // Dessin
 
-void Scene::drawScene(const glm::mat4 &globalMVMatrix){
-
+void Scene::drawScene(const glm::mat4 &globalMVMatrix, const glm::mat4 &ProjMatrix){
 	for(auto it = mapMeshByShaders.begin(); it != mapMeshByShaders.end(); it++){
 		it->first.use();
 		
-		initUniformValue(it->first, globalMVMatrix);
+		initUniformValue(it->first, globalMVMatrix, ProjMatrix);
+
 		lightsBuffer.bindLights(it->first, lights);
 		dirLightsBuffer.bindLights(it->first, dirLights);
 		
@@ -299,12 +301,7 @@ void Scene::drawScene(const glm::mat4 &globalMVMatrix){
 
 
 // Envoie des uniformes value.
-void Scene::initUniformValue(const Program &program, const glm::mat4 &globalMVMatrix){
-
-	//-----------------------------
-	glm::mat4 ProjMatrix = glm::perspective(glm::radians(70.f),1.f,0.1f,100.f);
-	//-----------------------------
-
+void Scene::initUniformValue(const Program &program, const glm::mat4 &globalMVMatrix, const glm::mat4 &ProjMatrix){
 	glUniformMatrix4fv(glGetUniformLocation(program.getGLId(), "uMVMatrix"), 1, GL_FALSE, glm::value_ptr(globalMVMatrix));
 	glUniformMatrix4fv(glGetUniformLocation(program.getGLId(), "uNormalMatrix"), 1, GL_FALSE, glm::value_ptr(glm::transpose(glm::inverse(globalMVMatrix))));
 	glUniformMatrix4fv(glGetUniformLocation(program.getGLId(), "uMVPMatrix"), 1, GL_FALSE, glm::value_ptr(ProjMatrix * globalMVMatrix));

@@ -34,5 +34,5 @@ void main() {
 
 	// Calcul de la position projetée
 	
-	gl_Position = uMVPMatrix*vec4(0.6*aVertexPosition.x, 0.6*aVertexPosition.y - 0.5, 0.6*aVertexPosition.z, 1);
+	gl_Position = uMVPMatrix*vec4(aVertexPosition.x, aVertexPosition.y, aVertexPosition.z, 1);
 }

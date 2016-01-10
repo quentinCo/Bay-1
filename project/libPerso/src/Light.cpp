@@ -56,7 +56,7 @@ DirectionalLight::DirectionalLight(const aiMesh *mesh, const aiMaterial *mat)
 
 	aiColor4D aColor;
 	if (AI_SUCCESS == aiGetMaterialColor(mat, AI_MATKEY_COLOR_EMISSIVE, &aColor)){
-		lightIntensity = vec4(vec3(aColor.r, aColor.g, aColor.b) * 1000.f, 0 );
+		lightIntensity = vec4(vec3(aColor.r, aColor.g, aColor.b), 0 );
 	}
 }
 
