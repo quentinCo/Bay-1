@@ -16,3 +16,9 @@ Contrôles de navigation :
 	right : aller au site suivant
 	
 	f : full screan
+	
+
+Rôles :
+	Designer 3D / Shader : Quentin GUITTARD
+	Shader / Lumière : Corentin LIMOGE
+	Moteur : Quentin COUILLARD
