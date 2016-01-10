@@ -19,12 +19,12 @@ Contrôles de navigation :
 	
 
 Rôles :
-	Designer 3D : Quentin GUITTARD
+	Moteur : Quentin COUILLARD
 	
 	Shader : Corentin LIMOGE / Quentin GUITTARD
 	
 	Lumière : Corentin LIMOGE 
 	
-	Moteur : Quentin COUILLARD
+	Designer 3D : Quentin GUITTARD
 	
 	Architecture : Quentin COUILLARD
