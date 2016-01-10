@@ -1,5 +1,5 @@
 # 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
-# File Created: 10.01.2016 19:02:11
+# File Created: 10.01.2016 19:25:23
 
 newmtl fsShaderNoTexture_house
 	Ns 10.0000
@@ -94,7 +94,7 @@ newmtl fsShaderemissiveMesh_directionlightorange
 	Ka 0.0118 0.0118 0.0118
 	Kd 0.8980 0.2824 0.0392
 	Ks 0.0000 0.0000 0.0000
-	Ke 0.2000 0.0784 0.0157
+	Ke 1.0000 0.6392 0.4627
 
 newmtl fsShaderemissiveMesh_directionlightblue
 	Ns 10.0000
@@ -106,7 +106,7 @@ newmtl fsShaderemissiveMesh_directionlightblue
 	Ka 0.0039 0.0039 0.0039
 	Kd 0.2157 0.2353 0.5882
 	Ks 0.0000 0.0000 0.0000
-	Ke 0.0902 0.0902 0.1922
+	Ke 0.6431 0.6431 1.0000
 
 newmtl fsShaderemissiveMesh_directionlightwhite
 	Ns 10.0000
@@ -118,4 +118,4 @@ newmtl fsShaderemissiveMesh_directionlightwhite
 	Ka 0.0039 0.0039 0.0039
 	Kd 0.4588 0.4588 0.4588
 	Ks 0.0000 0.0000 0.0000
-	Ke 0.2000 0.2000 0.2000
+	Ke 1.0000 1.0000 1.0000
