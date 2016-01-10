@@ -9,7 +9,7 @@
 		},
 		"test2" :
 		{
-			"path" : "grotte.obj",
+			"path" : "ile.obj",
 			"next" : ["test1","test3"]			
 		},
 		"test3" : 
