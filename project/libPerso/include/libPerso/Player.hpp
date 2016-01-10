@@ -28,6 +28,8 @@ class Player: public Camera{
 
 		glm::vec3 getFrontPlayer() const;
 
+		void setFrontVector(const glm::vec3 &frontVector);
+
 		void moveLeft(float t);
 		void moveFront(float t);
 		void moveTop(float t);

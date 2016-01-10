@@ -1,4 +1,4 @@
-	#include <libPerso/Player.hpp>
+#include <libPerso/Player.hpp>
 
 using namespace glm;
 
@@ -12,6 +12,10 @@ Player :: ~Player(){}
 
 vec3 Player :: getFrontPlayer() const {return frontPlayer;}
 
+void Player::setFrontVector(const glm::vec3 &frontVector){
+	Camera::setFrontVector(frontVector);
+	frontPlayer = vec3(std::cos(0)*std::sin(getPhi()), std::sin(0), std::cos(0)*std::cos(getPhi()));
+}
 
 void Player :: moveLeft(float t){
 	Camera :: moveLeft(t);

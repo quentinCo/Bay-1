@@ -39,7 +39,7 @@ class Camera{
 		glm::vec3 getLeftVector() const;	
 		glm::vec3 getUpVector() const;
 		
-		void setFrontVector(const glm::vec3 &frontVector);
+		virtual void setFrontVector(const glm::vec3 &frontVector);
 		void setPosition(glm::vec3 pos);
 		void setPhi(float radian);
 		void setTheta(float radian);
