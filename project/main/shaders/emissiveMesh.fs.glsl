@@ -25,5 +25,4 @@ void main() {
 	vec3 N = vNormal_vs;
 
 	fFragColor = uMaterial.emissionColor * 30 * dot((vec3(0,0,1) + N)*0.5,N);
-	//fFragColor = (inverse(uMVMatrix) * vec4(N, 0)).xyz;
 }
