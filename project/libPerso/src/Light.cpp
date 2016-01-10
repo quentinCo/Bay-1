@@ -16,8 +16,6 @@ EllipsoidLight::EllipsoidLight(const vec4 &pos, const vec4 &halfA, const vec4 &l
 	//numLights++;
 }
 
-EllipsoidLight::EllipsoidLight(const aiVector3D v):EllipsoidLight(vec4(v.x, v.y, v.z, 1)){}
-
 EllipsoidLight::EllipsoidLight(const Mesh &mesh, bool adaptSize){
 	position = vec4(mesh.getPosCenter(), 1);
 	
@@ -62,14 +60,24 @@ DirectionalLight::DirectionalLight(const vec4 &dir, const vec4 &lightI)
 	//numLights++;
 }
 
-DirectionalLight::DirectionalLight(const aiMesh *mesh)
+DirectionalLight::DirectionalLight(const aiMesh *mesh, const aiMaterial *mat)
 :DirectionalLight(vec4(
 	mesh->mVertices[0].x + mesh->mVertices[1].x,
 	mesh->mVertices[0].y + mesh->mVertices[1].y,
 	mesh->mVertices[0].z + mesh->mVertices[1].z,
 	0
-	))
-{}
+	)
+)
+{
+
+	if(mesh->HasNormals()) direction = vec4(mesh->mNormals[0].x, mesh->mNormals[0].y, mesh->mNormals[0].z, 0);
+	//std::cout << "DIRECT LIGHT NORMAL : " << direction << std::endl;
+	//lightIntensity = vec4(0,1,0,0);
+	aiColor4D aColor;
+	if (AI_SUCCESS == aiGetMaterialColor(mat, AI_MATKEY_COLOR_EMISSIVE, &aColor)){
+		lightIntensity = vec4(vec3(aColor.r, aColor.g, aColor.b) * 2000.f, 0 );
+	}
+}
 
 
 DirectionalLight::DirectionalLight(const DirectionalLight &l)

@@ -5,8 +5,6 @@ using namespace glm;
 Player :: Player(const vec3 &pos, const vec3 &frontVector, float speedMove, float speedAngle)
 : Camera(glm::vec3(pos.x, pos.y, pos.z) , frontVector), speedDep(speedMove), speedRotate(speedAngle), mousePositionInit(false){
 	frontPlayer = vec3(std::cos(0)*std::sin(getPhi()), std::sin(0), std::cos(0)*std::cos(getPhi()));
-
-	setPosition(pos);	
 }
 
 Player :: ~Player(){}
