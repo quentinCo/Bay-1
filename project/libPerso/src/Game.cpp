@@ -49,7 +49,11 @@ int Game::initOpenGLProperties(){
 		std::cerr << glewGetErrorString(glewInitError) << std::endl;
 		return EXIT_FAILURE;
 	}
-
+	
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glOrtho(-20.f,  20.f,  1.f, -1.f, 0.1f, 100.f);
+	
 	std::cout << "OpenGL Version : " << glGetString(GL_VERSION) << std::endl;
 	std::cout << "GLEW Version : " << glewGetString(GLEW_VERSION) << std::endl;
 	
