@@ -8,6 +8,7 @@ Camera :: Camera(const vec3 &pos, const vec3 &frontVector) : m_Position(pos){
 	vec3 normalizeFront = normalize(frontVector);
 	
 	m_fTheta = asin(normalizeFront.y);
+	
 	m_fPhi = acos(normalizeFront.z / cos(m_fTheta));
 	
 	computeDirectionVectors();

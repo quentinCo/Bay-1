@@ -60,8 +60,8 @@ Scene& Scene::operator =(Scene&& rvalue){
 Scene::~Scene(){
 	occurenceCounter[id]--;
 	if(occurenceCounter[id] == 0){
-		if(lights != NULL) delete [] lights;		// Modifier ici ce sont des tableaux à supprimer donc delete [] lights.
-		if(dirLights != NULL) delete [] dirLights;		// De même.
+		if(lights != NULL) delete [] lights;
+		if(dirLights != NULL) delete [] dirLights;
 	}
 }
 // ---------------------
@@ -96,13 +96,11 @@ int Scene::loadScene(const string path){
 	cameraPosition = glm::vec3(0,0,0);
 	cameraFront = glm::vec3(0,0,-1);
 
-	//std::cout<<"DEBUT LOADSCENE"<<std::endl;
 	processNode(aScene->mRootNode, aScene, mapNameShader);
 	
 	initUniformLightTabs();
 	
 	for(auto it : mapNameShader){
-		//cout << "it.first[0] : " << it.first[0] << " --- it.first[1] : " << it.first[1] << endl;
 		mapMeshByShaders.insert(pair<Program, vector<Mesh>>(loadProgramShader(glimac::FilePath(it.first[0]),glimac::FilePath(it.first[1])), it.second));
 	}
 	
@@ -114,7 +112,6 @@ int Scene::loadScene(const string path){
 void Scene::processNode(const aiNode* aNode, const aiScene* aScene, map<array<string, 2>, vector<Mesh>> &mapNameShader){
 	for(GLuint i = 0; i < aNode->mNumMeshes; i++)
 	{
-		//cout << "\n---------------------------------------" <<endl;
 		aiMesh* aMesh = aScene->mMeshes[aNode->mMeshes[i]];
 	
 		string nameMesh = aNode->mName.data;
@@ -125,30 +122,25 @@ void Scene::processNode(const aiNode* aNode, const aiScene* aScene, map<array<st
 		if(aScene->HasMaterials()) mat = aScene->mMaterials[aMesh->mMaterialIndex];
 		else mat = NULL;
 		
-		//cout << "nameMesh --> : " << nameMesh << endl;
+		
 		if(nameMesh.find("DirectionLight") != string::npos){
-			cout << "DirectionLight------------------------------<" << endl;
 			vectorDirLights.push_back(DirectionalLight(aMesh, mat));
 		}
 		else{
 			Mesh mesh = Mesh(aMesh, mat);
 			
 			if(nameMesh.find("PointLight") != string::npos){
-				cout << "PointLight**********************************<" << endl;
 				vectorLights.push_back(EllipsoidLight(mesh));
 			}
 			else if(nameMesh.find("Camera") != string::npos){
-				cout << "Camera<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<" << endl;
 				cameraPosition = glm::vec3(mesh.getPosCenter());
 				if(aMesh->HasNormals()){
 					cameraFront = glm::vec3(aMesh->mNormals[0].x, aMesh->mNormals[0].y, aMesh->mNormals[0].z);
 				}
-				std::cout << "CAMERA SCENE : " << cameraPosition << "\n\n" << cameraFront << std::endl;
 			}
 			else{
 	
 				if(nameMesh.find("MeshBright") != string::npos){
-					cout << "MeshBright////////////////////////////////<" << endl;
 					vectorLights.push_back(EllipsoidLight(mesh, true));
 				}
 	
@@ -163,29 +155,11 @@ void Scene::processNode(const aiNode* aNode, const aiScene* aScene, map<array<st
 }
 // ---------------------
 
-// Gestion des types de mesh
-/*
-Mesh Scene::selectTypeMesh (const string &name,const aiMesh *aMesh, const aiMaterial *mat){
-	Mesh *mesh;
-	if(name.find_first_of("MeshBright") != string::npos){
-		MeshBright *bmesh = new MeshBright(aMesh, mat);
-		mesh = bmesh;
-		vectorLights.push_back(bmesh->getLight());
-	}
-	else {
-		mesh = new Mesh(aMesh, mat);
-	}
-	
-	//return mesh;
-}*/
-// ---------------------
 
 // Initialisation des textures
 vector<Texture> Scene::processTexture(const aiMesh* aiMesh, const aiScene* scene, const aiMaterial *mat){
 
 	vector<Texture> textures;
-	
-	//cout << "Load Texture : " <<endl;
 	
 	if(mat){
 		vector<Texture> diffuseMaps = loadMaterialTextures(mat, aiTextureType_DIFFUSE, "Texture_diffuse");
@@ -217,7 +191,6 @@ vector<Texture> Scene::processTexture(const aiMesh* aiMesh, const aiScene* scene
 vector<Texture> Scene::loadMaterialTextures(const aiMaterial* mat, const aiTextureType type, string typeName){
 	vector<Texture> texturesType;
 
-	//std::cout << typeName << std::endl;
 	for(GLuint i = 0; i < mat->GetTextureCount(type); i++){
 		aiString str;
 		mat->GetTexture(type, i, &str);
@@ -246,7 +219,7 @@ vector<Texture> Scene::loadMaterialTextures(const aiMaterial* mat, const aiTextu
 // Gestion map shader
 	// Recupération des noms des shaders pour chaque mesh
 void Scene::addToMapShadersName(map<array<string, 2>,vector<Mesh>> &mapNameShader, const aiMaterial *mat, const Mesh &mesh){
-	//cout << "Find Shaders :" << endl;
+
 	if(mat){
 		aiString aNameMat;
 		mat->Get(AI_MATKEY_NAME, aNameMat);
@@ -266,7 +239,6 @@ void Scene::addToMapShadersName(map<array<string, 2>,vector<Mesh>> &mapNameShade
 		
 		if(mapNameShader.find(pairShaders) != mapNameShader.end()) {
 			mapNameShader[pairShaders].push_back(mesh);
-			//cout << "\tAdd to an exitent list" << endl;
 		}
 		else{
 			verifFileShaders(pairShaders[0], ".vs.glsl");
@@ -278,7 +250,7 @@ void Scene::addToMapShadersName(map<array<string, 2>,vector<Mesh>> &mapNameShade
 
 	// Recuperation du nom des shaders pour dans le nom du matériaux du mesh
 string Scene::recoverNameShader (const string &nameMat, const string &begin, char end){
-	//------------------------->cout << "recoverName : " << nameMat <<endl;
+	
 	size_t posBegin = nameMat.find(begin);
 	string nameShader;
 	
@@ -287,16 +259,15 @@ string Scene::recoverNameShader (const string &nameMat, const string &begin, cha
 		nameShader = step1.substr(begin.length(), step1.find_first_of(end)-begin.length());
 	}
 	else nameShader = "default";
-	//-------------------------->cout << "\t" << nameShader << endl;
+	
 	return nameShader;
 }
 
 	// Verification de l'existance du shader
 void Scene::verifFileShaders (string &pathShader, const string &fileExtention){
-	//-------------------------->cout << "verifFileShaders : "<< pathShader <<endl;
+	
 	if(FILE *file = fopen(pathShader.c_str(), "r")){
 		fclose(file);
-		//cout << "\t" << pathShader << endl;
 	}
 	else{
 		cout << "ERROR :" <<endl;
@@ -311,20 +282,9 @@ void Scene::verifFileShaders (string &pathShader, const string &fileExtention){
 // Dessin
 
 void Scene::drawScene(const glm::mat4 &globalMVMatrix){
-	//for(auto it : meshes) it.drawMesh(prog);
 
 	for(auto it = mapMeshByShaders.begin(); it != mapMeshByShaders.end(); it++){
 		it->first.use();
-		
-		//cout << "ID program : " << it->first.getGLId() << endl;
-		/*int ns;   
-		glGetProgramiv(it->first.getGLId(), GL_ATTACHED_SHADERS, &ns);   
-	
-			GLuint *shaders=new GLuint [ns];   
-			glGetAttachedShaders(it->first.getGLId(), ns, NULL, shaders);
-			for(int i; i<ns; i++){
-				cout << shaders[i] << endl;
-			}*/
 		
 		initUniformValue(it->first, globalMVMatrix);
 		lightsBuffer.bindLights(it->first, lights);
@@ -333,37 +293,7 @@ void Scene::drawScene(const glm::mat4 &globalMVMatrix){
 		for(auto mesh : it->second) mesh.drawMesh(it->first);
 		
 		lightsBuffer.unbindLights();
-		dirLightsBuffer.unbindLights();
-		
-		//Binding des lumières----------------------------------
-		/*
-		EllipsoidLight lights[3]; // Déclaration du tableau des lumières ellipsoïdales, à la place du 3, tu devras mettre le bon nombre de lumières, on en a 100 au maximum
-		
-		for(int i = 0; i < EllipsoidLight::numLights; ++i){
-			lights[i] = EllipsoidLight(
-				glm::vec4(0, 1, 0, 1), // Position du centre de la lumière, la dernière valeur doit rester à 1 vu que c'est un point
-				glm::vec4(1, 1, 1, 0), // Coefficients d'étirement, tu la définiras avec ta hitbox, le x devra être la moitié de la largeur, le y la moitié de la hauteur et le z la moitié de la profondeur et dernière valeur à 0
-				glm::vec4(1, 10, 1, 0) // Intensité lumineuse, RGB et dernière valeur à 0 
-			);
-		}
-		
-		bindLights(it->first, lights); // Ici on envoie les lumières aux programmes de shader
-		
-		*/
-		/*
-		DirectionalLight dirlights[0]; // Déclaration du tableau des lumières directionnelles, à la place du 0, tu devras mettre le bon nombre de lumières, on en a 100 au maximum
-		
-		for(int i = 0; i < DirectionalLight::numLights; ++i){
-			dirlights[i] = DirectionalLight(
-				glm::vec4(1, 1, 1, 0), // Direction de la lumière, la dernière valeur doit rester à 0 vu que c'est un point
-				glm::vec4(1, 1, 1, 0) // Intensité lumineuse, RGB et dernière valeur à 0 
-			);
-		}
-		
-		bindLights(it->first, dirLights); // Ici on envoie les lumières aux programmes de shader
-		*/
-		//---------------------------------------------------
-		
+		dirLightsBuffer.unbindLights();		
 	}
 }
 
@@ -382,25 +312,17 @@ void Scene::initUniformValue(const Program &program, const glm::mat4 &globalMVMa
 
 void Scene::initUniformLightTabs(){
 	EllipsoidLight::numLights = vectorLights.size();
-	cout << EllipsoidLight::numLights << endl;
+
 	lights = new EllipsoidLight[EllipsoidLight::numLights];
-	for(unsigned int i = 0; i < vectorLights.size(); i++){
-		lights[i] = vectorLights[i];
-		cout << "----------\n" << endl;
-		cout << lights[i] << endl;
-	}
+	for(unsigned int i = 0; i < vectorLights.size(); i++) lights[i] = vectorLights[i];
+	
 	vectorLights.clear();
-	cout << "EllipsoidLight::numLights => " << EllipsoidLight::numLights << endl;
 	
 	DirectionalLight::numLights = vectorDirLights.size();
 	dirLights = new DirectionalLight[DirectionalLight::numLights];
-	for(unsigned int i = 0; i < vectorDirLights.size(); i++){
-		dirLights[i] = vectorDirLights[i];
-		cout << "----------\n" << endl;
-		cout << dirLights[i] << endl;
-	}
+	for(unsigned int i = 0; i < vectorDirLights.size(); i++) dirLights[i] = vectorDirLights[i];
+	
 	vectorDirLights.clear();
-	cout << "DirectionalLight::numLights => " << DirectionalLight::numLights << endl;
 }
 // ---------------------
 

@@ -13,7 +13,6 @@ Game::Game(string dir, string winName, uint32_t windowWidth, uint32_t windowHeig
 	
 	// Initialisatioin du chemin pour les shaders.
 	Program::setShadersDirectory(currentDir);
-	std::cout << " dir : " << currentDir <<endl; 
 
 	// Initialisation des propriètés OpenGL. 
 	initOpenGLProperties();
@@ -22,7 +21,7 @@ Game::Game(string dir, string winName, uint32_t windowWidth, uint32_t windowHeig
 	initListeSite();
 	
 	// Chargement du premier site.
-	player = Player(glm::vec3(0,0,0), glm::vec3(0,0,1), 0.5, 0.5);;
+	player = Player(glm::vec3(0,0,0), glm::vec3(0,0,-1), 0.05, 0.5);;
 	initNewCurrentSite(siteHeader[firstSite]);
 }
 
@@ -81,11 +80,11 @@ int Game::initListeSite(){
 	
 	rapidjson::FileReadStream bis(fp, readBuffer, sizeof(readBuffer));
 	
-	rapidjson::AutoUTFInputStream<unsigned, rapidjson::FileReadStream> eis(bis);  // wraps bis into eis
+	rapidjson::AutoUTFInputStream<unsigned, rapidjson::FileReadStream> eis(bis);
 	
 	rapidjson::Document doc;
 	
-	doc.ParseStream<0, rapidjson::AutoUTF<unsigned> >(eis); // This parses any UTF file into UTF-8 in memory
+	doc.ParseStream<0, rapidjson::AutoUTF<unsigned> >(eis);
 	fclose(fp);
 
 	string directorySite = doc["directory"].GetString();
@@ -103,7 +102,6 @@ int Game::initListeSite(){
 			const rapidjson::Value& nextElement = site->value["next"];
 			for(rapidjson::SizeType j = 0; j < nextElement.Size(); j++){
 				next[j] = nextElement[j].GetString();
-				//std::cout << "i : " << j << " --- > " << nextElement[j].GetString() << std::endl;
 			}
 			
 			siteHeader.insert(std::pair<string,SceneHeader>(
@@ -113,7 +111,7 @@ int Game::initListeSite(){
 		}
 	}
 	else{
-		std::cerr << "Le fichier n'est conforme" << std::endl;
+		std::cerr << "Le fichier n'est pas conforme" << std::endl;
 		return EXIT_FAILURE;
 	}
 	
@@ -125,23 +123,17 @@ void Game::initNewCurrentSite(const SceneHeader &scene){
 	currentSite = Scene(scene.path, scene.next);
 	
 	player.setPosition(currentSite.getCameraPosition());
-	cout << "scene.getPosition : " << currentSite.getCameraPosition() <<endl;
-	cout << "player.getPosition : " << player.getPosition() <<endl;
 	player.setFrontVector(currentSite.getCameraFront());
-	
-	cout << "scene.getCameraFront : " << currentSite.getCameraFront() <<endl;
-	cout << "player.getFrontVector : " << player.getFrontVector() <<endl;
 }
 
 void Game::gamePlay(){
-	cout << "PLAY" <<endl;
 	loopPlay = false;
 	while(!loopPlay) {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		
 		// Dessin
 		glm::mat4 viewMatrix = player.getViewMatrix();
-		//cout << "viewMatrix : " << viewMatrix <<endl;
+		
 		currentSite.drawScene(viewMatrix);
 
 		
@@ -153,7 +145,6 @@ void Game::gamePlay(){
 }
 
 void Game::gameEvent(){
-	//cout<<"EVENT GESTION" << endl;
 	SDL_Event e;
 	string next ="";			
 	while(SDL_PollEvent(&e)){
@@ -163,7 +154,6 @@ void Game::gameEvent(){
 		}
 		switch(e.type){
 			case SDL_MOUSEMOTION:
-				//cout << "MOUSE MOVE" << endl;
 				player.playerRotate(e.motion);
 				break;
 

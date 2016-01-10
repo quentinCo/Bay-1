@@ -23,12 +23,10 @@ class LightBuffer{
 		}
 		
 		LightBuffer(const LightBuffer<lightT> &l): ubo(l.ubo), target(l.target){
-			std::cout << "COPIE" <<std::endl;
 			occurenceCounter[ubo]++;
 		}
 		
 		LightBuffer& operator =(LightBuffer<lightT>& lvalue){
-			std::cout << "& = &" <<std::endl;
 			ubo = lvalue.ubo;
 			target = lvalue.target;
 			
@@ -48,10 +46,7 @@ class LightBuffer{
 		
 		~LightBuffer(){
 			occurenceCounter[ubo]--;
-			std::cout << "DELETE : ubo " << occurenceCounter[ubo] << std::endl;
-			if(occurenceCounter[ubo] == 0){
-				glDeleteBuffers(1, &ubo);
-			}
+			if(occurenceCounter[ubo] == 0){ glDeleteBuffers(1, &ubo);}
 		}
 		
 		void bindLights(const Program &prog, const lightT *lights){

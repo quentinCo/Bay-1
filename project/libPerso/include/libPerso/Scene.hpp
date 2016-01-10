@@ -64,10 +64,6 @@ class Scene
 		std::vector<Texture> loadMaterialTextures(const aiMaterial* mat,const aiTextureType type, std::string typeName);
 		// ---------------------
 		
-		// Gestion des types de mesh
-		//Mesh selectTypeMesh (const std::string &name,const aiMesh *aMesh, const aiMaterial *mat);
-		// ---------------------
-		
 		// Gestion du map shader
 		void addToMapShadersName(std::map<std::array<std::string, 2>,std::vector<Mesh>> &mapNameShader, const aiMaterial *mat, const Mesh &mesh);
 		std::string recoverNameShader (const std::string &nameMat, const std::string &begin, char end);
