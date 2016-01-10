@@ -96,7 +96,7 @@ int Scene::loadScene(const string path){
 	cameraPosition = glm::vec3(0,0,0);
 	cameraFront = glm::vec3(0,0,-1);
 
-	std::cout<<"DEBUT LOADSCENE"<<std::endl;
+	//std::cout<<"DEBUT LOADSCENE"<<std::endl;
 	processNode(aScene->mRootNode, aScene, mapNameShader);
 	
 	initUniformLightTabs();
@@ -119,32 +119,31 @@ void Scene::processNode(const aiNode* aNode, const aiScene* aScene, map<array<st
 	
 		string nameMesh = aNode->mName.data;
 		
-		cout << "nameMesh --> : " << nameMesh << endl;
+		
+		aiMaterial *mat;
+
+		if(aScene->HasMaterials()) mat = aScene->mMaterials[aMesh->mMaterialIndex];
+		else mat = NULL;
+		
+		//cout << "nameMesh --> : " << nameMesh << endl;
 		if(nameMesh.find("DirectionLight") != string::npos){
 			cout << "DirectionLight------------------------------<" << endl;
-			vectorDirLights.push_back(DirectionalLight(aMesh));
-		}
-		else if(nameMesh.find("Camera") != string::npos){
-			cout << "Camera<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<" << endl;
-			cameraPosition = glm::vec3(aMesh->mVertices[0].x, aMesh->mVertices[0].y, aMesh->mVertices[0].z);
-			cameraFront = glm::vec3(
-				aMesh->mVertices[1].x - aMesh->mVertices[0].x,
-				aMesh->mVertices[1].y - aMesh->mVertices[0].y,
-				aMesh->mVertices[1].z - aMesh->mVertices[0].z
-			);
-			std::cout << "CAMERA SCENE : " << cameraPosition << "\n\n" << cameraFront << std::endl;
+			vectorDirLights.push_back(DirectionalLight(aMesh, mat));
 		}
 		else{
-			aiMaterial *mat;
-	
-			if(aScene->HasMaterials()) mat = aScene->mMaterials[aMesh->mMaterialIndex];
-			else mat = NULL;
-		
 			Mesh mesh = Mesh(aMesh, mat);
 			
 			if(nameMesh.find("PointLight") != string::npos){
 				cout << "PointLight**********************************<" << endl;
 				vectorLights.push_back(EllipsoidLight(mesh));
+			}
+			else if(nameMesh.find("Camera") != string::npos){
+				cout << "Camera<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<" << endl;
+				cameraPosition = glm::vec3(mesh.getPosCenter());
+				if(aMesh->HasNormals()){
+					cameraFront = glm::vec3(aMesh->mNormals[0].x, aMesh->mNormals[0].y, aMesh->mNormals[0].z);
+				}
+				std::cout << "CAMERA SCENE : " << cameraPosition << "\n\n" << cameraFront << std::endl;
 			}
 			else{
 	
@@ -186,7 +185,7 @@ vector<Texture> Scene::processTexture(const aiMesh* aiMesh, const aiScene* scene
 
 	vector<Texture> textures;
 	
-	cout << "Load Texture : " <<endl;
+	//cout << "Load Texture : " <<endl;
 	
 	if(mat){
 		vector<Texture> diffuseMaps = loadMaterialTextures(mat, aiTextureType_DIFFUSE, "Texture_diffuse");
@@ -247,7 +246,7 @@ vector<Texture> Scene::loadMaterialTextures(const aiMaterial* mat, const aiTextu
 // Gestion map shader
 	// Recupération des noms des shaders pour chaque mesh
 void Scene::addToMapShadersName(map<array<string, 2>,vector<Mesh>> &mapNameShader, const aiMaterial *mat, const Mesh &mesh){
-	cout << "Find Shaders :" << endl;
+	//cout << "Find Shaders :" << endl;
 	if(mat){
 		aiString aNameMat;
 		mat->Get(AI_MATKEY_NAME, aNameMat);
@@ -267,7 +266,7 @@ void Scene::addToMapShadersName(map<array<string, 2>,vector<Mesh>> &mapNameShade
 		
 		if(mapNameShader.find(pairShaders) != mapNameShader.end()) {
 			mapNameShader[pairShaders].push_back(mesh);
-			cout << "\tAdd to an exitent list" << endl;
+			//cout << "\tAdd to an exitent list" << endl;
 		}
 		else{
 			verifFileShaders(pairShaders[0], ".vs.glsl");
@@ -297,7 +296,7 @@ void Scene::verifFileShaders (string &pathShader, const string &fileExtention){
 	//-------------------------->cout << "verifFileShaders : "<< pathShader <<endl;
 	if(FILE *file = fopen(pathShader.c_str(), "r")){
 		fclose(file);
-		cout << "\t" << pathShader << endl;
+		//cout << "\t" << pathShader << endl;
 	}
 	else{
 		cout << "ERROR :" <<endl;

@@ -29,8 +29,6 @@ struct EllipsoidLight{
 		const glm::vec4 &lightI= glm::vec4(1,1,1,0)
 	);
 	
-	EllipsoidLight(const aiVector3D v);
-	
 	EllipsoidLight(const Mesh &mesh, bool adaptSize = false);
 	
 	EllipsoidLight(const EllipsoidLight &p);
@@ -52,7 +50,7 @@ struct DirectionalLight{
 		const glm::vec4 &lightI= glm::vec4(1,1,1,0)
 	);
 	
-	DirectionalLight(const aiMesh *mesh);
+	DirectionalLight(const aiMesh *mesh, const aiMaterial *mat);
 	
 	DirectionalLight(const DirectionalLight &p);
 	~DirectionalLight();
