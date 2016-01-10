@@ -1,5 +1,5 @@
 # 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
-# File Created: 10.01.2016 20:13:58
+# File Created: 10.01.2016 21:57:56
 
 mtllib ile.mtl
 
@@ -16773,8 +16773,8 @@ usemtl fsShaderNoTexture_grass
 f 3274//3280 3519//3280 3650//3280 
 usemtl fsShaderNoTexture_terre
 f 3426//3281 3631//3281 3478//3281 
-f 3468//3282 3495//3282 3264//3282 
 usemtl fsShaderNoTexture_grass
+f 3468//3282 3495//3282 3264//3282 
 f 3381//3283 3650//3283 3647//3283 
 usemtl fsShaderNoTexture_terre
 f 3408//3284 3691//3284 3321//3284 
