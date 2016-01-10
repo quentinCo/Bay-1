@@ -39,11 +39,7 @@ Texture& Texture::operator =(Texture&& rvalue){
 // Destructeur
 Texture::~Texture(){
 	occurenceCounter[textureId]--;
-	if(occurenceCounter[textureId] == 0){
-		std::cout<<"DELETE TEXTURE "<< textureId <<" : " << occurenceCounter[textureId] << std::endl;
-	
-		glDeleteTextures(1,&textureId);
-	}
+	if(occurenceCounter[textureId] == 0){ glDeleteTextures(1,&textureId);}
 }
 // ---------------------
 

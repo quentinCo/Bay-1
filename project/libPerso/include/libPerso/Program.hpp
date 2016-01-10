@@ -10,38 +10,38 @@
 
 // glimac Program modifié 
 class Program {
-private:
-	Program& operator =(const Program&);
+	private:
+		Program& operator =(const Program&);
 	
-	GLuint m_nGLId;
-	static std::string directory;
-	static std::map<GLuint, unsigned int> occurenceCounter;
+		GLuint m_nGLId;
+		static std::string directory;
+		static std::map<GLuint, unsigned int> occurenceCounter;
 	
-public:
-	Program();
+	public:
+		Program();
 
-	Program(const Program &p);
+		Program(const Program &p);
 
-	~Program();
+		~Program();
 
-	Program(Program&& rvalue);
+		Program(Program&& rvalue);
 
-	Program& operator =(Program&& rvalue);
+		Program& operator =(Program&& rvalue);
 	
-	bool operator <(const Program &rvalue)const;
+		bool operator <(const Program &rvalue)const;
 
-	GLuint getGLId() const ;
+		GLuint getGLId() const ;
 
-	void attachShader(const glimac::Shader& shader);
+		void attachShader(const glimac::Shader& shader);
 
-	bool link();
+		bool link();
 
-	const std::string getInfoLog() const;
+		const std::string getInfoLog() const;
 
-	static glimac::FilePath getShadersDirectory();
-	static void setShadersDirectory(glimac::FilePath dir);
+		static glimac::FilePath getShadersDirectory();
+		static void setShadersDirectory(glimac::FilePath dir);
 
-	void use() const;
+		void use() const;
 };
 
 // Build a GLSL program from source code

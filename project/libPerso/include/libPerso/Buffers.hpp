@@ -30,7 +30,6 @@ class Buffers{
 		}
 		
 		Buffers(const Buffers<T> &b):buffer(b.buffer), target(b.target), size(b.size){
-			//std::cout << " Copie const " << std :: endl;
 			occurenceCounter[buffer]++;
 		}
 				
@@ -40,10 +39,7 @@ class Buffers{
 			size = rvalue.size;
 			
 			rvalue.buffer = 0; // Plus de buffer
-			/*
-			std::cout << "this.buffer = " << buffer << std::endl;
-			std::cout << "rvalue.buffer =" << rvalue.buffer << std::endl;
-			*/
+			
 			return *this;
 		}
 		
@@ -52,10 +48,7 @@ class Buffers{
 		// Destructeur
 		~Buffers(){
 			occurenceCounter[buffer]--;
-			/*
-			std::cout << "DIE BUFFER : "<< buffer << std::endl;
-			std::cout << "COUNTER : " << counter[buffer] << std::endl;
-			*/
+	
 			if(occurenceCounter[buffer] == 0) glDeleteBuffers(1,&buffer);
 		}
 		// ---------------------

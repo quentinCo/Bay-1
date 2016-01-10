@@ -12,9 +12,7 @@ std::string DirectionalLight::uniformName = "uDirectionalLights";
 // Constructeurs
 EllipsoidLight::EllipsoidLight(const vec4 &pos, const vec4 &halfA, const vec4 &lightI)
 : position(pos), halfAxes(halfA), lightIntensity(lightI)
-{
-	//numLights++;
-}
+{}
 
 EllipsoidLight::EllipsoidLight(const Mesh &mesh, bool adaptSize){
 	position = vec4(mesh.getPosCenter(), 1);
@@ -28,23 +26,15 @@ EllipsoidLight::EllipsoidLight(const Mesh &mesh, bool adaptSize){
 	}
 	else
 		halfAxes = vec4(1, 1, 1, 0);
-	
-	
-	//numLights++;
 }
 
 EllipsoidLight::EllipsoidLight(const EllipsoidLight &l)
 : position(l.position), halfAxes(l.halfAxes), lightIntensity(l.lightIntensity)
-{
-	//numLights++;
-}
+{}
 // ---------------------
 
 // Destructeur
-EllipsoidLight::~EllipsoidLight(){
-	//numLights--;
-	std::cout << "DELETE LIGHT ELLIP" << std::endl;
-}
+EllipsoidLight::~EllipsoidLight(){}
 // ---------------------
 
 std::ostream & operator<< (std::ostream & os, const EllipsoidLight &light){
@@ -56,9 +46,7 @@ std::ostream & operator<< (std::ostream & os, const EllipsoidLight &light){
 
 DirectionalLight::DirectionalLight(const vec4 &dir, const vec4 &lightI)
 : direction(dir), lightIntensity(lightI)
-{
-	//numLights++;
-}
+{}
 
 DirectionalLight::DirectionalLight(const aiMesh *mesh, const aiMaterial *mat)
 :DirectionalLight()
@@ -68,22 +56,18 @@ DirectionalLight::DirectionalLight(const aiMesh *mesh, const aiMaterial *mat)
 
 	aiColor4D aColor;
 	if (AI_SUCCESS == aiGetMaterialColor(mat, AI_MATKEY_COLOR_EMISSIVE, &aColor)){
-		lightIntensity = vec4(vec3(aColor.r, aColor.g, aColor.b) * 1.f, 0 );
+		lightIntensity = vec4(vec3(aColor.r, aColor.g, aColor.b), 0 );
 	}
 }
 
 
 DirectionalLight::DirectionalLight(const DirectionalLight &l)
 : direction(l.direction), lightIntensity(l.lightIntensity)
-{
-	//numLights++;
-}
+{}
 // ---------------------
 
 // Destructeur
-DirectionalLight::~DirectionalLight(){
-	//numLights--;
-}
+DirectionalLight::~DirectionalLight(){}
 // ---------------------
 
 std::ostream & operator<< (std::ostream & os, const DirectionalLight &light){

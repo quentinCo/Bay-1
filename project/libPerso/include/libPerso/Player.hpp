@@ -26,6 +26,8 @@ class Player: public Camera{
 		
 		~Player();
 
+		glm::vec3 getFrontPlayer() const;
+
 		void moveLeft(float t);
 		void moveFront(float t);
 		void moveTop(float t);
@@ -34,7 +36,7 @@ class Player: public Camera{
 		void playerRotate(const SDL_MouseMotionEvent &e);
 		void playerMove(const Uint8 *keystate);
 
-
+		friend std::ostream & operator<< (std::ostream & os, const Player &p);
 };
 
 #endif

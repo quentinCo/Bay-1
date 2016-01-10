@@ -53,30 +53,6 @@ Mesh::Mesh(const aiMesh *mesh, const aiMaterial *mat): nbVertices(mesh->mNumVert
 	initBuffer(vecVertices, vecIndice);
 }
 
-/*
-Mesh::Mesh(const Vertex *pointTab,const int sizePointTab, const uint32_t *pointOrderTab, const int sizeOrder): nbVertices(sizePointTab){
-
-	std::vector <Vertex> vecVertices;
-	std::vector <uint32_t> vecIndice;
-
-	for(int i = 0; i<sizePointTab; i++) vecVertices.push_back(pointTab[i]);
-	for(int i = 0; i<sizeOrder; i++) vecIndice.push_back(pointOrderTab[i]);
-	
-	initBuffer(vecVertices, vecIndice);
-}
-
-Mesh::Mesh(const std::vector<Vertex> &pointVec, const std::vector <uint32_t> &pointOrderVec): nbVertices(pointVec.size()){
-	
-	std::vector <Vertex> vecVertices;
-	std::vector <uint32_t> vecIndice;
-	
-	for(int i = 0; i<nbVertices; i++) vecVertices.push_back(pointVec[i]);
-	for(int i = 0; i<pointOrderVec.size(); i++) vecIndice.push_back(pointOrderVec[i]);
-	
-	initBuffer(vecVertices, vecIndice);
-}
-*/
-
 Mesh::Mesh(const Mesh &mesh)
 :positionCenter(mesh.positionCenter), dimension(mesh.dimension), nbVertices(mesh.nbVertices),
 vbo(mesh.vbo), vecVertices(mesh.vecVertices), ibo(mesh.ibo), vecIndice(mesh.vecIndice), vao(mesh.vao),

@@ -8,6 +8,7 @@ SDLWindowManager::SDLWindowManager(uint32_t width, uint32_t height, const char* 
         std::cerr << SDL_GetError() << std::endl;
         return;
     }
+    
    // SDL_SetVideoMode(0, 0, 32, SDL_OPENGL | SDL_FULLSCREEN);
     
     const SDL_VideoInfo* screenInfo = SDL_GetVideoInfo();
