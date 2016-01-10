@@ -1,17 +1,5 @@
 # 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
-# File Created: 09.01.2016 23:00:58
-
-newmtl Default
-	Ns 50.0000
-	Ni 1.5000
-	d 1.0000
-	Tr 0.0000
-	Tf 1.0000 1.0000 1.0000 
-	illum 2
-	Ka 0.7000 0.7000 0.7000
-	Kd 0.7000 0.7000 0.7000
-	Ks 0.7070 0.7070 0.7070
-	Ke 0.0000 0.0000 0.0000
+# File Created: 10.01.2016 11:56:59
 
 newmtl fsShaderNoTexture_poutres
 	Ns 10.0000
@@ -47,7 +35,19 @@ newmtl fsShaderemissiveMesh_cristal
 	Ka 0.0000 0.5647 1.0000
 	Kd 0.0000 0.5647 1.0000
 	Ks 0.0000 0.0000 0.0000
-	Ke 0.0078 0.0118 0.0118
+	Ke 0.0078 0.0431 0.0471
+
+newmtl fsShaderNoTexture_gem
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0627 0.0627 0.0627
+	Kd 0.6078 0.1020 0.1020
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0471 0.0000 0.0196
 
 newmtl fsShaderNoTexture_grotte
 	Ns 10.0000
@@ -84,3 +84,13 @@ newmtl fsShaderNoTexture_dragon
 	Kd 0.0275 0.0275 0.0275
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
+
+newmtl wire_027177148
+	Ns 32
+	d 1
+	Tr 0
+	Tf 1 1 1
+	illum 2
+	Ka 0.1059 0.6941 0.5804
+	Kd 0.1059 0.6941 0.5804
+	Ks 0.3500 0.3500 0.3500
