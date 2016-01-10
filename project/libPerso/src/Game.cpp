@@ -7,6 +7,8 @@ Game * Game::instance = NULL;
 Game::Game(string dir, string winName, uint32_t windowWidth, uint32_t windowHeight)
 :windowManager(windowWidth, windowHeight, winName.c_str())
 {
+	ProjMatrix = glm::perspective(glm::radians(70.f), windowWidth/(float)windowHeight, 0.2f, 100.f);
+	
 	// Initialisation du repertoire courrent.
 	glimac::FilePath applicationPath(dir);
 	currentDir = applicationPath.dirPath();
@@ -22,7 +24,7 @@ Game::Game(string dir, string winName, uint32_t windowWidth, uint32_t windowHeig
 	initListeSite();
 	
 	// Chargement du premier site.
-	player = Player(glm::vec3(0,0,0), glm::vec3(0,0,1), 0.5, 0.5);;
+	player = Player(glm::vec3(0,0,0), glm::vec3(0,0,1), 0.1, 0.5);;
 	initNewCurrentSite(siteHeader[firstSite]);
 }
 
@@ -50,10 +52,6 @@ int Game::initOpenGLProperties(){
 		return EXIT_FAILURE;
 	}
 	
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glOrtho(-20.f,  20.f,  1.f, -1.f, 0.1f, 100.f);
-	
 	std::cout << "OpenGL Version : " << glGetString(GL_VERSION) << std::endl;
 	std::cout << "GLEW Version : " << glewGetString(GLEW_VERSION) << std::endl;
 	
@@ -66,7 +64,7 @@ int Game::initOpenGLProperties(){
 
 	
 		
-	//SDL_WM_GrabInput(SDL_GRAB_ON);
+	SDL_WM_GrabInput(SDL_GRAB_ON);
 	SDL_ShowCursor(SDL_DISABLE);
 
 	return 1;
@@ -140,13 +138,14 @@ void Game::initNewCurrentSite(const SceneHeader &scene){
 void Game::gamePlay(){
 	cout << "PLAY" <<endl;
 	loopPlay = false;
+	
 	while(!loopPlay) {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		
 		// Dessin
 		glm::mat4 viewMatrix = player.getViewMatrix();
 		//cout << "viewMatrix : " << viewMatrix <<endl;
-		currentSite.drawScene(viewMatrix);
+		currentSite.drawScene(viewMatrix, ProjMatrix);
 
 		
 		// Traitement des events

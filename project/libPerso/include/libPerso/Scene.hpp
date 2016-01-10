@@ -75,7 +75,7 @@ class Scene
 		// ---------------------
 		
 		// Uniform value
-		void initUniformValue(const Program &program, const glm::mat4 &globalMVMatrix);
+		void initUniformValue(const Program &program, const glm::mat4 &globalMVMatrix, const glm::mat4 &ProjMatrix);
 		void initUniformLightTabs();
 		// ---------------------
 
@@ -93,7 +93,7 @@ class Scene
 		std::string getNext(int i) const;
 		
 		// Méthode de dessin
-		void drawScene(const glm::mat4 &globalMVMatrix); 
+		void drawScene(const glm::mat4 &globalMVMatrix, const glm::mat4 &ProjMatrix); 
 		// ---------------------
 		
 };

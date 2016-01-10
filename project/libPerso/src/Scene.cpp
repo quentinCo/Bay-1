@@ -96,13 +96,11 @@ int Scene::loadScene(const string path){
 	cameraPosition = glm::vec3(0,0,0);
 	cameraFront = glm::vec3(0,0,-1);
 
-	//std::cout<<"DEBUT LOADSCENE"<<std::endl;
 	processNode(aScene->mRootNode, aScene, mapNameShader);
 	
 	initUniformLightTabs();
 	
 	for(auto it : mapNameShader){
-		//cout << "it.first[0] : " << it.first[0] << " --- it.first[1] : " << it.first[1] << endl;
 		mapMeshByShaders.insert(pair<Program, vector<Mesh>>(loadProgramShader(glimac::FilePath(it.first[0]),glimac::FilePath(it.first[1])), it.second));
 	}
 	
@@ -114,7 +112,6 @@ int Scene::loadScene(const string path){
 void Scene::processNode(const aiNode* aNode, const aiScene* aScene, map<array<string, 2>, vector<Mesh>> &mapNameShader){
 	for(GLuint i = 0; i < aNode->mNumMeshes; i++)
 	{
-		//cout << "\n---------------------------------------" <<endl;
 		aiMesh* aMesh = aScene->mMeshes[aNode->mMeshes[i]];
 	
 		string nameMesh = aNode->mName.data;
@@ -125,7 +122,6 @@ void Scene::processNode(const aiNode* aNode, const aiScene* aScene, map<array<st
 		if(aScene->HasMaterials()) mat = aScene->mMaterials[aMesh->mMaterialIndex];
 		else mat = NULL;
 		
-		//cout << "nameMesh --> : " << nameMesh << endl;
 		if(nameMesh.find("DirectionLight") != string::npos){
 			cout << "DirectionLight------------------------------<" << endl;
 			vectorDirLights.push_back(DirectionalLight(aMesh, mat));
@@ -161,23 +157,6 @@ void Scene::processNode(const aiNode* aNode, const aiScene* aScene, map<array<st
 
 	for(GLuint i = 0; i < aNode->mNumChildren; i++) processNode(aNode->mChildren[i], aScene, mapNameShader);
 }
-// ---------------------
-
-// Gestion des types de mesh
-/*
-Mesh Scene::selectTypeMesh (const string &name,const aiMesh *aMesh, const aiMaterial *mat){
-	Mesh *mesh;
-	if(name.find_first_of("MeshBright") != string::npos){
-		MeshBright *bmesh = new MeshBright(aMesh, mat);
-		mesh = bmesh;
-		vectorLights.push_back(bmesh->getLight());
-	}
-	else {
-		mesh = new Mesh(aMesh, mat);
-	}
-	
-	//return mesh;
-}*/
 // ---------------------
 
 // Initialisation des textures
@@ -310,71 +289,24 @@ void Scene::verifFileShaders (string &pathShader, const string &fileExtention){
 
 // Dessin
 
-void Scene::drawScene(const glm::mat4 &globalMVMatrix){
-	//for(auto it : meshes) it.drawMesh(prog);
-
+void Scene::drawScene(const glm::mat4 &globalMVMatrix, const glm::mat4 &ProjMatrix){
 	for(auto it = mapMeshByShaders.begin(); it != mapMeshByShaders.end(); it++){
 		it->first.use();
 		
-		//cout << "ID program : " << it->first.getGLId() << endl;
-		/*int ns;   
-		glGetProgramiv(it->first.getGLId(), GL_ATTACHED_SHADERS, &ns);   
-	
-			GLuint *shaders=new GLuint [ns];   
-			glGetAttachedShaders(it->first.getGLId(), ns, NULL, shaders);
-			for(int i; i<ns; i++){
-				cout << shaders[i] << endl;
-			}*/
-		
-		initUniformValue(it->first, globalMVMatrix);
+		initUniformValue(it->first, globalMVMatrix, ProjMatrix);
 		lightsBuffer.bindLights(it->first, lights);
 		dirLightsBuffer.bindLights(it->first, dirLights);
 		
 		for(auto mesh : it->second) mesh.drawMesh(it->first);
 		
 		lightsBuffer.unbindLights();
-		dirLightsBuffer.unbindLights();
-		
-		//Binding des lumières----------------------------------
-		/*
-		EllipsoidLight lights[3]; // Déclaration du tableau des lumières ellipsoïdales, à la place du 3, tu devras mettre le bon nombre de lumières, on en a 100 au maximum
-		
-		for(int i = 0; i < EllipsoidLight::numLights; ++i){
-			lights[i] = EllipsoidLight(
-				glm::vec4(0, 1, 0, 1), // Position du centre de la lumière, la dernière valeur doit rester à 1 vu que c'est un point
-				glm::vec4(1, 1, 1, 0), // Coefficients d'étirement, tu la définiras avec ta hitbox, le x devra être la moitié de la largeur, le y la moitié de la hauteur et le z la moitié de la profondeur et dernière valeur à 0
-				glm::vec4(1, 10, 1, 0) // Intensité lumineuse, RGB et dernière valeur à 0 
-			);
-		}
-		
-		bindLights(it->first, lights); // Ici on envoie les lumières aux programmes de shader
-		
-		*/
-		/*
-		DirectionalLight dirlights[0]; // Déclaration du tableau des lumières directionnelles, à la place du 0, tu devras mettre le bon nombre de lumières, on en a 100 au maximum
-		
-		for(int i = 0; i < DirectionalLight::numLights; ++i){
-			dirlights[i] = DirectionalLight(
-				glm::vec4(1, 1, 1, 0), // Direction de la lumière, la dernière valeur doit rester à 0 vu que c'est un point
-				glm::vec4(1, 1, 1, 0) // Intensité lumineuse, RGB et dernière valeur à 0 
-			);
-		}
-		
-		bindLights(it->first, dirLights); // Ici on envoie les lumières aux programmes de shader
-		*/
-		//---------------------------------------------------
-		
+		dirLightsBuffer.unbindLights();		
 	}
 }
 
 
 // Envoie des uniformes value.
-void Scene::initUniformValue(const Program &program, const glm::mat4 &globalMVMatrix){
-
-	//-----------------------------
-	glm::mat4 ProjMatrix = glm::perspective(glm::radians(70.f),1.f,0.1f,100.f);
-	//-----------------------------
-
+void Scene::initUniformValue(const Program &program, const glm::mat4 &globalMVMatrix, const glm::mat4 &ProjMatrix){
 	glUniformMatrix4fv(glGetUniformLocation(program.getGLId(), "uMVMatrix"), 1, GL_FALSE, glm::value_ptr(globalMVMatrix));
 	glUniformMatrix4fv(glGetUniformLocation(program.getGLId(), "uNormalMatrix"), 1, GL_FALSE, glm::value_ptr(glm::transpose(glm::inverse(globalMVMatrix))));
 	glUniformMatrix4fv(glGetUniformLocation(program.getGLId(), "uMVPMatrix"), 1, GL_FALSE, glm::value_ptr(ProjMatrix * globalMVMatrix));
