@@ -21,6 +21,8 @@ class Game{
 		
 		bool loopPlay;
 		
+		bool fullScreen;
+		
 		glm::mat4 ProjMatrix;
 		
 		int initOpenGLProperties();

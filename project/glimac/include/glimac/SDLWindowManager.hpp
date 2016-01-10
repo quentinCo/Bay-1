@@ -8,6 +8,12 @@ namespace glimac {
 
 class SDLWindowManager {
 public:
+	float maxWidth;
+	float maxHeight;
+	
+	float normalWidth;
+	float normalHeight;
+	
     SDLWindowManager(uint32_t width, uint32_t height, const char* title);
 
     ~SDLWindowManager();
@@ -25,6 +31,8 @@ public:
 
     // Return the time in seconds
     float getTime() const;
+    
+    void changeScreen(bool fullScreen) const;
 };
 
 }

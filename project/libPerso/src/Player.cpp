@@ -1,4 +1,4 @@
-	#include <libPerso/Player.hpp>
+#include <libPerso/Player.hpp>
 
 using namespace glm;
 
